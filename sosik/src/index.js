@@ -1,15 +1,15 @@
-import Inputkcal from './Inputkcal';
-import Section1 from "./component/section1/section1";
-import Section2 from "./component/"
-import MyHeader from "./component/header/MyHeader";
-import reportWebVitals from "./reportWebVitals";
-import App from "./App";
-import "./index.css";
-import ReactDOM from "react-dom/client";
 import React from "react";
+import reportWebVitals from "./reportWebVitals";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import Section3 from "./Inputkcal";
+import Section1 from "./component/section1/section1";
+import Section2 from "./component/lhj/Section2";
+import MyHeader from "./component/header/MyHeader";
 
-import reportWebVitals from './reportWebVitals';
-import Footer from './component/footer/Footer';
+import Footer from "./component/footer/Footer";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <MyHeader></MyHeader>
@@ -19,6 +19,5 @@ root.render(
     <Footer></Footer>
   </React.StrictMode>
 );
-
 
 reportWebVitals();
