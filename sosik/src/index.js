@@ -2,7 +2,7 @@ import React from "react";
 import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Section3 from "./Inputkcal";
+import Section3 from "./component/Inputkcal";
 import Section1 from "./component/section1/section1";
 import Section2 from "./component/lhj/Section2";
 import MyHeader from "./component/header/MyHeader";
