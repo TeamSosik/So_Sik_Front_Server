@@ -35,6 +35,27 @@ const Section2 = () => {
       },
       url: "#",
     },
+    // TODO : 개수가 늘어나면 중앙으로 배치되는데 왼쪽부터 정렬로 바꾸기
+    // {
+    //   alt: "image3",
+    //   image:
+    //     "https://cdn.healthinnews.co.kr/news/photo/202003/12742_14189_53.jpg",
+    //   content: {
+    //     c1: "지루한 식단 공유는 그만!",
+    //     c2: "Ranking 확인",
+    //   },
+    //   url: "#",
+    // },
+    // {
+    //   alt: "image3",
+    //   image:
+    //     "https://cdn.healthinnews.co.kr/news/photo/202003/12742_14189_53.jpg",
+    //   content: {
+    //     c1: "지루한 식단 공유는 그만!",
+    //     c2: "Ranking 확인",
+    //   },
+    //   url: "#",
+    // },
   ];
   // const default
 
