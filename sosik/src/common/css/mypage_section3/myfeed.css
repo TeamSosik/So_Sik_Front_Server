@@ -1,0 +1,24 @@
+.feedimg {
+  width: 33%;
+  object-fit: cover;
+}
+.mypost {
+  font-size: 17pt;
+}
+.feedlogo {
+  width: 30px;
+  height: 30px;
+}
+.Section3Component {
+  text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 3%;
+}
+.container {
+  overflow: auto;
+  height: "auto";
+  width: "100%";
+  border: "#00C22B solid 2px ";
+  margin-bottom: 5%;
+}
