@@ -135,7 +135,7 @@ const Section2Component = () => {
       >
         <div className="row">
           {products.map((a, i) => {
-            return <Feed products={a} />;
+            return <Feed products={a} key={i} />;
           })}
         </div>
       </div>
