@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import '../../src/common/css/mypg_frlst.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // import Pagination from '@mui/material/Pagination';
 // import Stack from '@mui/material/Stack';
 
