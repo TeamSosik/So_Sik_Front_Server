@@ -1,74 +1,74 @@
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 .notosanskr * {
-    font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
 }
 
 .mypgFrlst {
-    display: flex;
-    justify-content: flex-end;
-    font-family: 'Noto Sans KR';
-    letter-spacing: -2px;
+  display: flex;
+  justify-content: flex-end;
+  font-family: "Noto Sans KR";
+  letter-spacing: -2px;
 }
 
 .mypgFrlst .friend-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* 가운데 정렬 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 가운데 정렬 */
 }
 
 .mypgFrlst .pagination {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    gap: 5px;
-    /* Pagination 버튼 사이의 간격 설정 */
+  display: flex;
+  list-style: none;
+  padding: 0;
+  gap: 5px;
+  /* Pagination 버튼 사이의 간격 설정 */
 }
 
 .mypgFrlst .pagination li {
-    /* Pagination 버튼 스타일 */
+  /* Pagination 버튼 스타일 */
 }
 
 .sidebar {
-    width: 230px;
-    height: 800px;
-    background-color: #59BD82;
-    padding: 20px;
-    font-size: 25px;
-    color: #ffffff;
-    text-align: center;
-    border-radius: 20px;
+  width: 230px;
+  height: 800px;
+  background-color: #59bd82;
+  padding: 20px;
+  font-size: 25px;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 20px;
 }
 
 .friend-list {
-    border-top: 1px solid #ffffff;
-    margin-top: 15px;
+  border-top: 1px solid #ffffff;
+  margin-top: 15px;
 }
 
 .friend-list ul {
-    list-style: none;
-    padding: 0;
-    align-content: center;
+  list-style: none;
+  padding: 0;
+  align-content: center;
 }
 
 .friend-list li {
-    padding: 8px 0;
-    cursor: pointer;
+  padding: 8px 0;
+  cursor: pointer;
 }
 
 .friend-list li:hover {
-    background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
 /* 반응형 스타일 */
 
 @media screen and (max-width: 768px) {
-    .mypgFrlst {
-        flex-direction: column;
-    }
+  .mypgFrlst {
+    flex-direction: column;
+  }
 
-    .sidebar {
-        width: 100%;
-    }
+  .sidebar {
+    width: 100%;
+  }
 }
