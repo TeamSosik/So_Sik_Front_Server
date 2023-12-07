@@ -7,6 +7,14 @@
   border: 5px solid #59bd81;
   box-sizing: border-box;
   padding: 5rem 3rem;
+  float: left;
+  margin-left: 6%;
+  margin-top: 5%;
+}
+.section2 {
+  float: left;
+  padding-left: 6%;
+  padding-top: 5%;
 }
 
 /* myInfoBox */

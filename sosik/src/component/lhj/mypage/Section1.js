@@ -4,7 +4,7 @@ import MyWeight from "./MyWeight.js";
 import MyInfo from "./MyInfo.js";
 import MyIntroduction from "./MyIntroduction.js";
 import MyActivity from "./MyActivity.js";
-
+import Section2 from "../../Mypg_frlst.js";
 /**
  * 기능 : 메인페이지 body의 section1 부분
  */
@@ -50,18 +50,23 @@ const Section1 = () => {
   // view
 
   return (
-    <div className="section1">
-      {/* 내프로필 image box */}
-      <MyInfo myInfo={myInfo} />
+    <div>
+      <div className="section1">
+        {/* 내프로필 image box */}
+        <MyInfo myInfo={myInfo} />
 
-      {/* 내정보 box */}
-      <MyWeight myInfo={myInfo} />
+        {/* 내정보 box */}
+        <MyWeight myInfo={myInfo} />
 
-      {/* 내소개 box */}
-      <MyIntroduction myInfo={myInfo} />
+        {/* 내소개 box */}
+        <MyIntroduction myInfo={myInfo} />
 
-      {/* TODO : 나의활동 box - github의 잔디모양 */}
-      <MyActivity />
+        {/* TODO : 나의활동 box - github의 잔디모양 */}
+        <MyActivity />
+      </div>
+      <div className="section2">
+        <Section2></Section2>
+      </div>
     </div>
   );
 };
