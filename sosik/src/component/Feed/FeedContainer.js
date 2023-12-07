@@ -1,8 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
-import Feed from './component/Feed/Feed';
+import Feed from './Feed';
+import './FeedContainer.css';
 
-function App() {
+
+function FeedContainer() {
   
  const personList = [
       {
@@ -40,10 +40,10 @@ function App() {
   
 
   return (
-    <div className="App">
+    <div className="FeedContainer">
         {FeedList}
     </div>
   );
 }
 
-export default App;
+export default FeedContainer;
