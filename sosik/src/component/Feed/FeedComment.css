@@ -1,0 +1,20 @@
+.post-comment{
+
+    height: 20%;
+  }
+  .post-comment img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin: 10px;
+  }
+  
+  .post-comment-nick{
+    font-weight:900;
+    margin-right: 10px;
+  }
+  
+  .post-comment-write{
+    
+  }
+  
