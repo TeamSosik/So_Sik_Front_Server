@@ -5,10 +5,14 @@
 }
 
 .mypgFrlst {
-  display: flex;
-  justify-content: flex-end;
-  font-family: "Noto Sans KR";
-  letter-spacing: -2px;
+    display: flex;
+    justify-content: flex-end;
+    font-family: 'Noto Sans KR';
+    letter-spacing: -2px;
+    float: right;
+    display: inline;
+    margin-right: 100px;
+
 }
 
 .mypgFrlst .friend-list {
