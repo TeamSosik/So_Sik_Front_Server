@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.recd-anly-section1 hr {
+    width: 70%;
+    height: 1px;
+    background: #A7A7A7;
+    margin: 5% auto;
+    /* 수평선 위아래 여백 지정 */
+}
+
+.recd-anly-section1 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-shrink: 0;
+    font-family: 'SUITE-Regular';
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 200px;
+}
+
+.recd-anly-section2 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-shrink: 0;
+    font-family: 'SUITE-Regular';
+    text-align: center;
+    padding-bottom: 200px;
+    margin: 0 auto;
+}
+
+.recd-anly-name {
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.recd-anly-section1 #chart,
+.recd-anly-section2 #pie-chart {
+    padding-top: 20px;
+    width: 700px;
+    /* 원하는 너비 */
+    max-width: 100%;
+    /* 차트의 최대 너비를 설정 */
+    margin: 0 auto;
+    /* 좌우 여백을 자동으로 설정하여 가운데 정렬 */
+}
