@@ -1,0 +1,58 @@
+
+.recipe-card {
+    width: 300px; 
+    margin: 35px;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 20px;
+}
+
+.cardborder{
+    border: none;
+    border-radius: 20px;
+    
+}
+
+.cardborder2{
+    border: none;
+    height: 250px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.cardtext{
+    display: flex;
+}
+
+.cardpickcommentview{
+    display: flex;
+}
+
+.cardcount{
+    font-size: 13px;
+}
+
+.cardicon-with-number{
+    margin-left: 10px;
+}
+
+.cardnamedate{
+    padding-top: 13px;
+    font-size: 16px;
+    float: left;
+    margin-right: auto;
+}
+
+.cardtitle{
+    margin-top: -18px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.cardname{
+    font-weight: 400;
+}
+.carddate{
+    font-weight: 400;
+}
+ 
+  
