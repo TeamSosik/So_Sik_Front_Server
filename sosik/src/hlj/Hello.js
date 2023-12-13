@@ -4,6 +4,7 @@ const Hello = () => {
   return (
     <div>
       <hi>하하</hi>
+      ok
     </div>
   );
 };
