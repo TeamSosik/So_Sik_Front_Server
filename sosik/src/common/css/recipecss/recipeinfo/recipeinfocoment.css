@@ -1,0 +1,10 @@
+.commentlist {
+    border: none !important;
+  }
+  .commenttotal{
+    padding-top: 100px;
+  }
+  .commenttext{
+    padding-left: 43px;
+    padding-top: 5px;
+  }
