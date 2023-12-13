@@ -1,0 +1,38 @@
+.no-focus-border:focus {
+    box-shadow: none;
+    border-color: initial;
+  }
+
+.no-focus-border::placeholder {
+  color: #ccc;  
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #ccc; 
+}
+
+.form-control.no-focus-border {
+  border-color: #ccc;
+}
+
+.boardsearchbar {
+  border-radius: 20px;
+  outline: none;
+  border-color:#ccc;
+}
+
+.searchbutton{
+  background-color: #F8F6E6;
+  color: #ccc;
+  border: #ccc;
+  &:hover {
+    color: #ccc;
+    background-color: #F8F6E6; 
+  }
+}
+
+.search{
+  margin-top:30px;
+  margin-bottom:15px;
+}
