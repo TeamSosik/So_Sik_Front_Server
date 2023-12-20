@@ -59,7 +59,7 @@ const Header = () => {
           <div class="bar"></div>
           <div class="bar"></div>
         </button>
-      </div>  ` `
+      </div>
       {/* <div class="scrollindicator" style="visibility: visible;">
         <div class="scrollprogress" style="transform: translate3d(-100%, 0px, 0px);"></div>
       </div> */}
