@@ -1,40 +1,53 @@
 import React from "react";
 import logo from "../../images/logo.png";
 import "../../common/css/header/header.css";
+import { Link,BrowserRouter , Routes, Route } from 'react-router-dom';
+import Recipeboardlist from '../../page/Recipeboardlist';
+import Feed from '../Feed/FeedContainer';
+import Mainpage from "../../page/MainPage";
+import Login from "../Login";
+import FoodSearch from "../foodSearch/FoodSearch"
+import Signup from '../Sign_up';
+
+
 
 const Header = () => {
   return (
-    <header id="header" class="nav-down">
-      <a class="logo" href="/">
-      <img src={logo} alt="Logo" />
-      </a>
+    <BrowserRouter>
+    <header id="header" className="nav-down">
+      {/* <a className="logo" href="/"> */}
+      <Link to="/mainpage" className="logo">
+      <img src={logo} alt="Logo" /> 
+      </Link>
+      {/* </a> */}
       <nav id="gnb">
-        <ul class="depth-1">
-          <li><a href="/guide/list">SNS</a>
-          </li>
-          <li><a href="/recipe-lab/list/recipe">랭킹</a>
-            <ul class="depth-2">
-              <li><a href="/recipe-lab/list/recipe">레시피</a>
-              </li><li><a href="/recipe-lab/list/solution">솔루션</a>
-              </li></ul>
-          </li>
-          <li><a href="/cooking/list">칼로리</a>
-            <ul class="depth-2">
-              <li><a href="/cooking/list">요리해요</a>
-              </li><li><a href="/counseling/list">고민있어요</a>
-              </li></ul>
-          </li>
-          <li><a href="/wow/list">커뮤니티</a>
-          </li>
+        <ul className="depth-1">
+          <li><Link to="/foodsearch">칼로리</Link>
+            </li>
+            {/* <li><a href="">랭킹</a>
+              <ul className="depth-2">
+                <li><a href="">레시피</a>
+                </li></ul>
+            </li> */}
+            <li><Link to="/feed">SNS</Link>
+            </li>
+            <li><Link to="/recipeboardlist">커뮤니티</Link>
+              <ul className="depth-2">
+              <li><Link to="/recipeboardlist">요리해요</Link></li>
+              <li><a href="">고민있어요</a>
+              </li><li><a href="">성공했어요</a>
+              </li>
+              </ul>
+            </li>
         </ul>
       </nav>
-      <div class="utWrap">
-        <ul class="logWrap">
-          <li><a href="https://member.sempio.com/login?r=7d04a443ad6a5706efcd37ba0299bf38&amp;s=semie">로그인</a></li>
+      <div className="utWrap">
+        <ul className="logWrap">
+          <li><Link to="/login">로그인</Link></li>
         </ul>
-        <div class="searchWrap">
+        <div className="searchWrap">
           <input type="text" placeholder="어떤 요리가 궁금하신가요?" />
-          <button class="" type="button" id="topSearchBtn">검색</button>
+          <button className="" type="button" id="topSearchBtn">검색</button>
         </div>
         {/* <div class="searchWrap">
           <input type="text" name="q"/>
@@ -51,6 +64,18 @@ const Header = () => {
         <div class="scrollprogress" style="transform: translate3d(-100%, 0px, 0px);"></div>
       </div> */}
     </header>
+    
+    <Routes>
+      <Route path="/recipeboardlist" element={<Recipeboardlist />} />
+      <Route path="/feed" element={<Feed/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/mainpage" element={<Mainpage/>}/>
+      <Route path="/foodsearch" element={<FoodSearch/>}/>
+      <Route path="/signup" element={<Signup/>} />
+     
+    </Routes>
+    
+    </BrowserRouter>
   );
 };
 
