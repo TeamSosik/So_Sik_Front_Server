@@ -6,9 +6,11 @@ import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import "../common/css/login.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link,BrowserRouter , Routes, Route } from 'react-router-dom';
 
 function Login() {
   return (
+
     <Container>
     <Row>
         <Col></Col>
@@ -31,7 +33,7 @@ function Login() {
                 <Button variant="success" type="submit" className='loginbutton'>
                     <strong>로그인</strong>
                 </Button>
-                <p className='loginfont2'><a href=''>회원가입</a> | <a href=''>아이디찾기</a> | <a href=''>비밀번호찾기</a></p>
+                <p className='loginfont2'><Link to="/signup">회원가입</Link> | <a href=''>비밀번호찾기</a></p>
                 
                 <hr></hr>
                 <div className='logindiv1'>
@@ -44,6 +46,8 @@ function Login() {
     </Row>
     
 </Container>
+ 
+
   );
 }
 
