@@ -486,10 +486,6 @@ header #gnb .depth-1>li:after {
     content: '';
 }
 
-header #gnb .depth-1>li:last-of-type:after {
-    display: none;
-}
-
 header #gnb .depth-2 {
     display: none;
     position: absolute;
