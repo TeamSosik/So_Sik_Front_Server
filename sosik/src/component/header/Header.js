@@ -8,6 +8,7 @@ import Mainpage from "../../page/MainPage";
 import Login from "../Login";
 import FoodSearch from "../foodSearch/FoodSearch"
 import Signup from '../Sign_up';
+import Mypage from "../../page/mypage";
 
 
 
@@ -45,6 +46,9 @@ const Header = () => {
         <ul className="logWrap">
           <li><Link to="/login">로그인</Link></li>
         </ul>
+        <ul className="logWrap">
+          <li><Link to="/mypage">마이페이지</Link></li>
+        </ul>
         <div className="searchWrap">
           <input type="text" placeholder="어떤 요리가 궁금하신가요?" />
           <button className="" type="button" id="topSearchBtn">검색</button>
@@ -70,6 +74,7 @@ const Header = () => {
       <Route path="/feed" element={<Feed/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/mainpage" element={<Mainpage/>}/>
+      <Route path="/mypage" element={<Mypage/>}/>
       <Route path="/foodsearch" element={<FoodSearch/>}/>
       <Route path="/signup" element={<Signup/>} />
      

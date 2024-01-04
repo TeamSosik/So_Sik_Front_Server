@@ -1,8 +1,11 @@
 .home-banner {
-  margin-top: 2%;
+  margin-top: 7%;
   margin-left: 11%;
 }
 .home-img {
   width: 88%;
   height: 270px;
+  image-rendering: -webkit-optimize-contrast;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
