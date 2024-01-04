@@ -1,50 +1,45 @@
-.loginbutton{
-    margin-bottom: 10px;
-    text-align: center;
-    width: 100%;
-    background-color: #59BD82;
-    border: none;
-    
+.loginbutton {
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+  background-color: #59bd82;
+  border: none;
+}
+.loginForm {
+  margin-top: 42%;
+  margin-bottom: 12%;
+}
+.snsloginbutton {
+  height: 35px;
+  margin-bottom: 10px;
+  /* margin-left: 5px; */
+  margin-top: 10px;
+  margin-right: 5px;
 }
 
-.snsloginbutton{
-    height: 35px;
-    margin-bottom: 10px;
-    /* margin-left: 5px; */
-    margin-top: 10px;
-    margin-right: 5px;
-
+.logindiv1 {
+  display: flex;
+  margin-left: 10px;
 }
 
-.logindiv1{
-    display: flex;
-    margin-left: 10px;
+.loginfont {
+  font-size: 13px;
 }
 
-.loginfont{
-    font-size: 13px;
+.loginfont2 {
+  font-size: 13px;
+  text-align: center;
 }
 
-.loginfont2{
-    font-size: 13px;
-    text-align: center;
-}
-
-.logininputdiv{
-    margin-bottom: 10px;
+.logininputdiv {
+  margin-bottom: 10px;
 }
 
 .loginfont2 a {
-    color: black; 
-    text-decoration: none; 
-  }
-  
-.loginfont2 a:hover {
-text-decoration: none; 
+  color: black;
+  text-decoration: none;
 }
 
-
-
-
-
-
+.loginfont2 a:hover {
+  text-decoration: none;
+}
