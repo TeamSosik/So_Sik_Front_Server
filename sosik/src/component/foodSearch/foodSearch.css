@@ -1,0 +1,148 @@
+.foodSearchBox {
+  width: 1200px;
+  height: 1000px;
+}
+
+.searchBox {
+  width: 100%;
+  height: 20%;
+  /* background-color: aquamarine; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBox > .searchAllBox {
+  width: 40%;
+  height: 30%;
+  /* background-color: coral; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5rem;
+  border: 0.3rem solid #59bd82;
+}
+
+.searchBox > .searchAllBox > .searchValueBox {
+  width: 80%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBox > .searchAllBox > .searchValueBox > input[type="text"] {
+  width: 80%;
+  height: 50%;
+  border: none;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-left: 3rem;
+}
+
+.searchBox > .searchAllBox > .searchValueBox > input[type="text"]:focus {
+  outline: none;
+}
+
+.searchBox > .searchAllBox > .searchImageBox {
+  width: 20%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBox > .searchAllBox > .searchImageBox > img {
+  width: 33%;
+  height: 33%;
+  cursor: pointer;
+}
+
+/* kcalContexListtBox */
+.kcalContexListBox {
+  width: 100%;
+  height: 70%;
+
+  display: flex;
+  flex-flow: row wrap;
+  /* align-items: center; */
+  align-content: flex-start;
+}
+
+.kcalContexListBox > .kcalContex {
+  width: 32%;
+  height: 20%;
+  border-radius: 10px;
+  box-shadow: 5px 5px 1px -1px #f1f1f1;
+  margin: 0 0.5rem 5rem 0.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.kcalContexListBox > .kcalContex > .kcalContexTitle {
+  width: 80%;
+  height: 40%;
+  font-size: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kcalContexListBox > .kcalContex > .kcalContextContentBox {
+  width: 80%;
+  height: 40%;
+  background-color: #cdefc6;
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* buttonBox */
+.pageButtonBox {
+  width: 100%;
+  height: 10%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageButtonBox > .pageButtonList {
+  width: 33%;
+  height: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageButtonBox > .pageButtonList > input[type="button"] {
+  width: 2rem;
+  height: 2rem;
+  background-color: #f8f6e6;
+  margin-left: 0.5rem;
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pageButtonBox > .pageButtonList > input[type="button"]:hover {
+  background-color: #fdf3a2;
+}

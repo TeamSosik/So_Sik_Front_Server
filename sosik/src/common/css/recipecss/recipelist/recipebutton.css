@@ -1,0 +1,24 @@
+
+.selectcategory {
+  background-color: white;
+  color: black;
+  font-weight: bolder;
+}
+
+.buttongroup3 {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  
+}
+
+.buttongroup3 .selectcategory:first-of-type {
+  border-top-left-radius: 25px !important;
+  border-bottom-left-radius: 25px !important;
+}
+
+.buttongroup3 .selectcategory:last-of-type {
+  border-top-right-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+}
