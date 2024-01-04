@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Row, Col, Container, InputGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
-
+import { useNavigate } from "react-router-dom";
 
 const generateOptions = (start, end) => {
     if (start >= end) {
@@ -13,7 +13,6 @@ const generateOptions = (start, end) => {
         return Array.from({ length: end - start + 1 }, (_, index) => start + index);
     }
 };
-
 
 const SelectOptions = ({ defaultValue, values, handleInputChange, name }) => (
     <Form.Select defaultValue={defaultValue} name={name} onChange={handleInputChange}>
@@ -28,6 +27,9 @@ const SelectOptions = ({ defaultValue, values, handleInputChange, name }) => (
 
 
 function Signup() {
+
+    const navigate = useNavigate();
+
     const [memberInfo, setMemberInfo] = useState({
         email: "",
         password: "",
@@ -37,9 +39,8 @@ function Signup() {
         height: 0,
         activityLevel: "",
         nickname: "",
-        profileImage: null  // 사용자가 프로필 이미지를 선택하지 않았을 때를 나타내기 위해서 null로 설정
+        profileImage: ""  // 사용자가 프로필 이미지를 선택하지 않았을 때를 나타내기 위해서 null로 설정
     });
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -58,6 +59,7 @@ function Signup() {
         } else {
             setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
         }
+
         const { year, month, day } = memberInfo.birthday;
         if (year && month && day) {
             const formattedDate = `${year}-${month}-${day}`;
@@ -67,7 +69,6 @@ function Signup() {
             }));
         }
     };
-
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -81,40 +82,42 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-
-        if (memberInfo.profileImage) {
-            formData.append('profileImage', memberInfo.profileImage);
-            console.log(memberInfo.profileImage)
-            delete memberInfo.profileImage;
-
+    
+        formData.append('profileImage', memberInfo.profileImage);
+    
             const json = JSON.stringify(memberInfo);
             const blob = new Blob([json], {
                 type: 'application/json'
             });
-            formData.append('member', blob);
-        }
-
+        formData.append('member', blob);
+    
+ 
         try {
-            console.log(memberInfo);
-            const response = await axios({
-                method: 'post',
-                url: 'http://localhost:9000/members/sign-up',
-                data: formData,
+            console.log(memberInfo)
+            const response =await axios({
+                method: "post", // 통신 방식
                 headers: {
-                    "Content-Type": "multipart/form-data"
-                }
+                    'Content-Type': 'multipart/form-data'
+                },
+                url: "http://localhost:9000/members/sign-up", // 서버
+                data: formData
             })
-            console.log("회원가입 성공:", response.data); // 서버로부터의 응답 처리
-            // 회원가입 성공 후 추가적인 작업 수행 가능
+            .then(function(response) {
+              alert("가입을 환영합니다!")
+              navigate('/mainpage');//리다이렉트
+
+
+            })
         } catch (error) {
             console.error("회원가입 실패:", error); // 오류 처리
         }
     };
 
-
     const years = generateOptions(2020, 1900);
     const months = generateOptions(1, 12);
     const days = generateOptions(1, 31);
+
+
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props} >
             <strong>비활동적</strong> - 대부분의 시간을 앉아서 보내고 규칙적인 운동을 하지 않는 사람<br /><br />
@@ -124,6 +127,7 @@ function Signup() {
         </Tooltip>
     );
 
+    
 
     return (
         <Container>
@@ -135,6 +139,7 @@ function Signup() {
                             <Form.Label column sm="3">
                                 이메일
                             </Form.Label>
+
                             <Form.Control
                                 // placeholder="example@sosik.com"
                                 aria-label="Recipient's username"
@@ -146,6 +151,7 @@ function Signup() {
                                 중복확인
                             </Button>
                         </InputGroup>
+
                         <InputGroup className="mb-3">
                             <Form.Label column sm="3">
                                 비밀번호
@@ -166,6 +172,7 @@ function Signup() {
                                 onChange={handleInputChange}
                             />
                         </InputGroup>
+
                         <InputGroup className="mb-3">
                             <Form.Label column sm="3" >
                                 이름
@@ -176,6 +183,7 @@ function Signup() {
                                 onChange={handleInputChange}
                             />
                         </InputGroup>
+
                         <div key={`inline-${'radio'}`} className="mb-3">
                             <Form.Label column sm="3">
                                 성별
@@ -199,20 +207,25 @@ function Signup() {
                                 onChange={handleInputChange}
                             />
                         </div>
+
                         <Row className="mb-3">
                             <Form.Label column sm="3">
                                 생년월일
                             </Form.Label>
+
                             <Form.Group as={Col} controlId="formGridYear">
                                 <SelectOptions defaultValue="연도" values={years} name="year" handleInputChange={handleInputChange} />
                             </Form.Group>
+
                             <Form.Group as={Col} controlId="formGridMonth">
                                 <SelectOptions defaultValue="월" values={months} name="month" handleInputChange={handleInputChange} />
                             </Form.Group>
+
                             <Form.Group as={Col} controlId="formGridDay">
                                 <SelectOptions defaultValue="일" values={days} name="day" handleInputChange={handleInputChange} />
                             </Form.Group>
                         </Row>
+
                         <InputGroup className="mb-3">
                             <Form.Label column sm="3">
                                 현재 체중
@@ -223,6 +236,7 @@ function Signup() {
                                 onChange={handleInputChange} />
                             <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
                         </InputGroup>
+
                         <InputGroup className="mb-3">
                             <Form.Label column sm="3">
                                 목표 체중
@@ -233,6 +247,7 @@ function Signup() {
                                 onChange={handleInputChange} />
                             <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
                         </InputGroup>
+
                         <InputGroup className="mb-3">
                             <Form.Label column sm="3">
                                 신장
@@ -243,6 +258,7 @@ function Signup() {
                                 onChange={handleInputChange} />
                             <InputGroup.Text id="basic-addon2">cm</InputGroup.Text>
                         </InputGroup>
+
                         <div key={`inline-${'radio'}`} className="mb-3">
                             <Form.Label column sm="3">
                                 활동 레벨
@@ -253,6 +269,7 @@ function Signup() {
                                     <FontAwesomeIcon icon={faCircleQuestion} />
                                 </OverlayTrigger>
                             </Form.Label>
+
                             <Form.Check
                                 inline
                                 label="비활동적"
@@ -290,10 +307,12 @@ function Signup() {
                                 onChange={handleInputChange}
                             />
                         </div>
+
                         <InputGroup className="mb-3">
                             <Form.Label column sm="3">
                                 닉네임
                             </Form.Label>
+
                             <Form.Control
                                 aria-label="Recipient's username"
                                 aria-describedby="basic-addon2"
@@ -308,16 +327,17 @@ function Signup() {
                             <Form.Label>프로필 이미지</Form.Label>
                             <Form.Control type="file" onChange={handleImageChange} />
                         </Form.Group>
-
                         <div className="text-center">
                             <Button variant="success" type="submit">
                                 가입하기
                             </Button></div>
                     </Form>
+
                 </Col>
                 <Col> </Col>
             </Row>
         </Container>
     );
 }
+
 export default Signup;
