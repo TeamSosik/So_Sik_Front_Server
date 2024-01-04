@@ -4,14 +4,21 @@
   font-family: "Noto Sans KR";
 }
 
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
 .mypgFrlst {
-    display: flex;
-    justify-content: flex-end;
-    font-family: 'Noto Sans KR';
-    letter-spacing: -2px;
-    float: right;
-    display: inline;
-    margin-right: 100px;
+  display: flex;
+  justify-content: flex-end;
+  font-family: 'SUITE-Regular';
+  letter-spacing: -2px;
+  float: right;
+  display: inline;
+  margin-right: 100px;
 
 }
 
@@ -39,7 +46,7 @@
   height: 800px;
   background-color: #59bd82;
   padding: 20px;
-  font-size: 25px;
+  font-size: 20px;
   color: #ffffff;
   text-align: center;
   border-radius: 20px;
