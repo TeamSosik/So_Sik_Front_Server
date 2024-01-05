@@ -2,10 +2,10 @@ import React from "react";
 import logo from "../../images/logo.png";
 import "../../common/css/header/header.css";
 import { Link,BrowserRouter , Routes, Route } from 'react-router-dom';
-import Recipeboardlist from '../../page/Recipeboardlist';
+import Recipeboardlist from '../../page/recipeboardlist';
 import Feed from '../Feed/FeedContainer';
 import Mainpage from "../../page/MainPage";
-import Login from "../Login";
+import Login from "../../component/Login";
 import FoodSearch from "../foodSearch/FoodSearch"
 import Signup from '../Sign_up';
 
