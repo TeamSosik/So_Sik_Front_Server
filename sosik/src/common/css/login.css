@@ -17,9 +17,10 @@
   margin-right: 5px;
 }
 
-.logindiv1 {
-  display: flex;
-  margin-left: 10px;
+.logindiv1{
+    display: flex;
+    margin-left: 10px;
+    width: 150px;
 }
 
 .loginfont {
@@ -43,3 +44,17 @@
 .loginfont2 a:hover {
   text-decoration: none;
 }
+
+.logincontainer {
+    margin-top: 130px;
+    margin-bottom: 130px;
+}
+
+.error-message{
+    font-size: 12px;
+    color: rgb(255, 52, 52);
+    margin: 5px;
+}
+
+
+

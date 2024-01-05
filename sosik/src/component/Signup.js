@@ -130,7 +130,7 @@ function Signup() {
     
 
     return (
-        <Container>
+        <Container style={{ marginTop: '150px',marginBottom:'100px' }}>
             <Row>
                 <Col></Col>
                 <Col xs={6}>
