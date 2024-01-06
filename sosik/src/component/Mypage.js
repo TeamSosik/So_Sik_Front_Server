@@ -1,6 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import "../common/css/mypage.css";
+import FoodModal from "./FoodModal/FoodModal";
 
 const MyPage = () => {
   const profileImage =
@@ -265,6 +266,7 @@ const MyPage = () => {
             </div>
           </div>
         </div>
+        <FoodModal></FoodModal>
 
         <div className="my-weight-change">
           <span className="weight-change-title">나의 체중 변화</span>
@@ -273,6 +275,7 @@ const MyPage = () => {
             series={weightChangeOptions.series}
             type="area"
             height={450}
+            zIndex="0"
           />
         </div>
       </div>
