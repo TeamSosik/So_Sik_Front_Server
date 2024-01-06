@@ -3,14 +3,13 @@ import logo from "../../images/logo.png";
 import "../../common/css/header/header.css";
 
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
-import Recipeboardlist from "../../page/Recipeboardlist.js";
+import Recipeboardlist from "../../page/recipeboardlist.js";
 import Feed from "../Feed/FeedContainer";
 import Mainpage from "../../page/MainPage";
-import Login from "../Login";
+import Login from "../../component/Signup.js";
 import FoodSearch from "../foodSearch/FoodSearch";
 import Signup from "../Signup";
 import Mypage from "../../component/Mypage.js";
-// import Mypage from "../../page/mypage";
 import axios from 'axios';
 
 
