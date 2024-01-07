@@ -99,7 +99,7 @@ function Signup() {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
-                url: "http://localhost:9000/members/sign-up", // 서버
+                url: "http://localhost:5056/members/sign-up", // 서버
                 data: formData
             })
             .then(function(response) {
