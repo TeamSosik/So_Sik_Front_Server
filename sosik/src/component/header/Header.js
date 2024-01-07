@@ -6,7 +6,7 @@ import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import Recipeboardlist from "../../page/recipeboardlist.js";
 import Feed from "../Feed/FeedContainer";
 import Mainpage from "../../page/MainPage";
-import Login from "../../component/Signup.js";
+import Login from "../../component/Login.js";
 import FoodSearch from "../foodSearch/FoodSearch";
 import Signup from "../Signup";
 import Mypage from "../../component/Mypage.js";
