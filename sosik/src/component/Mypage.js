@@ -1,14 +1,55 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import "../common/css/mypage.css";
-import FoodModal from "./FoodModal/FoodModal";
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import UpdateInfo from "./updatemyinfo/UpdateInfo";
 
 const MyPage = () => {
-  const profileImage =
-    "https://www.wadiz.kr/wwwwadiz/green001/sns_profile_pics/20210715190605914_35332951.jpg"; // 프로필 이미지 URL
-  const nickName = "떡뽀끼";
+  const getData = async () => {
+    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+ 
+    try {
+        await axios({
+          
+          method: "get",
+          url: 'http://localhost:9000/members/v1/detail',
+          headers: {
+            "authorization": "Bearer " + authorization,
+            "refreshToken": "Bearer " + refreshToken,
+          }
+        })
+        .then(response => {
+            console.log(response);
+            setUsers(response.data.result);
+        });
+      } catch(e) {
+    }
+  }
+
+  useEffect(() => {
+    getData();
+    
+  }, []);
+
+  const [users, setUsers] = useState({
+    memberId: "",
+    email: "",
+    name: "",
+    gender:"",
+    height: 0,
+    role:"",
+    activityLevel: "",
+    nickname: "",
+    profileImage: "",
+    birthday: "",
+    tdeeCalculation: "",
+    weightList: [""]
+  });
+
+  
   const weightChangeOptions = {
     annotations: {},
     chart: {
@@ -20,7 +61,6 @@ const MyPage = () => {
       fontFamily: "SUITE-Regular",
       height: 342,
       id: "wxJSW",
-      stacked: true,
       stackOnlyBar: true,
       toolbar: {
         show: false,
@@ -106,11 +146,12 @@ const MyPage = () => {
         left: 15,
       },
     },
+    
     legend: {
       fontSize: 14,
       offsetY: 5,
       itemMargin: {
-        horizontal: 14,
+        horizontal: 14, 
         vertical: 15,
       },
     },
@@ -118,60 +159,29 @@ const MyPage = () => {
       hover: {
         sizeOffset: 6,
       },
+      offsetX: 0,
+    
     },
     series: [
       {
         name: "현재 체중",
-        data: [
-          {
-            x: "Aug",
-            y: 31,
-          },
-          {
-            x: "Sep",
-            y: 40,
-          },
-          {
-            x: "Oct",
-            y: 28,
-          },
-          {
-            x: "Nov",
-            y: 51,
-          },
-          {
-            x: "Dec",
-            y: 42,
-          },
-        ],
+        data: users.weightList.map(entry => ({
+          x: entry.createdAt,  
+          y: entry.currentWeight,
+         
+        })),
         zIndex: 0,
       },
       {
         name: "목표 체중",
-        data: [
-          {
-            x: "Aug",
-            y: 20,
-          },
-          {
-            x: "Sep",
-            y: 32,
-          },
-          {
-            x: "Oct",
-            y: 38,
-          },
-          {
-            x: "Nov",
-            y: 22,
-          },
-          {
-            x: "Dec",
-            y: 56,
-          },
-        ],
+        data: users.weightList.map(entry => ({
+          x: entry.createdAt,
+          y: entry.targetWeight,
+          
+        })),
         zIndex: 1,
       },
+      
     ],
     stroke: {
       width: 4,
@@ -227,20 +237,23 @@ const MyPage = () => {
     theme: {
       palette: "palette4",
     },
-  };
+};
+  
+  const lastWeightEntry = users.weightList[users.weightList.length - 1];
+  const lastCurrentWeight = lastWeightEntry.currentWeight;
+  const lastGoalWeight = lastWeightEntry.targetWeight;
 
   return (
     <div className="my-page">
       <div className="left-section">
         <div className="profile-info">
-          <img src={profileImage} alt="프로필 이미지" />
-          <h2>{nickName} 님</h2>
+          <img src={`http://localhost:9000/members/images/${users.memberId}`}  alt=""/>
+          <h2>{users.nickname} 님</h2>
         </div>
         <button>
-        <Link to="/updateinfo">정보 수정</Link>
-      </button>
+          <Link to="/updateinfo">정보 수정</Link>
+        </button>
       </div>
-  
 
       <div className="right-section">
         <div className="kcal-weight">
@@ -248,31 +261,30 @@ const MyPage = () => {
             <div className="kcal-type">
               <div className="tdee-kcal">
                 <span className="kcal-type-name">TDEE 칼로리</span>
-                <span className="kcal-name">1500 kcal</span>
+                <span className="kcal-name">{users.tdeeCalculation}kcal</span>
               </div>
               <hr />
               <div className="activity-kcal">
                 <span className="kcal-type-name">오늘 목표 칼로리</span>
-                <span className="kcal-name">2000 kcal</span>
+                <span className="kcal-name">{0}kcal</span>
               </div>
             </div>
           </div>
           <div className="weight">
             <div className="current-weight">
               <span className="weight-name">현재 체중</span>
-              <p className="current">64kg</p>
+              <p className="current">{lastCurrentWeight}kg</p>
             </div>
             <div className="target-weight">
               <span className="weight-name">목표 체중</span>
-              <p className="target">60kg</p>
+              <p className="target">{lastGoalWeight}kg</p>
             </div>
             <div className="remaining-weight">
               <span className="weight-name">남은 체중</span>
-              <p className="remaining">4kg</p>
+              <p className="remaining">{Math.abs(lastCurrentWeight - lastGoalWeight)}kg</p>
             </div>
           </div>
         </div>
-        <FoodModal></FoodModal>
 
         <div className="my-weight-change">
           <span className="weight-change-title">나의 체중 변화</span>
