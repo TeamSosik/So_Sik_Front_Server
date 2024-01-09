@@ -236,11 +236,10 @@ const MyPage = () => {
           <img src={profileImage} alt="프로필 이미지" />
           <h2>{nickName} 님</h2>
         </div>
-        <button>
-        <Link to="/updateinfo">정보 수정</Link>
-      </button>
+        <Link to="/updateinfo">
+          <button>정보수정</button>
+        </Link>
       </div>
-  
 
       <div className="right-section">
         <div className="kcal-weight">

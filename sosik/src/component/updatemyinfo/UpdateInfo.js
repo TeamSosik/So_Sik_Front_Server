@@ -85,41 +85,29 @@ function UpdateInfo() {
       default:
         console.log("error발생");
     }
-    console.log(member.gender);
-    if (member.gender === "male") {
-      setMemberInfo((prevInfo) => {
-        const a = {
-          ...prevInfo,
-          tdeeCalculation:
-            (10 * memberInfo.currentWeight +
-              6.25 * memberInfo.height -
-              5 * calculateAge() +
-              5) *
-            AMR,
-        };
-
-        console.log(a);
-        return a;
-      });
+    const isEqual = member.gender === "male";
+    if (isEqual) {
+      return Math.floor(
+        (10 * memberInfo.currentWeight +
+          6.25 * memberInfo.height -
+          5 * calculateAge() +
+          5) *
+          AMR
+      );
     } else {
-      setMemberInfo((prevInfo) => {
-
-        return {
-          ...prevInfo,
-          tdeeCalculation:
-            (10 * memberInfo.currentWeight +
-              6.25 * memberInfo.height -
-              5 * calculateAge() -
-              161) *
-            AMR
-        }
-      });
+      return Math.floor(
+        (10 * memberInfo.currentWeight +
+          6.25 * memberInfo.height -
+          5 * calculateAge() -
+          161) *
+          AMR
+      );
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handletdeeChange();
+    memberInfo.tdeeCalculation = handletdeeChange();
     const formData = new FormData();
 
     formData.append("profileImage", memberInfo.profileImage);
@@ -138,8 +126,6 @@ function UpdateInfo() {
         window.localStorage.getItem("refreshtoken")
       );
 
-      console.log(memberInfo);
-
       const response = await axios({
         method: "patch", // 통신 방식
         headers: {
@@ -151,7 +137,7 @@ function UpdateInfo() {
         baseURL: "http://localhost:5056", // 서버
         data: formData,
       }).then(function (response) {
-        navigate("/mainpage"); //리다이렉트
+        navigate("/mypage"); //리다이렉트
       });
     } catch (error) {
       console.error("회원정보수정 실패:", error); // 오류 처리
@@ -160,16 +146,16 @@ function UpdateInfo() {
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      <strong>비활동적</strong> - 대부분의 시간을 앉아서 보내고 규칙적인 운동을
-      하지 않는 사람
+      <strong>매우 비활동적</strong> - 대부분의 시간을 앉아서 보내고 규칙적인
+      운동을 하지 않는 사람
       <br />
       <br />
-      <strong>저활동적</strong> - 대부분의 시간을 앉아서 보내지만 쇼핑, 청소와
+      <strong>비활동적</strong> - 대부분의 시간을 앉아서 보내지만 쇼핑, 청소와
       같은 가벼운 운동을 규칙적으로 하는 사람
       <br />
       <br />
-      <strong>보통 활동적</strong> - 대부분의 시간을 앉아서 보내지만 운동을
-      시간을 정해 보통의 신체적활동을 하는 사람
+      <strong>보통</strong> - 대부분의 시간을 앉아서 보내지만 운동을 시간을 정해
+      보통의 신체적활동을 하는 사람
       <br />
       <br />
       <strong>활동적</strong> - 일상적으로 꾸준한 운동이나 활동을 통해 신체적
@@ -187,7 +173,7 @@ function UpdateInfo() {
     <Container>
       <Row>
         <Col></Col>
-        <Col xs={6}>
+        <Col xs={7}>
           <Form className="updateInfo" onSubmit={handleSubmit}>
             <InputGroup className="mb-3">
               <Form.Label column sm="3">
@@ -239,7 +225,7 @@ function UpdateInfo() {
 
               <Form.Check
                 inline
-                label="비활동적"
+                label="매우 비활동적"
                 name="activityLevel"
                 type={"radio"}
                 id={`inline-${"radio"}-1`}
@@ -248,7 +234,7 @@ function UpdateInfo() {
               />
               <Form.Check
                 inline
-                label="저활동적"
+                label="비활동적"
                 name="activityLevel"
                 type={"radio"}
                 id={`inline-${"radio"}-2`}
@@ -257,7 +243,7 @@ function UpdateInfo() {
               />
               <Form.Check
                 inline
-                label="보통 활동적"
+                label="보통"
                 name="activityLevel"
                 type={"radio"}
                 id={`inline-${"radio"}-3`}
