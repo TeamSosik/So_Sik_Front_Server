@@ -31,7 +31,7 @@ function Login() {
   
   
       try {
-        const response = await axios.post('http://localhost:9000/members/login', credentials)
+        const response = await axios.post('http://localhost:9000/members/v1/sign-in', credentials)
         .then(result => {
             const accesstoken = result.data.result.accessToken
             const refreshtoken = result.data.result.refreshToken
