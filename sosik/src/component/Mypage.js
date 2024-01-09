@@ -2,6 +2,8 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import "../common/css/mypage.css";
 import FoodModal from "./FoodModal/FoodModal";
+import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
+import UpdateInfo from "./updatemyinfo/UpdateInfo";
 
 const MyPage = () => {
   const profileImage =
@@ -234,7 +236,11 @@ const MyPage = () => {
           <img src={profileImage} alt="프로필 이미지" />
           <h2>{nickName} 님</h2>
         </div>
+        <button>
+        <Link to="/updateinfo">정보 수정</Link>
+      </button>
       </div>
+  
 
       <div className="right-section">
         <div className="kcal-weight">
