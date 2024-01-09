@@ -449,6 +449,7 @@ function Signup() {
                   handleInputChange={handleInputChange}
                 />
               </Form.Group>
+   
             </Row>
 
             <InputGroup className="mb-3">
