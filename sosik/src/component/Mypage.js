@@ -3,6 +3,7 @@ import ReactApexChart from "react-apexcharts";
 import "../common/css/mypage.css";
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import UpdateInfo from "./updatemyinfo/UpdateInfo";
 
 const MyPage = () => {
