@@ -250,9 +250,10 @@ const MyPage = () => {
           <img src={`http://localhost:9000/members/images/${users.memberId}`}  alt=""/>
           <h2>{users.nickname} 님</h2>
         </div>
-        <button>
-          <Link to="/updateinfo">정보 수정</Link>
-        </button>
+        <Link to="/updateinfo">
+          <button>정보수정</button>
+        </Link>
+
       </div>
 
       <div className="right-section">
