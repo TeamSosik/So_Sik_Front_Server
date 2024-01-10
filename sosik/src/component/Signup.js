@@ -95,6 +95,12 @@ function Signup() {
   const navigate = useNavigate();
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [passwordLength, setPasswordLength] = useState(null);
+  const [emailCheck, setEmailCheck] = useState("");
+  const [isDuplicate, setIsDuplicate] = useState(false);
+
+  const handleEmailChange = (e) => {
+    setEmailCheck(e.target.value);
+  };
   const handlePasswordChange = (e) => {
     const { value } = e.target;
     setMemberInfo((prevInfo) => ({ ...prevInfo, password: value }));
@@ -223,10 +229,14 @@ function Signup() {
         },
       }));
     } else if (name === "password") {
+      setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
       handlePasswordChange(e);
       checkPasswordLength(e.target.value);
     } else if (name === "passwordCheck") {
       handlePasswordCheckChange(e);
+    } else if (name === "email") {
+      setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+      handleEmailChange(e);
     } else {
       setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
     }
@@ -248,7 +258,23 @@ function Signup() {
       profileImage: file,
     }));
   };
+  const handleCheckDuplicated = async (e) => {
+    e.preventDefault();
 
+    try {
+      const response = await axios.post(
+        "http://localhost:5056/members/v1/checkEmail",
+        {
+          email: emailCheck,
+        }
+      );
+      if (response.data.isDuplicate) {
+        setIsDuplicate(true);
+      } else {
+        setIsDuplicate(false);
+      }
+    } catch (error) {}
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -334,11 +360,19 @@ function Signup() {
                 name="email"
                 onChange={handleInputChange}
               />
-              <Button variant="outline-secondary" id="button-addon2">
+              <Button
+                variant="outline-secondary"
+                id="button-addon2"
+                onClick={handleCheckDuplicated}
+              >
                 중복확인
               </Button>
             </InputGroup>
-
+            <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>
+              {isDuplicate && (
+                <p style={{ color: "red" }}>아이디가 이미 존재합니다.</p>
+              )}
+            </InputGroup>
             <InputGroup className="mb-3">
               <Form.Label column sm="3">
                 비밀번호
@@ -449,7 +483,6 @@ function Signup() {
                   handleInputChange={handleInputChange}
                 />
               </Form.Group>
-   
             </Row>
 
             <InputGroup className="mb-3">
