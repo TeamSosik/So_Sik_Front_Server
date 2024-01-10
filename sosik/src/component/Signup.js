@@ -148,7 +148,20 @@ function Signup() {
   const calculateAge = () => {
     // 생년월일 문자열을 Date 객체로 변환
     const birthDateObj = new Date(memberInfo.birthday);
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+    
+        formData.append('profileImage', memberInfo.profileImage);
+    
+            const json = JSON.stringify(memberInfo);
+            const blob = new Blob([json], {
+                type: 'application/json'
+            });
+        formData.append('member', blob);
+      }
+ 
+      
     // 현재 날짜를 가져오기
     const currentDate = new Date();
 
@@ -165,7 +178,8 @@ function Signup() {
     const finalAge = isBirthdayPassed ? age : age - 1;
     console.log(finalAge);
     return finalAge;
-  };
+    }
+  
 
   const setAMR = () => {
     let AMR = 0;
