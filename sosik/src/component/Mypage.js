@@ -266,7 +266,7 @@ const MyPage = () => {
             </div>
           </div>
         </div>
-        <FoodModal></FoodModal>
+        <FoodModal modalBtn={"모달열기"}></FoodModal>
 
         <div className="my-weight-change">
           <span className="weight-change-title">나의 체중 변화</span>
