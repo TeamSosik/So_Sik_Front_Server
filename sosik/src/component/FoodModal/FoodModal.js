@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import "./FoodModal.css";
-// import FoodResult from "./foodResult";
+
 import { Button, Form, InputGroup, Pagination } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -70,18 +70,22 @@ const FoodModal = () => {
   //   );
   // });
 
-  return (
-    <>
-      <div className={"btn-wrapper"}>
-        <button className={"modal-open-btn"} onClick={() => setModalOpen(true)}>
-          모달 열기
-        </button>
-      </div>
-      {modalOpen && (
-        <div
-          className={"modal-container"}
-          ref={modalBackground}
-          onClick={(e) => {
+    // const foodSearchResult =  foodResult.map((a,b) => {
+    //     return <FoodResult key={b} foodname={a.foodname} kcal={a.kcal} carbo={a.carbo} fat={a.fat} protein={a.protein}></FoodResult>
+         
+    //    })
+  
+    return (
+      <>
+        <div className={'btn-wrapper'}>
+          <button className={'modal-open-btn'} onClick={() => setModalOpen(true)}>
+            모달 열기
+          </button>
+        </div>
+        {
+          modalOpen &&
+          <div className={'modal-container'} ref={modalBackground} onClick={e => {
+
             if (e.target === modalBackground.current) {
               setModalOpen(false);
             }

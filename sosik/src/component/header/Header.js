@@ -1,7 +1,6 @@
 import React, { useEffect, useState, createContext } from "react";
 import logo from "../../images/logo.png";
 import "../../common/css/header/header.css";
-
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import Recipeboardlist from "../../page/Recipeboardlist.js";
 import Feed from "../Feed/FeedContainer";
@@ -10,7 +9,9 @@ import Login from "../../component/Login.js";
 import FoodSearch from "../foodSearch/FoodSearch";
 import Signup from "../Signup";
 import Mypage from "../../component/Mypage.js";
-import axios from "axios";
+import axios from 'axios';
+import RecdKcal from "../Record/RecdKcal.js";
+import RecdAnly from "../Record/RecdAnly.js";
 import UpdateInfo from "../updatemyinfo/UpdateInfo.js";
 
 export const HeaderContext = createContext();
@@ -22,6 +23,7 @@ const Header = () => {
     const access = window.localStorage.getItem("accesstoken");
     if (access === null) {
       setlogout(true);
+
     } else {
       setlogout(false);
     }
@@ -44,6 +46,7 @@ const Header = () => {
       console.log(member.email);
 
       await axios({
+
         method: "post",
         url: "/members/v1/sign-out",
         baseURL: "http://localhost:5056",
@@ -69,11 +72,13 @@ const Header = () => {
     }
   };
 
+
   let loginview = "";
 
   if (logout === false) {
     loginview = (
       <>
+
         <li>
           <Link to="/mypage" style={{ marginRight: "30px" }}>
             마이페이지
@@ -93,6 +98,7 @@ const Header = () => {
   }
 
   return (
+
     <BrowserRouter>
       <header id="header" className="nav-down">
         {/* <a className="logo" href="/"> */}
@@ -102,6 +108,7 @@ const Header = () => {
         {/* </a> */}
         <nav id="gnb">
           <ul className="depth-1">
+
             <li>
               <Link to="/foodsearch">칼로리</Link>
             </li>
@@ -110,6 +117,7 @@ const Header = () => {
                   <li><a href="">레시피</a>
                   </li></ul>
               </li> */}
+
             <li>
               <Link to="/feed">SNS</Link>
             </li>
@@ -130,6 +138,7 @@ const Header = () => {
           </ul>
         </nav>
         <div className="utWrap">
+
           <ul className="logWrap">{loginview}</ul>
           <div className="searchWrap">
             <input type="text" placeholder="어떤 요리가 궁금하신가요?" />
@@ -157,6 +166,7 @@ const Header = () => {
               <Link to="/mypage">마이페이지</Link>
         </div> */}
       </header>
+
       <HeaderContext.Provider value={{ setlogout }}>
         <Routes>
           <Route path="/recipeboardlist" element={<Recipeboardlist />} />
@@ -166,8 +176,11 @@ const Header = () => {
           <Route path="/foodsearch" element={<FoodSearch />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/mypage" element={<Mypage />} />
-          <Route path="/updateinfo" element={<UpdateInfo />} />
+          <Route path="/recdkcal" element={<RecdKcal />} />
+          <Route path="/recdanly" element={<RecdAnly />} />
         </Routes>
+        {/* <RecdButton /> */}
+
       </HeaderContext.Provider>
     </BrowserRouter>
   );
