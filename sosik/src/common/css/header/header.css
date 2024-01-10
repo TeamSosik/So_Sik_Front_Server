@@ -191,6 +191,10 @@ ul,
 ol,
 li {
   list-style: none;
+
+}
+ul li a{
+  text-decoration: none;
 }
 
 input {
