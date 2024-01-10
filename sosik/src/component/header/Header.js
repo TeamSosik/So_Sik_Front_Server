@@ -13,6 +13,7 @@ import axios from 'axios';
 import RecdKcal from "../Record/RecdKcal.js";
 import RecdAnly from "../Record/RecdAnly.js";
 import UpdateInfo from "../updatemyinfo/UpdateInfo.js";
+import Redirection from "../Redirection.js";
 
 export const HeaderContext = createContext();
 
@@ -178,6 +179,9 @@ const Header = () => {
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/recdkcal" element={<RecdKcal />} />
           <Route path="/recdanly" element={<RecdAnly />} />
+          <Route path="/updateinfo" element={<UpdateInfo />} />
+          <Route path="/redirection" element={<Redirection />} />
+
         </Routes>
         {/* <RecdButton /> */}
 
