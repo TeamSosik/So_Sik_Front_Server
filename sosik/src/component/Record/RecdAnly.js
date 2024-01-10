@@ -1,7 +1,8 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { ResponsivePie } from '@nivo/pie';
-import "../common/css/recdAnly.css";
+import RecdButton from "../../component/Record/RecdButton";
+import "../../common/css/record/recdAnly.css";
 
 const RecdAnly_section1 = () => {
     const barChartOptions = {
@@ -288,7 +289,7 @@ const RecdAnly_section2 = () => {
         <div className="recd-anly-section2">
             <div className="recd-anly-name">일일 영양소 분석</div>
             <div className="recd-anly-content">
-                <div id="pie-chart" style={{width: '700px', height: '400px', margin: '0 auto' }}>
+                <div id="pie-chart" style={{ width: '700px', height: '400px', margin: '0 auto' }}>
                     <ResponsivePie
                         data={pieChartData}
                         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
@@ -376,6 +377,7 @@ const RecdAnly_section2 = () => {
 const RecdAnly = () => {
     return (
         <div>
+            <RecdButton />
             <RecdAnly_section1 />
             <RecdAnly_section2 />
         </div>

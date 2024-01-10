@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import './calenderview.css';
@@ -9,10 +10,24 @@ function Calendarview() {
   const mark3 = ["2024-01-02", "2024-01-04", "2024-01-11", "2024-01-13"];
 
   const [clickedDate, setClickedDate] = useState(null);
+  const [dayTargetKcal, setDayTargetKcal] = useState(null);
 
-  const handleDayClick = (value, event) => {
+  const handleDayClick = async (value, event) => {
     const formattedDate = moment(value).format("YYYY-MM-DD");
     setClickedDate(clickedDate === formattedDate ? null : formattedDate);
+
+    try {
+      const response = await axios({
+        method: "get",
+        url: "http://localhost:5056/target-calorie/getcalorie",
+        data: formattedDate
+      })
+      setDayTargetKcal(response.data.dayTargetKcal);
+    } catch (error) {
+      console.error("기록된 데이터가 없습니다.", error);
+      setDayTargetKcal(null);
+    }
+
     event.preventDefault();
   };
 

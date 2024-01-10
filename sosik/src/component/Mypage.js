@@ -1,7 +1,9 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import "../common/css/mypage.css";
-import FoodModal from "./FoodModal/FoodModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from 'react-router-dom';
 
 const MyPage = () => {
   const profileImage =
@@ -227,12 +229,21 @@ const MyPage = () => {
     },
   };
 
+  const navigate = useNavigate();
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
   return (
     <div className="my-page">
       <div className="left-section">
         <div className="profile-info">
           <img src={profileImage} alt="프로필 이미지" />
           <h2>{nickName} 님</h2>
+        </div>
+        <div className="update-btn">
+          <button className="my-anly" type="submit" onClick={() => handleNavigate('/recdanly')}>나의 분석<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button className="my-kcal" type="submit" onClick={() => handleNavigate('/recdkcal')}>나의 칼로리<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button className="myinfo-update" type="submit" onClick={() => handleNavigate('/recdanly')}>내 정보 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
         </div>
       </div>
 
@@ -266,7 +277,6 @@ const MyPage = () => {
             </div>
           </div>
         </div>
-        <FoodModal></FoodModal>
 
         <div className="my-weight-change">
           <span className="weight-change-title">나의 체중 변화</span>

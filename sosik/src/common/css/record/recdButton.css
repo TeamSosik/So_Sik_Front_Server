@@ -1,0 +1,23 @@
+
+.selectcategory {
+  background-color: white;
+  color: black;
+  font-weight: bolder;
+}
+
+.recdbutton {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  padding-top: 200px;
+}
+
+.recdbutton .selectcategory:first-of-type {
+  border-top-left-radius: 25px !important;
+  border-bottom-left-radius: 25px !important;
+}
+
+.recdbutton .selectcategory:last-of-type {
+  border-top-right-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+}
