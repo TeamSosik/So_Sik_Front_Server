@@ -89,18 +89,19 @@ function Signup() {
       return false;
     }
 
+    if (isDuplicate !== false) {
+      alert("아이디 중복확인을 해주세요!");
+      return false;
+    }
+
     return true;
   };
 
   const navigate = useNavigate();
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [passwordLength, setPasswordLength] = useState(null);
-  const [emailCheck, setEmailCheck] = useState("");
-  const [isDuplicate, setIsDuplicate] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(null);
 
-  const handleEmailChange = (e) => {
-    setEmailCheck(e.target.value);
-  };
   const handlePasswordChange = (e) => {
     const { value } = e.target;
     setMemberInfo((prevInfo) => ({ ...prevInfo, password: value }));
@@ -148,20 +149,7 @@ function Signup() {
   const calculateAge = () => {
     // 생년월일 문자열을 Date 객체로 변환
     const birthDateObj = new Date(memberInfo.birthday);
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-    
-        formData.append('profileImage', memberInfo.profileImage);
-    
-            const json = JSON.stringify(memberInfo);
-            const blob = new Blob([json], {
-                type: 'application/json'
-            });
-        formData.append('member', blob);
-      }
- 
-      
+
     // 현재 날짜를 가져오기
     const currentDate = new Date();
 
@@ -178,8 +166,7 @@ function Signup() {
     const finalAge = isBirthdayPassed ? age : age - 1;
     console.log(finalAge);
     return finalAge;
-    }
-  
+  };
 
   const setAMR = () => {
     let AMR = 0;
@@ -248,9 +235,6 @@ function Signup() {
       checkPasswordLength(e.target.value);
     } else if (name === "passwordCheck") {
       handlePasswordCheckChange(e);
-    } else if (name === "email") {
-      setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
-      handleEmailChange(e);
     } else {
       setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
     }
@@ -277,12 +261,10 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5056/members/v1/checkEmail",
-        {
-          email: emailCheck,
-        }
+        "http://localhost:5056/members/v1/checkEmail/" + memberInfo.email
       );
-      if (response.data.isDuplicate) {
+      console.log(response);
+      if (response.data) {
         setIsDuplicate(true);
       } else {
         setIsDuplicate(false);
@@ -383,8 +365,12 @@ function Signup() {
               </Button>
             </InputGroup>
             <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>
-              {isDuplicate && (
-                <p style={{ color: "red" }}>아이디가 이미 존재합니다.</p>
+              {isDuplicate !== null && (
+                <p style={{ color: isDuplicate ? "red" : "blue" }}>
+                  {isDuplicate
+                    ? "이 아이디는 사용중인 아이디입니다."
+                    : "이 아이디는 사용가능한 아이디 입니다."}
+                </p>
               )}
             </InputGroup>
             <InputGroup className="mb-3">
