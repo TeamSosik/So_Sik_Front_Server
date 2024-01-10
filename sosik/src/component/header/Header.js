@@ -157,9 +157,9 @@ const Header = () => {
             class="ham"
             onclick="$(this).toggleClass('cross')"
           >
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
           </button>
         </div>
         {/* <div class="scrollindicator" style="visibility: visible;">

@@ -123,7 +123,7 @@ const postCommemtArr =  postComment.map((a,b) => {
             {postCommemtArr}
             
             <a className="more">댓글 더보기</a>
-            <div class="input-group mb-3">
+            <div className="input-group mb-3">
               
             </div>
           </div>
