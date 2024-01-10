@@ -5,6 +5,8 @@
     font-style: normal;
 }
 
+/* ************* recd-kcal-section1 시작 *********** */
+
 .recd-kcal-section1 {
     display: flex;
     justify-content: center;
@@ -15,6 +17,53 @@
     margin: 0 auto;
     padding-top: 200px;
 }
+
+/* ************* recd-kcal-section1 끝 *********** */
+
+
+/* ************* recd-kcal-section2 시작 *********** */
+
+.additionMeal {
+    display: flex;
+    justify-content: center;
+    /* flex-direction: column; */
+    
+    width: 1200px;
+    height: 90px;
+    margin: 40px auto 0 auto;
+    padding: 20px;
+    border-radius: 37px;
+    background: #FFF;
+    text-align: center;
+
+}
+
+.additionMeal .additionMeal-name {
+    font-family: 'SUITE-Regular';
+    font-size: 30px;
+    font-weight: 900;
+    
+    /* float: left; */
+    width: 15%;
+}
+
+.additionMeal .additionMeal-button-content {
+    font-family: 'SUITE-Regular';
+    font-size: 40px; /* 폰트를 어떻게 하면 안 바뀌는 지 논의해보기 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* float: left; */
+    width: 5%;
+}
+
+.additionMeal .additionMeal-button-content .additionMeal-button {
+    
+    cursor: pointer;
+}
+
+
 
 .recd-kcal-section2 {
     display: flex;
@@ -37,28 +86,92 @@
 
 .recd-kcal-section2 .meal-content {
     display: flex;
-    align-items: center;
     /* 요소를 수직 가운데 정렬 */
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     /* 요소를 수평 가운데 정렬 */
+
     text-align: center;
 }
 
-.recd-kcal-section2 .meal-content .meal{
-    display: flex;
-    align-items: center;
-    /* 요소를 수직 가운데 정렬 */
-    justify-content: center;
-    /* 요소를 수평 가운데 정렬 */
+.recd-kcal-section2 .meal-content .meal {
+
     width: 1200px;
     height: 90px;
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 40px;
     padding: 20px;
     border-radius: 37px;
     background: #FFF;
 }
+
+.recd-kcal-section2 .meal-content .meal .meal-name {
+    /* display: flex; */
+    /* align-items: center; */
+    /* 요소를 수직 가운데 정렬 */
+    /* justify-content: center; */
+    /* 요소를 수평 가운데 정렬 */
+    
+    float: left;
+    width: 30%;
+    /* height: 90px; */
+    
+    /* text-align: center; */
+    /* margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 37px;
+    background: #FFF; */
+}
+
+.recd-kcal-section2 .meal-content .meal .nutrient{
+    /* display: flex; */
+    /* align-items: center; */
+    /* 요소를 수직 가운데 정렬 */
+    /* justify-content: center; */
+    /* 요소를 수평 가운데 정렬 */
+
+    float: right;
+    width: 70%;
+    /* height: 90px; */
+    /* text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 37px;
+    background: #FFF; */
+}
+
+.recd-kcal-section2 .meal-content .meal .nutrient .nutrient-detail, 
+.recd-kcal-section2 .meal-content .meal .nutrient .nutrient-gram {
+    /* display: flex; */
+    /* align-items: center; */
+    /* 요소를 수직 가운데 정렬 */
+    /* justify-content: center; */
+    /* 요소를 수평 가운데 정렬 */
+
+    display: flex;
+    width: 100%;
+    /* height: 90px; */
+    /* text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 37px;
+    background: #FFF; */
+}
+
+.nutrient-name, .nutrient-data {
+    width: 100%;
+}
+
+
+
+/* ************* recd-kcal-section2 끝 *********** */
+
+
+/* ************* recd-kcal-section3 시작 *********** */
 
 .recd-kcal-section3 {
     display: flex;
@@ -108,3 +221,5 @@
     font-weight: 900;
     margin-bottom: 0;
 }
+
+/* ************* recd-kcal-section3 끝 *********** */

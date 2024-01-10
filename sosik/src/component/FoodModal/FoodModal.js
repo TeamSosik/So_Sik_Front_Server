@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import "./FoodModal.css";
 
+// import FoodResult from "./FoodResult";
 import { Button, Form, InputGroup, Pagination } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
-const FoodModal = () => {
+
+const FoodModal = ({modalBtn}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const modalBackground = useRef();
 
@@ -79,7 +81,7 @@ const FoodModal = () => {
       <>
         <div className={'btn-wrapper'}>
           <button className={'modal-open-btn'} onClick={() => setModalOpen(true)}>
-            모달 열기
+            {modalBtn}
           </button>
         </div>
         {
@@ -90,7 +92,7 @@ const FoodModal = () => {
               setModalOpen(false);
             }
           }}
-        >
+          >
           <div className={"modal-content"}>
             <p>음식 검색</p>
             <span style={{ fontSize: "14px" }}>
@@ -192,7 +194,7 @@ const FoodModal = () => {
             </table>
           </div>
         </div>
-      )}
+      }
     </>
   );
 };
