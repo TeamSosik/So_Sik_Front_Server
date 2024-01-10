@@ -11,6 +11,10 @@ import "../common/css/login.css"
 import { HeaderContext } from './header/Header';
 
 function Login() {
+  const REST_API_KEY = "83838cea18a7862894ce003e923d2fd7"
+  const REDIRECT_URI ="http://localhost:3000/redirection"
+    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
     const [credentials, setCredentials] = useState({
       email: '',
       password: ''
@@ -23,6 +27,12 @@ function Login() {
       setCredentials({ ...credentials, [name]: value });
     };
   
+    const loginHandler = () => {
+      window.location.href = link
+    };
+
+    
+    
     const navigate = useNavigate();
     const {setlogout} = useContext(HeaderContext);// heaer context
 
@@ -31,7 +41,7 @@ function Login() {
   
   
       try {
-        const response = await axios.post('http://localhost:9000/members/login', credentials)
+        const response = await axios.post('http://localhost:5056/members/v1/sign-in', credentials)
         .then(result => {
             const accesstoken = result.data.result.accessToken
             const refreshtoken = result.data.result.refreshToken
@@ -47,9 +57,11 @@ function Login() {
         
       } catch (error) {
         console.error('로그인 실패:', error);
-        setError('아이디 또는 비밀번호가 일치하지 않습니다.');
+        setError('아이디 또는 비밀번호가 일치하지 않습니다.')
       }
     };
+
+    
   
     return (
       <Container>
@@ -96,8 +108,8 @@ function Login() {
   
               <hr></hr>
               <div className="logindiv1">
-                <a href="">
-                  <Image src="img/kakao_login.png" className="snsloginbutton" />
+                <a>
+                  <Image src="img/kakao_login.png" className="snsloginbutton" onClick={loginHandler} />
                 </a>
                 <br />
                 <a href="">
