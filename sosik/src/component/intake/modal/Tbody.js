@@ -130,7 +130,7 @@ const Tbody = ({data, handleModalTogle}) => {
           />
         </td>
         <td style={{ width: "10%", textAlign: "center" }}>
-          <FontAwesomeIcon icon={faPlus} onClick={handleIntakeRegistrationBtnClick} />
+          <FontAwesomeIcon className="registrationBtn" icon={faPlus} onClick={handleIntakeRegistrationBtnClick} />
         </td>
       </tbody>
   );

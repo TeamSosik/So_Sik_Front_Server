@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Tbody from "./Tbody";
+import PageButton from "./PageButton";
 
 const FoodModal = ({modalBtn}) => {
 
@@ -42,11 +43,19 @@ const FoodModal = ({modalBtn}) => {
   ];
 
   const modalBackground = useRef();
+
+  const defaultPageData = {
+    page: 1,// 현재 페이지 번호
+    size: 10,// 한 페이지당 게시글 수
+    showPages: 5,// 화면에 보일 페이지 개수
+    totalNum: 0// 전체 게시글 수
+  }
   
   // 상태
   const [modalOpen, setModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [dataList, setDataList] = useState([]);  
+  const [dataList, setDataList] = useState([]);
+  const [pageData, setPageData] = useState(() => defaultPageData);
 
   console.log("inputValue : ", inputValue);
 
@@ -70,6 +79,17 @@ const FoodModal = ({modalBtn}) => {
 
     // 데이터 뿌려주기
     setDataList(() => {return data.data.result.content});
+    // page 데이터 입력하기
+    setPageData((current) => {
+      const newPageData = {
+        ...current,
+        page: data.data.result.number + 1,
+        size: data.data.result.size,
+        totalNum: data.data.result.totalElements,
+        totalPages: data.data.result.totalPages
+      }
+      return newPageData;
+    });
 
   };
 
@@ -78,6 +98,7 @@ const FoodModal = ({modalBtn}) => {
   }
 
   console.log(dataList);
+
 
   // const foodSearchResult = foodResult.map((a, b) => {
   //   return (
@@ -98,7 +119,7 @@ const FoodModal = ({modalBtn}) => {
     //    })
 
   // view
-  let tbodys = "검색을 해주세요!";
+  let tbodys = "";
 
   if(dataList.length !== 0) {
     tbodys = dataList.map((data, index) => {
@@ -111,8 +132,8 @@ const FoodModal = ({modalBtn}) => {
 
     const params = {
       name: inputValue,
-      page: 1,
-      size: 10
+      page: pageData.page,
+      size: pageData.size
     }
 
     try {
@@ -130,6 +151,73 @@ const FoodModal = ({modalBtn}) => {
       console.log(response);
       console.log("************** 데이터 왔다 끝 ***************");
       return response;
+    } catch(e) {
+      console.log("********** 에러 발생 *************");
+      console.log(e);
+    }
+  }
+
+  // 페이지 버튼 클릭
+  const handlePageBtnClick = async (e) => {
+
+    console.log(e.target.id);
+
+    const data = await getDataByPageBtn(e);
+
+    console.log(data);
+
+    setDataList(() => data.data.result.content);
+
+    // page 데이터 입력하기
+    setPageData((current) => {
+      const newPageData = {
+        ...current,
+        page: data.data.result.number + 1,
+        size: data.data.result.size,
+        totalNum: data.data.result.totalElements,
+        totalPages: data.data.result.totalPages
+      }
+      return newPageData;
+    });
+
+
+  }
+
+  // 데이터 불러오기
+  const getDataByPageBtn = async (e) => {
+
+    const pageNum = e.target.id;
+
+    setPageData((current) => {
+      return {
+        ...current,
+        page: Number(pageNum)
+      }
+    });
+
+    const params = {
+      name: inputValue,
+      page: pageNum,
+      size: pageData.size
+    }
+
+    try {
+      // 음식 데이터 요청하기
+      const response = await axios({
+        method: "get",
+        url: "/food/v1",
+        baseURL: "http://localhost:5056/",
+        params: params,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      console.log("************** 데이터 왔다 시작 ***************");
+      console.log(response);
+      console.log("************** 데이터 왔다 끝 ***************");
+      return response;
+
     } catch(e) {
       console.log("********** 에러 발생 *************");
       console.log(e);
@@ -173,46 +261,38 @@ const FoodModal = ({modalBtn}) => {
               모달 닫기
             </button>
 
-            <table>
-              <thead>
-                <tr style={{ marginLeft: "50px" }}>
-                  <th style={{ width: "25%", textAlign: "center" }}> 음식</th>
-                  <th style={{ width: "10%", textAlign: "center" }}> 탄수화물</th>
-                  <th style={{ width: "10%", textAlign: "center" }}> 단백질</th>
-                  <th style={{ width: "10%", textAlign: "center" }}> 지방</th>
-                  <th style={{ width: "25%", textAlign: "center" }}> 칼로리</th>
-                  <th style={{ width: "10%", textAlign: "center" }}> g/ml</th>
-                </tr>
-              </thead>
+            { dataList.length !== 0 ?
+              <>
+                <table>
+                  <thead>
+                    <tr style={{ marginLeft: "50px" }}>
+                      <th style={{ width: "25%", textAlign: "center" }}> 음식</th>
+                      <th style={{ width: "10%", textAlign: "center" }}> 탄수화물</th>
+                      <th style={{ width: "10%", textAlign: "center" }}> 단백질</th>
+                      <th style={{ width: "10%", textAlign: "center" }}> 지방</th>
+                      <th style={{ width: "25%", textAlign: "center" }}> 칼로리</th>
+                      <th style={{ width: "10%", textAlign: "center" }}> g/ml</th>
+                    </tr>
+                  </thead>
 
-              {/* ********** 검색 데이터 뿌려주기 시작 ********** */}
+                  {/* ********** 검색 데이터 뿌려주기 시작 ********** */}
 
-              {tbodys}
+                  {tbodys}
 
-              {/* ********** 검색 데이터 뿌려주기 끝 ********** */}
+                  {/* ********** 검색 데이터 뿌려주기 끝 ********** */}
 
-              
-              <Pagination
-                style={{
-                  position: "absolute",
-                  bottom: "0",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                }}
-              >
-                <Pagination.First />
-                <Pagination.Prev />
-                <Pagination.Item>{1}</Pagination.Item>
-                <Pagination.Ellipsis />
-                <Pagination.Item active>{12}</Pagination.Item>
-                <Pagination.Item disabled>{13}</Pagination.Item>
-                <Pagination.Item>{14}</Pagination.Item>
-                <Pagination.Ellipsis />
-                <Pagination.Item>{20}</Pagination.Item>
-                <Pagination.Next />
-                <Pagination.Last />
-              </Pagination>
-            </table>
+                </table>
+
+                {/* 페이지 번호 시작 */}
+                <PageButton handlePageBtnClick={handlePageBtnClick} pageData={pageData} />
+                {/* 페이지 번호 끝 */}
+              </>
+              : 
+              <div>
+                데이터가 없습니다.
+              </div>
+            
+            }
           </div>
         </div>
       }
