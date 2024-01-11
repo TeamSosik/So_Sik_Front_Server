@@ -28,9 +28,54 @@ const MyPage = () => {
     } catch (e) {}
   };
 
+  const getData2 = async () => {
+
+    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+
+    let today = new Date();
+    today = today.toISOString();
+    today = today.split("T")[0];
+
+    console.log(today);
+    
+    try {
+        await axios({
+          
+          method: "get",
+          url: 'http://localhost:5056/target-calorie/v1/'+today,
+          headers: {
+            "authorization": "Bearer " + authorization,
+            "refreshToken": "Bearer " + refreshToken
+          }
+          
+        })
+        .then(response => {
+            console.log(response);
+            console.log(response.data.result.dayTargetKcal);
+            setTodaykcal(response.data.result);
+        });
+      } catch(e) {
+        console.log(e)
+    }
+  }
+
+  const start = async () => {
+
+    await getData();
+    await getData2();
+
+    
+  }
+
   useEffect(() => {
     getData();
+    getData2();
   }, []);
+
+  const [todaykcal,setTodaykcal] = useState({
+    dayTargetKcal: ""
+  })
 
   const [users, setUsers] = useState({
     memberId: "",
@@ -46,6 +91,7 @@ const MyPage = () => {
     tdeeCalculation: "",
     weightList: [""],
   });
+
 
   const weightChangeOptions = {
     annotations: {},
@@ -157,13 +203,15 @@ const MyPage = () => {
         sizeOffset: 6,
       },
       offsetX: 0,
+
     },
     series: [
       {
         name: "현재 체중",
-        data: users.weightList.map((entry) => ({
+        data: users.weightList.map(entry => ({
           x: entry.createdAt,
           y: entry.currentWeight,
+
         })),
         zIndex: 0,
       },
@@ -247,65 +295,21 @@ const MyPage = () => {
     setShowModal(true);
   };
 
+
   return (
     <div className="my-page">
       <div className="left-section">
         <div className="profile-info">
-          <img
-            src={`http://localhost:9000/members/images/${users.memberId}`}
-            alt=""
-          />
+          <img src={`http://localhost:5056/members/v1/images/${users.memberId}`} alt="" />
           <h2>{users.nickname} 님</h2>
         </div>
         <div className="update-btn">
-          <button
-            className="my-kcal"
-            type="submit"
-            onClick={() => handleNavigate("/recdkcal")}
-          >
-            나의 칼로리
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              size="2xs"
-              style={{ color: "#000000", marginLeft: 30 }}
-            />
+          <button className="my-kcal" type="submit" onClick={() => handleNavigate('/recdkcal')}>나의 칼로리<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button className="my-anly" type="submit" onClick={() => handleNavigate('/recdanly')}>나의 분석<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button className="myweight-update" type="submit" onClick={handleShowModal}>
+            나의 체중 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} />
           </button>
-          <button
-            className="my-anly"
-            type="submit"
-            onClick={() => handleNavigate("/recdanly")}
-          >
-            나의 분석
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              size="2xs"
-              style={{ color: "#000000", marginLeft: 30 }}
-            />
-          </button>
-          <button
-            className="myweight-update"
-            type="submit"
-            onClick={handleShowModal}
-          >
-            나의 체중 수정
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              size="2xs"
-              style={{ color: "#000000", marginLeft: 30 }}
-            />
-          </button>
-          <button
-            className="myinfo-update"
-            type="submit"
-            onClick={() => handleNavigate("/updateinfo")}
-          >
-            내 정보 수정
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              size="2xs"
-              style={{ color: "#000000", marginLeft: 30 }}
-            />
-          </button>
+          <button className="myinfo-update" type="submit" onClick={() => handleNavigate('/updateinfo')}>내 정보 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
         </div>
       </div>
 
@@ -320,7 +324,7 @@ const MyPage = () => {
               <hr />
               <div className="activity-kcal">
                 <span className="kcal-type-name">오늘 목표 칼로리</span>
-                <span className="kcal-name">{0}kcal</span>
+                <span className="kcal-name">{todaykcal.dayTargetKcal}kcal</span>
               </div>
             </div>
           </div>
@@ -336,7 +340,7 @@ const MyPage = () => {
             <div className="remaining-weight">
               <span className="weight-name">남은 체중</span>
               <p className="remaining">
-                {Math.abs(lastCurrentWeight - lastGoalWeight)}kg
+                {Math.abs(lastCurrentWeight - lastGoalWeight) === 0 ? "목표 달성!" : `${Math.abs(lastCurrentWeight - lastGoalWeight)}kg`}
               </p>
             </div>
           </div>
@@ -353,9 +357,7 @@ const MyPage = () => {
           />
         </div>
       </div>
-      {showModal && (
-        <WeightModal handleCloseModal={() => setShowModal(false)} />
-      )}
+      {showModal && <WeightModal handleCloseModal={() => setShowModal(false)} />}
     </div>
   );
 };
