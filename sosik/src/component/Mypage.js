@@ -266,9 +266,6 @@ const MyPage = () => {
             나의 체중 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} />
           </button>
           <button className="myinfo-update" type="submit" onClick={() => handleNavigate('/updateinfo')}>내 정보 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
-          <Link to="/updateinfo">
-            <button>정보수정</button>
-          </Link>
         </div>
       </div>
 
