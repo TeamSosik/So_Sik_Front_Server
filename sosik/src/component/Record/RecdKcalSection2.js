@@ -1,9 +1,9 @@
 import { faAngleLeft, faAngleRight, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import FoodModal from '../FoodModal/FoodModal';
+import FoodModal from '../Modal/FoodModal';
 
-const RecdKcalSection2 = ({mealList: mealDataList}) => {
+const RecdKcalSection2 = ({ mealList: mealDataList }) => {
 
   // 필드
   const nutrientDetails = ["탄수화물", "단백질", "지방", "kcal"];
@@ -40,15 +40,15 @@ const RecdKcalSection2 = ({mealList: mealDataList}) => {
 
   const index = mealTitleList.indexOf(mealViewName);
   const realMealTitleName = realMealTitleList[mealTitleList.indexOf(mealViewName)];
-  
+
 
   leftBtnMealTitle = mealTitleList[index - 1];
   rightBtnMealTitle = mealTitleList[index + 1];
 
-  if(index === 0) {
+  if (index === 0) {
     leftBtnMealTitle = mealTitleList[mealTitleList.length - 1];
   }
-  if(index === 3) {
+  if (index === 3) {
     rightBtnMealTitle = mealTitleList[0];
   }
 
@@ -63,7 +63,7 @@ const RecdKcalSection2 = ({mealList: mealDataList}) => {
       <FontAwesomeIcon
         icon={faAngleLeft}
         size="2xs"
-        style={{ color: "#000000", marginRight: 30 }}
+        style={{ color: "#000000", marginRight: 30, cursor: "pointer" }}
         onClick={() => {
           handleMealTitleChangeBtnClick(leftBtnMealTitle);
         }}
@@ -72,7 +72,7 @@ const RecdKcalSection2 = ({mealList: mealDataList}) => {
       <FontAwesomeIcon
         icon={faAngleRight}
         size="2xs"
-        style={{ color: "#000000", marginLeft: 30 }}
+        style={{ color: "#000000", marginLeft: 30, cursor: "pointer" }}
         onClick={() => {
           handleMealTitleChangeBtnClick(rightBtnMealTitle);
         }}
@@ -110,28 +110,29 @@ const RecdKcalSection2 = ({mealList: mealDataList}) => {
       </div>
 
       // {/* **** meal box 끝 **** */}
-    ); 
+    );
   });
 
   const modalBtn = (<FontAwesomeIcon
     className="additionMeal-button"
     icon={faCirclePlus}
-    style={{ color: "#59bd82"}}
+    size="xs"
+    style={{ color: "#59bd82" }}
   />);
 
   const additionMealView = (
 
     <div className="additionMeal">
 
-        <div className="additionMeal-name">
-          <div>식사 추가하기</div>
-        </div>
+      <div className="additionMeal-name">
+        <div>식사 추가하기</div>
+      </div>
 
-        <div className="additionMeal-button-content">
+      <div className="additionMeal-button-content">
 
-          <FoodModal modalBtn={modalBtn} />
+        <FoodModal modalBtn={modalBtn} />
 
-        </div>
+      </div>
 
     </div>
   )
@@ -150,8 +151,8 @@ const RecdKcalSection2 = ({mealList: mealDataList}) => {
       {/* ****************** meal-content box 시작 *************** */}
 
       <div className="meal-content">
-          {mealListView}
-          {additionMealView}    
+        {mealListView}
+        {additionMealView}
       </div>
 
       {/* ****************** meal-content box 끝 *************** */}
