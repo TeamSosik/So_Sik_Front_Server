@@ -1,7 +1,7 @@
 import React from "react";
-import Recipebutton from "../component/recipeboard/recipelist/Recipebutton";
-import Recipecard from "../component/recipeboard/recipelist/Recipecard";
-import Recipesearch from "../component/recipeboard/recipelist/Recipesearch";
+import Recipebutton from "../component/community/recipeboard/recipelist/Recipebutton";
+import Recipecard from "../component/community/recipeboard/recipelist/Recipecard";
+import Recipesearch from "../component/community/recipeboard/recipelist/Recipesearch";
 
 function Recipeboardinfo() {
   return (
