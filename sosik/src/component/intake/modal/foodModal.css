@@ -3,8 +3,7 @@
   justify-content: center;
 }
 
-.modal-open-button,
-.modal-close-btn {
+.modal-open-button, .modal-close-btn {
   cursor: pointer;
   margin-left: auto;
 }
@@ -20,6 +19,7 @@
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+  
 }
 
 .modal-content {
@@ -28,8 +28,18 @@
   height: 60%;
   padding: 15px;
   z-index: 1000;
+  overflow: hidden;
+  
+}
+.modal-content button {
+  font-size: 16px;
+}
+.modal-content table {
+  font-size: 16px;
 }
 
-.modal-search {
+.modal-search{
   text-align: center;
+
 }
+

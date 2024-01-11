@@ -1,33 +1,15 @@
 import { useRef, useState } from "react";
 import "./foodModal.css";
 
-// import FoodResult from "./FoodResult";
 import { Button, Form, InputGroup, Pagination } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import Tbody from "./Tbody";
 
-const FoodModal = ({ modalBtn }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const modalBackground = useRef();
+const FoodModal = ({modalBtn}) => {
 
-  const [search, setSearch] = useState("");
-  const onChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const [inputValue, setInputValue] = useState("");
-
-  // 인풋 값이 변경될 때 호출되는 함수
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  // 폼 제출 시 호출되는 함수 (예: 제출 버튼을 눌렀을 때)
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // 입력된 값을 사용하거나 다른 작업 수행
-    console.log("입력된 값:", inputValue);
-  };
+  // 필드
   const foodResult = [
     {
       foodname: "사과잼 파이",
@@ -59,6 +41,44 @@ const FoodModal = ({ modalBtn }) => {
     },
   ];
 
+  const modalBackground = useRef();
+  
+  // 상태
+  const [modalOpen, setModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [dataList, setDataList] = useState([]);  
+
+  console.log("inputValue : ", inputValue);
+
+  // 메서드
+  // 인풋 값이 변경될 때 호출되는 함수
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+  
+
+  // 폼 제출 시 호출되는 함수 (예: 제출 버튼을 눌렀을 때)
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // 입력된 값을 사용하거나 다른 작업 수행
+    console.log("입력된 값:", inputValue);
+
+    // 음식 서비스에 요청하기
+    const data = await getDataList();
+
+    console.log(data);
+
+    // 데이터 뿌려주기
+    setDataList(() => {return data.data.result.content});
+
+  };
+
+  const handleModalTogle = (value) => {
+    setModalOpen(value);
+  }
+
+  console.log(dataList);
+
   // const foodSearchResult = foodResult.map((a, b) => {
   //   return (
   //     // <FoodResult
@@ -72,23 +92,62 @@ const FoodModal = ({ modalBtn }) => {
   //   );
   // });
 
-  // const foodSearchResult =  foodResult.map((a,b) => {
-  //     return <FoodResult key={b} foodname={a.foodname} kcal={a.kcal} carbo={a.carbo} fat={a.fat} protein={a.protein}></FoodResult>
+    // const foodSearchResult =  foodResult.map((a,b) => {
+    //     return <FoodResult key={b} foodname={a.foodname} kcal={a.kcal} carbo={a.carbo} fat={a.fat} protein={a.protein}></FoodResult>
+         
+    //    })
 
-  //    })
+  // view
+  let tbodys = "검색을 해주세요!";
 
+  if(dataList.length !== 0) {
+    tbodys = dataList.map((data, index) => {
+      return <Tbody key={index} data={data} handleModalTogle={handleModalTogle}  />
+    });
+  }
+
+  // 데이터 불러오기
+  const getDataList = async () => {
+
+    const params = {
+      name: inputValue,
+      page: 1,
+      size: 10
+    }
+
+    try {
+      // 음식 데이터 요청하기
+      const response = await axios({
+        method: "get",
+        url: "/food/v1",
+        baseURL: "http://localhost:5056/",
+        params: params,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      console.log("************** 데이터 왔다 시작 ***************");
+      console.log(response);
+      console.log("************** 데이터 왔다 끝 ***************");
+      return response;
+    } catch(e) {
+      console.log("********** 에러 발생 *************");
+      console.log(e);
+    }
+  }
+
+  
   return (
     <>
-      <div className={"btn-wrapper"}>
-        <button className={"modal-open-btn"} onClick={() => setModalOpen(true)}>
+      <div className={'btn-wrapper'}>
+        <button className={'modal-open-btn'} onClick={() => setModalOpen(true)}>
           {modalBtn}
         </button>
       </div>
-      {modalOpen && (
-        <div
-          className={"modal-container"}
-          ref={modalBackground}
-          onClick={(e) => {
+      {
+        modalOpen &&
+        <div className={'modal-container'} ref={modalBackground} onClick={e => {
+
             if (e.target === modalBackground.current) {
               setModalOpen(false);
             }
@@ -96,13 +155,13 @@ const FoodModal = ({ modalBtn }) => {
         >
           <div className={"modal-content"}>
             <p>음식 검색</p>
+            
             <span style={{ fontSize: "14px" }}>
-              {" "}
-              * 모든 음식은 100g/ 100ml 기준입니다.{" "}
+              * 모든 음식은 100g/ 100ml 기준입니다.
             </span>
             <InputGroup className="mb-3">
-              <Form.Control placeholder="음식을 검색해주세요" />
-              <Button variant="outline-secondary" id="button-addon2">
+              <Form.Control placeholder="음식을 검색해주세요" onChange={handleInputChange} />
+              <Button variant="outline-secondary" id="button-addon2" onClick={handleSubmit} >
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </Button>
             </InputGroup>
@@ -118,60 +177,21 @@ const FoodModal = ({ modalBtn }) => {
               <thead>
                 <tr style={{ marginLeft: "50px" }}>
                   <th style={{ width: "25%", textAlign: "center" }}> 음식</th>
-                  <th style={{ width: "25%", textAlign: "center" }}>kcal</th>
-                  <th style={{ width: "10%", textAlign: "center" }}> carbo</th>
-                  <th style={{ width: "10%", textAlign: "center" }}> fat</th>
-                  <th style={{ width: "10%", textAlign: "center" }}>
-                    {" "}
-                    protein
-                  </th>
+                  <th style={{ width: "10%", textAlign: "center" }}> 탄수화물</th>
+                  <th style={{ width: "10%", textAlign: "center" }}> 단백질</th>
+                  <th style={{ width: "10%", textAlign: "center" }}> 지방</th>
+                  <th style={{ width: "25%", textAlign: "center" }}> 칼로리</th>
                   <th style={{ width: "10%", textAlign: "center" }}> g/ml</th>
                 </tr>
               </thead>
 
-              <tbody>
-                <td style={{ width: "25%", textAlign: "center" }}>
-                  사과잼파이
-                </td>
-                <td style={{ width: "25%", textAlign: "center" }}>300.1</td>
-                <td style={{ width: "10%", textAlign: "center" }}>30</td>
-                <td style={{ width: "10%", textAlign: "center" }}>50</td>
-                <td style={{ width: "10%", textAlign: "center" }}>10</td>
-                <td style={{ width: "10%", textAlign: "center" }}>
-                  <input
-                    type="text"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    placeholder=""
-                    style={{ width: "50px" }}
-                  />
-                </td>
-                <td style={{ width: "10%", textAlign: "center" }}>
-                  <FontAwesomeIcon icon={faPlus} />
-                </td>
-              </tbody>
+              {/* ********** 검색 데이터 뿌려주기 시작 ********** */}
 
-              <tbody>
-                <td style={{ width: "25%", textAlign: "center" }}>
-                  사과잼파이
-                </td>
-                <td style={{ width: "25%", textAlign: "center" }}>300.1</td>
-                <td style={{ width: "10%", textAlign: "center" }}>30</td>
-                <td style={{ width: "10%", textAlign: "center" }}>50</td>
-                <td style={{ width: "10%", textAlign: "center" }}>10</td>
-                <td style={{ width: "10%", textAlign: "center" }}>
-                  <input
-                    type="text"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    placeholder=""
-                    style={{ width: "50px" }}
-                  />
-                </td>
-                <td style={{ width: "10%", textAlign: "center" }}>
-                  <FontAwesomeIcon icon={faPlus} />
-                </td>
-              </tbody>
+              {tbodys}
+
+              {/* ********** 검색 데이터 뿌려주기 끝 ********** */}
+
+              
               <Pagination
                 style={{
                   position: "absolute",
@@ -195,7 +215,7 @@ const FoodModal = ({ modalBtn }) => {
             </table>
           </div>
         </div>
-      )}
+      }
     </>
   );
 };
