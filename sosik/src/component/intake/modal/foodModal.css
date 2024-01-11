@@ -90,5 +90,11 @@
   background-color: #fdf3a2;
 }
 
+/* 음식 이름 */
+.foodName:hover {
+  cursor: pointer;
+  color: #0f6ffd
+}
+
 
 

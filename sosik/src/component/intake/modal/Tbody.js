@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useState } from 'react';
 import { RecdKcalSection2Context } from '../record/RecdKcalSection2';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Tbody = ({data, handleModalTogle}) => {
 
@@ -10,6 +11,7 @@ const Tbody = ({data, handleModalTogle}) => {
   const defaultFoodAmount = {
     foodAmount: ""
   }
+  const navigation = useNavigate();
 
   const {mealViewName: category, handleShowMealView} = useContext(RecdKcalSection2Context);
 
@@ -17,6 +19,16 @@ const Tbody = ({data, handleModalTogle}) => {
   const [foodAmount, setFoodAmount] = useState(defaultFoodAmount);
 
   // 메서드
+  // 음식 상세페이지로 이동한다.
+  const handleFoodNameClick = (e) => {
+
+    const foodId = e.target.id;
+    console.log(foodId);
+    navigation(`/food/${foodId}`);
+
+  }
+
+
   // 섭취량이 변경되면 호출된다.
   const handleFoodAmountChange = (e) => {
     const {name, value} = e.target;
@@ -94,19 +106,14 @@ const Tbody = ({data, handleModalTogle}) => {
       console.log(e);
     }
 
-    
   }
 
-
-
-
   // view
-
 
   return (
     <tbody>
         <td style={{ width: "25%", textAlign: "center" }}>
-          {data.name}
+          <div className='foodName' id={data.foodId} onClick={handleFoodNameClick}>{data.name}</div>
         </td>
         <td style={{ width: "25%", textAlign: "center" }}>
           {data.carbo}
