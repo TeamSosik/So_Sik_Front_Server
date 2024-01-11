@@ -7,7 +7,7 @@ import Feed from "../Feed/FeedContainer";
 import Mainpage from "../../page/MainPage";
 import Login from "../../component/Login.js";
 import FoodSearch from "../foodSearch/FoodSearch";
-import Signup from "../Signup";
+import Signup from "../SignupForm/Signup.js";
 import Mypage from "../../component/Mypage.js";
 import axios from 'axios';
 import RecdKcal from "../Record/RecdKcal.js";

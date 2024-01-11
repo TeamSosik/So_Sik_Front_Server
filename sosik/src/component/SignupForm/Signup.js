@@ -9,98 +9,36 @@ import {
   InputGroup,
   Button,
   OverlayTrigger,
-  Tooltip,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-
-const generateOptions = (start, end) => {
-  if (start >= end) {
-    return Array.from(
-      { length: start - end + 1 },
-      (_, index) => end + index
-    ).reverse();
-  } else {
-    return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-  }
-};
-
-const SelectOptions = ({ defaultValue, values, handleInputChange, name }) => (
-  <Form.Select
-    defaultValue={defaultValue}
-    name={name}
-    onChange={handleInputChange}
-  >
-    <option>{defaultValue}</option>
-    {values.map((value) => (
-      <option key={value} value={value}>
-        {value}
-      </option>
-    ))}
-  </Form.Select>
-);
+import RenderTooltip from "./RenderTooltip";
+import GenerateOptions from "./GenerateOptions";
+import SelectOptions from "./SelectOptions";
+import ValidationForm from "./ValidationForm";
+import TdeeCalFunction from "./TdeeCalFunction";
 
 function Signup() {
-  const validateForm = () => {
-    const {
-      email,
-      password,
-      passwordCheck,
-      name,
-      gender,
-      birthday,
-      currentWeight,
-      targetWeight,
-      height,
-      activityLevel,
-      nickname,
-    } = memberInfo;
-
-    // 각 필드에 대한 유효성 검사
-    if (
-      !email ||
-      !password ||
-      !passwordCheck ||
-      !name ||
-      !gender ||
-      !birthday ||
-      !currentWeight ||
-      !targetWeight ||
-      !height ||
-      !activityLevel ||
-      !nickname
-    ) {
-      alert("모든 정보를 입력해주세요.");
-      return false;
-    }
-
-    // 이메일 유효성 검사 (간단한 예제)
-    const emailRegex =
-      /^([\w.-])*[a-zA-Z0-9]+([\w.-])*([a-zA-Z0-9])+([\w.-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/;
-    if (!emailRegex.test(email)) {
-      alert("올바른 이메일 주소를 입력해주세요.");
-      return false;
-    }
-
-    // 비밀번호 일치 여부 확인
-    if (password !== passwordCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return false;
-    }
-
-    if (isDuplicate !== false) {
-      alert("아이디 중복확인을 해주세요!");
-      return false;
-    }
-
-    return true;
-  };
-
   const navigate = useNavigate();
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [passwordLength, setPasswordLength] = useState(null);
   const [isDuplicate, setIsDuplicate] = useState(null);
+
+  const [memberInfo, setMemberInfo] = useState({
+    email: "",
+    password: "",
+    name: "",
+    gender: "",
+    birthday: "",
+    height: 0,
+    activityLevel: "1",
+    nickname: "",
+    currentWeight: 0,
+    targetWeight: 0,
+    tdeeCalculation: 0,
+    profileImage: "", // 사용자가 프로필 이미지를 선택하지 않았을 때를 나타내기 위해서 null로 설정
+  });
 
   const handlePasswordChange = (e) => {
     const { value } = e.target;
@@ -131,90 +69,7 @@ function Signup() {
       setPasswordMatch(null);
     }
   };
-  const [memberInfo, setMemberInfo] = useState({
-    email: "",
-    password: "",
-    name: "",
-    gender: "",
-    birthday: "",
-    height: 0,
-    activityLevel: "1",
-    nickname: "",
-    currentWeight: 0,
-    targetWeight: 0,
-    tdeeCalculation: 0,
-    profileImage: "", // 사용자가 프로필 이미지를 선택하지 않았을 때를 나타내기 위해서 null로 설정
-  });
 
-  const calculateAge = () => {
-    // 생년월일 문자열을 Date 객체로 변환
-    const birthDateObj = new Date(memberInfo.birthday);
-
-    // 현재 날짜를 가져오기
-    const currentDate = new Date();
-
-    // 나이 계산
-    const age = currentDate.getFullYear() - birthDateObj.getFullYear();
-
-    // 생일이 지났는지 확인
-    const isBirthdayPassed =
-      currentDate.getMonth() > birthDateObj.getMonth() ||
-      (currentDate.getMonth() === birthDateObj.getMonth() &&
-        currentDate.getDate() >= birthDateObj.getDate());
-
-    // 생일이 지났다면 나이 그대로, 그렇지 않다면 1을 빼줌
-    const finalAge = isBirthdayPassed ? age : age - 1;
-    console.log(finalAge);
-    return finalAge;
-  };
-
-  const setAMR = () => {
-    let AMR = 0;
-    switch (memberInfo.activityLevel) {
-      case "1":
-        AMR = 1.2;
-        break;
-      case "2":
-        AMR = 1.375;
-        break;
-      case "3":
-        AMR = 1.55;
-        break;
-      case "4":
-        AMR = 1.725;
-        break;
-      case "5":
-        AMR = 1.9;
-        break;
-      default:
-        console.log("error발생");
-    }
-    return AMR;
-  };
-
-  const handletdeeChange = () => {
-    const age = calculateAge();
-    const AMR = setAMR();
-
-    const isEqual = memberInfo.gender === "male";
-    if (isEqual) {
-      return Math.floor(
-        (10 * memberInfo.currentWeight +
-          6.25 * memberInfo.height -
-          5 * age +
-          5) *
-          AMR
-      );
-    } else {
-      return Math.floor(
-        (10 * memberInfo.currentWeight +
-          6.25 * memberInfo.height -
-          5 * age -
-          161) *
-          AMR
-      );
-    }
-  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "year" || name === "month" || name === "day") {
@@ -275,9 +130,9 @@ function Signup() {
     e.preventDefault();
 
     // memberInfo
-    memberInfo.tdeeCalculation = handletdeeChange();
+    memberInfo.tdeeCalculation = TdeeCalFunction(memberInfo);
     //유효성 검사
-    if (!validateForm()) {
+    if (!ValidationForm(memberInfo, isDuplicate)) {
       return;
     }
 
@@ -309,34 +164,9 @@ function Signup() {
     }
   };
 
-  const years = generateOptions(2020, 1900);
-  const months = generateOptions(1, 12);
-  const days = generateOptions(1, 31);
-
-  const renderTooltip = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      <strong>매우 비활동적</strong> - 대부분의 시간을 앉아서 보내고 규칙적인
-      운동을 하지 않는 사람
-      <br />
-      <br />
-      <strong>비활동적</strong> - 대부분의 시간을 앉아서 보내지만 쇼핑, 청소와
-      같은 가벼운 운동을 규칙적으로 하는 사람
-      <br />
-      <br />
-      <strong>보통</strong> - 대부분의 시간을 앉아서 보내지만 운동을 시간을 정해
-      보통의 신체적활동을 하는 사람
-      <br />
-      <br />
-      <strong>활동적</strong> - 일상적으로 꾸준한 운동이나 활동을 통해 신체적
-      활동량을 유지하는 사람
-      <br />
-      <br />
-      <strong>매우 활동적</strong> - 매일 정기적으로 고강도 운동이나 체력 단련을
-      통해 신체 활동량을 높이는 사람
-      <br />
-      <br />
-    </Tooltip>
-  );
+  const years = GenerateOptions(2020, 1900);
+  const months = GenerateOptions(1, 12);
+  const days = GenerateOptions(1, 31);
 
   return (
     <Container style={{ marginTop: "150px", marginBottom: "100px" }}>
@@ -527,7 +357,7 @@ function Signup() {
                 <OverlayTrigger
                   placement="right"
                   delay={{ show: 100, hide: 300 }}
-                  overlay={renderTooltip}
+                  overlay={RenderTooltip}
                 >
                   <FontAwesomeIcon icon={faCircleQuestion} />
                 </OverlayTrigger>
@@ -612,5 +442,4 @@ function Signup() {
     </Container>
   );
 }
-
 export default Signup;
