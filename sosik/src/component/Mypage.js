@@ -9,7 +9,6 @@ import WeightModal from "./Modal/WeightModal"
 import ReactApexChart from "react-apexcharts";
 import "../common/css/mypage.css";
 
-
 const MyPage = () => {
   const getData = async () => {
     const authorization = JSON.parse(localStorage.getItem("accesstoken"));
@@ -17,25 +16,21 @@ const MyPage = () => {
 
     try {
       await axios({
-
         method: "get",
-        url: 'http://localhost:9000/members/v1/detail',
+        url: "http://localhost:5056/members/v1/detail",
         headers: {
-          "authorization": "Bearer " + authorization,
-          "refreshToken": "Bearer " + refreshToken,
-        }
-      })
-        .then(response => {
-          console.log(response);
-          setUsers(response.data.result);
-        });
-    } catch (e) {
-    }
-  }
+          authorization: "Bearer " + authorization,
+          refreshToken: "Bearer " + refreshToken,
+        },
+      }).then((response) => {
+        console.log(response);
+        setUsers(response.data.result);
+      });
+    } catch (e) {}
+  };
 
   useEffect(() => {
     getData();
-
   }, []);
 
   const [users, setUsers] = useState({
@@ -50,7 +45,7 @@ const MyPage = () => {
     profileImage: "",
     birthday: "",
     tdeeCalculation: "",
-    weightList: [""]
+    weightList: [""],
   });
 
 
@@ -178,14 +173,12 @@ const MyPage = () => {
       },
       {
         name: "목표 체중",
-        data: users.weightList.map(entry => ({
+        data: users.weightList.map((entry) => ({
           x: entry.createdAt,
           y: entry.targetWeight,
-
         })),
         zIndex: 1,
       },
-
     ],
     stroke: {
       width: 4,
@@ -273,6 +266,9 @@ const MyPage = () => {
             나의 체중 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} />
           </button>
           <button className="myinfo-update" type="submit" onClick={() => handleNavigate('/updateinfo')}>내 정보 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <Link to="/updateinfo">
+            <button>정보수정</button>
+          </Link>
         </div>
       </div>
 
@@ -302,7 +298,9 @@ const MyPage = () => {
             </div>
             <div className="remaining-weight">
               <span className="weight-name">남은 체중</span>
-              <p className="remaining">{Math.abs(lastCurrentWeight - lastGoalWeight)}kg</p>
+              <p className="remaining">
+                {Math.abs(lastCurrentWeight - lastGoalWeight)}kg
+              </p>
             </div>
           </div>
         </div>
