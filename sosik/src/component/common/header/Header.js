@@ -2,8 +2,8 @@ import React, { useEffect, useState, createContext } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
-import Recipeboardlist from "../../../page/Recipeboardlist.js";
-import Feed from "../../feed/FeedContainer.js";
+import Recipeboardlist from "../../../page/recipeboardlist.js";
+import Feed from "../../Feed/FeedContainer.js";
 import Mainpage from "../../../page/MainPage";
 import Login from "../../member/loginform/Login.js";
 import FoodSearch from "../../food/foodSearch/FoodSearch.js";
@@ -14,6 +14,7 @@ import RecdKcal from "../../intake/record/RecdKcal.js";
 import RecdAnly from "../../intake/record/RecdAnly.js";
 import UpdateInfo from "../../member/updatemyinfo/UpdateInfo.js";
 import Redirection from "../../member/loginform/social/Redirection.js";
+import FoodDetail from './../../food/foodDetail/FoodDetail';
 
 export const HeaderContext = createContext();
 
@@ -174,6 +175,7 @@ const Header = () => {
           <Route path="/recdanly" element={<RecdAnly />} />
           <Route path="/updateinfo" element={<UpdateInfo />} />
           <Route path="/redirection" element={<Redirection />} />
+          <Route path="/food/:id" element={<FoodDetail />} />
         </Routes>
         {/* <RecdButton /> */}
       </HeaderContext.Provider>
