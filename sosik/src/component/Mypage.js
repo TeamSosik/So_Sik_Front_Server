@@ -1,49 +1,50 @@
 import React from "react";
-import ReactApexChart from "react-apexcharts";
-import "../common/css/mypage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import UpdateInfo from "./updatemyinfo/UpdateInfo";
+import WeightModal from "./Modal/WeightModal"
+import ReactApexChart from "react-apexcharts";
+import "../common/css/mypage.css";
+
 
 const MyPage = () => {
   const getData = async () => {
     const authorization = JSON.parse(localStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
- 
+
     try {
-        await axios({
-          
-          method: "get",
-          url: 'http://localhost:9000/members/v1/detail',
-          headers: {
-            "authorization": "Bearer " + authorization,
-            "refreshToken": "Bearer " + refreshToken,
-          }
-        })
+      await axios({
+
+        method: "get",
+        url: 'http://localhost:9000/members/v1/detail',
+        headers: {
+          "authorization": "Bearer " + authorization,
+          "refreshToken": "Bearer " + refreshToken,
+        }
+      })
         .then(response => {
-            console.log(response);
-            setUsers(response.data.result);
+          console.log(response);
+          setUsers(response.data.result);
         });
-      } catch(e) {
+    } catch (e) {
     }
   }
 
   useEffect(() => {
     getData();
-    
+
   }, []);
 
   const [users, setUsers] = useState({
     memberId: "",
     email: "",
     name: "",
-    gender:"",
+    gender: "",
     height: 0,
-    role:"",
+    role: "",
     activityLevel: "",
     nickname: "",
     profileImage: "",
@@ -52,7 +53,7 @@ const MyPage = () => {
     weightList: [""]
   });
 
-  
+
   const weightChangeOptions = {
     annotations: {},
     chart: {
@@ -149,12 +150,12 @@ const MyPage = () => {
         left: 15,
       },
     },
-    
+
     legend: {
       fontSize: 14,
       offsetY: 5,
       itemMargin: {
-        horizontal: 14, 
+        horizontal: 14,
         vertical: 15,
       },
     },
@@ -163,15 +164,15 @@ const MyPage = () => {
         sizeOffset: 6,
       },
       offsetX: 0,
-    
+
     },
     series: [
       {
         name: "현재 체중",
         data: users.weightList.map(entry => ({
-          x: entry.createdAt,  
+          x: entry.createdAt,
           y: entry.currentWeight,
-         
+
         })),
         zIndex: 0,
       },
@@ -180,11 +181,11 @@ const MyPage = () => {
         data: users.weightList.map(entry => ({
           x: entry.createdAt,
           y: entry.targetWeight,
-          
+
         })),
         zIndex: 1,
       },
-      
+
     ],
     stroke: {
       width: 4,
@@ -240,8 +241,8 @@ const MyPage = () => {
     theme: {
       palette: "palette4",
     },
-};
-  
+  };
+
   const lastWeightEntry = users.weightList[users.weightList.length - 1];
   const lastCurrentWeight = lastWeightEntry.currentWeight;
   const lastGoalWeight = lastWeightEntry.targetWeight;
@@ -250,22 +251,29 @@ const MyPage = () => {
   const handleNavigate = (path) => {
     navigate(path);
   };
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+
   return (
     <div className="my-page">
       <div className="left-section">
         <div className="profile-info">
-          <img src={`http://localhost:9000/members/images/${users.memberId}`}  alt=""/>
+          <img src={`http://localhost:9000/members/images/${users.memberId}`} alt="" />
           <h2>{users.nickname} 님</h2>
         </div>
         <div className="update-btn">
-          <button className="my-anly" type="submit" onClick={() => handleNavigate('/recdanly')}>나의 분석<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
           <button className="my-kcal" type="submit" onClick={() => handleNavigate('/recdkcal')}>나의 칼로리<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
-          <button className="myinfo-update" type="submit" onClick={() => handleNavigate('/recdanly')}>내 정보 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button className="my-anly" type="submit" onClick={() => handleNavigate('/recdanly')}>나의 분석<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button className="myweight-update" type="submit" onClick={handleShowModal}>
+            나의 체중 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} />
+          </button>
+          <button className="myinfo-update" type="submit" onClick={() => handleNavigate('/updateinfo')}>내 정보 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
         </div>
-        <Link to="/updateinfo">
-          <button>정보수정</button>
-        </Link>
-
       </div>
 
       <div className="right-section">
@@ -310,6 +318,7 @@ const MyPage = () => {
           />
         </div>
       </div>
+      {showModal && <WeightModal handleCloseModal={() => setShowModal(false)} />}
     </div>
   );
 };
