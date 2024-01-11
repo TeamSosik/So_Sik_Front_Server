@@ -10,9 +10,9 @@ import React, { useContext, useState } from "react";
 import "./login.css";
 import { HeaderContext } from "../../common/header/Header";
 function Login() {
-  const REST_API_KEY = "83838cea18a7862894ce003e923d2fd7";
-  const REDIRECT_URI = "http://localhost:3000/redirection";
-  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const REST_API_KEY_FOR_KAKAO = "83838cea18a7862894ce003e923d2fd7";
+  const REDIRECT_URI_FOR_KAKAO = "http://localhost:3000/redirection";
+  const linkForKakao = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY_FOR_KAKAO}&redirect_uri=${REDIRECT_URI_FOR_KAKAO}&response_type=code`;
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -22,8 +22,8 @@ function Login() {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
   };
-  const loginHandler = () => {
-    window.location.href = link;
+  const loginHandlerForKakao = () => {
+    window.location.href = linkForKakao;
   };
   const navigate = useNavigate();
   const { setlogout } = useContext(HeaderContext); // heaer context
@@ -94,7 +94,7 @@ function Login() {
               <strong>로그인</strong>
             </Button>
             <p className="loginfont2">
-              <Link to="/signup">회원가입</Link> | <a href="">비밀번호찾기</a>
+              <Link to="/signup">회원가입</Link> | <Link to="/findPw">비밀번호찾기</Link>
             </p>
             <hr></hr>
             <div className="logindiv1">
@@ -102,13 +102,10 @@ function Login() {
                 <Image
                   src="img/kakao_login.png"
                   className="snsloginbutton"
-                  onClick={loginHandler}
+                  onClick={loginHandlerForKakao}
                 />
               </a>
               <br />
-              <a href="">
-                <Image src="img/naver_login.png" className="snsloginbutton" />
-              </a>
               <br />
             </div>
           </Form>
