@@ -4,10 +4,12 @@ import React, { useContext, useState } from 'react';
 import { RecdKcalSection2Context } from '../record/RecdKcalSection2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { RecdKcalContext } from '../record/RecdKcal';
 
 const Tbody = ({data, handleModalTogle}) => {
 
   // 필드
+  const {addMealList} = useContext(RecdKcalContext);
   const defaultFoodAmount = {
     foodAmount: ""
   }
@@ -56,10 +58,10 @@ const Tbody = ({data, handleModalTogle}) => {
       alert("숫자를 입력해주세요");
     }
 
-    const calculationCarbo = data.carbo * foodAmount.foodAmount;
-    const calculationProtein = data.protein * foodAmount.foodAmount;
-    const calculationFat = data.fat * foodAmount.foodAmount;
-    const calculationKcal = data.kcal * foodAmount.foodAmount;
+    const calculationCarbo = data.carbo * foodAmount.foodAmount / 100;
+    const calculationProtein = data.protein * foodAmount.foodAmount / 100;
+    const calculationFat = data.fat * foodAmount.foodAmount / 100;
+    const calculationKcal = data.kcal * foodAmount.foodAmount / 100;
     // memberId
     const member = JSON.parse(localStorage.getItem("member"));
     const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
@@ -100,6 +102,8 @@ const Tbody = ({data, handleModalTogle}) => {
       handleModalTogle(false);
       // 섭취 리스트로 이동하기
       handleShowMealView(category);
+      // 섭취 목록 불러오기
+      addMealList();
 
       return response;
     } catch(e) {

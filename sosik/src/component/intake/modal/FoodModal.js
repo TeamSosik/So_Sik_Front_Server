@@ -83,7 +83,7 @@ const FoodModal = ({modalBtn}) => {
     setPageData((current) => {
       const newPageData = {
         ...current,
-        page: data.data.result.number + 1,
+        page: 1,
         size: data.data.result.size,
         totalNum: data.data.result.totalElements,
         totalPages: data.data.result.totalPages
