@@ -1,7 +1,7 @@
 import React from "react";
-import Badges2 from "../component/recipeboard/recipeinfo/Badges2";
-import Recipeinfobody from "../component/recipeboard/recipeinfo/recipeinfobody";
-import Recipeinfocomment from "../component/recipeboard/recipeinfo/recipeinfocomment";
+import Badges2 from "../component/community/recipeboard/recipeinfo/Badges2";
+import Recipeinfobody from "../component/community/recipeboard/recipeinfo/Recipeinfobody";
+import Recipeinfocomment from "../component/community/recipeboard/recipeinfo/Recipeinfocomment";
 
 function Recipeboardinfo() {
   return (
