@@ -3,56 +3,50 @@ import ReactApexChart from "react-apexcharts";
 import "../common/css/mypage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from 'react-router-dom';
-import { useState,useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
-import UpdateInfo from "./updatemyinfo/UpdateInfo";
 
 const MyPage = () => {
   const getData = async () => {
     const authorization = JSON.parse(localStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
- 
+
     try {
-        await axios({
-          
-          method: "get",
-          url: 'http://localhost:9000/members/v1/detail',
-          headers: {
-            "authorization": "Bearer " + authorization,
-            "refreshToken": "Bearer " + refreshToken,
-          }
-        })
-        .then(response => {
-            console.log(response);
-            setUsers(response.data.result);
-        });
-      } catch(e) {
-    }
-  }
+      await axios({
+        method: "get",
+        url: "http://localhost:5056/members/v1/detail",
+        headers: {
+          authorization: "Bearer " + authorization,
+          refreshToken: "Bearer " + refreshToken,
+        },
+      }).then((response) => {
+        console.log(response);
+        setUsers(response.data.result);
+      });
+    } catch (e) {}
+  };
 
   useEffect(() => {
     getData();
-    
   }, []);
 
   const [users, setUsers] = useState({
     memberId: "",
     email: "",
     name: "",
-    gender:"",
+    gender: "",
     height: 0,
-    role:"",
+    role: "",
     activityLevel: "",
     nickname: "",
     profileImage: "",
     birthday: "",
     tdeeCalculation: "",
-    weightList: [""]
+    weightList: [""],
   });
 
-  
   const weightChangeOptions = {
     annotations: {},
     chart: {
@@ -149,12 +143,12 @@ const MyPage = () => {
         left: 15,
       },
     },
-    
+
     legend: {
       fontSize: 14,
       offsetY: 5,
       itemMargin: {
-        horizontal: 14, 
+        horizontal: 14,
         vertical: 15,
       },
     },
@@ -163,28 +157,24 @@ const MyPage = () => {
         sizeOffset: 6,
       },
       offsetX: 0,
-    
     },
     series: [
       {
         name: "현재 체중",
-        data: users.weightList.map(entry => ({
-          x: entry.createdAt,  
+        data: users.weightList.map((entry) => ({
+          x: entry.createdAt,
           y: entry.currentWeight,
-         
         })),
         zIndex: 0,
       },
       {
         name: "목표 체중",
-        data: users.weightList.map(entry => ({
+        data: users.weightList.map((entry) => ({
           x: entry.createdAt,
           y: entry.targetWeight,
-          
         })),
         zIndex: 1,
       },
-      
     ],
     stroke: {
       width: 4,
@@ -240,8 +230,8 @@ const MyPage = () => {
     theme: {
       palette: "palette4",
     },
-};
-  
+  };
+
   const lastWeightEntry = users.weightList[users.weightList.length - 1];
   const lastCurrentWeight = lastWeightEntry.currentWeight;
   const lastGoalWeight = lastWeightEntry.targetWeight;
@@ -254,18 +244,53 @@ const MyPage = () => {
     <div className="my-page">
       <div className="left-section">
         <div className="profile-info">
-          <img src={`http://localhost:9000/members/images/${users.memberId}`}  alt=""/>
+          <img
+            src={`http://localhost:5056/members/images/${users.memberId}`}
+            alt=""
+          />
           <h2>{users.nickname} 님</h2>
         </div>
         <div className="update-btn">
-          <button className="my-anly" type="submit" onClick={() => handleNavigate('/recdanly')}>나의 분석<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
-          <button className="my-kcal" type="submit" onClick={() => handleNavigate('/recdkcal')}>나의 칼로리<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
-          <button className="myinfo-update" type="submit" onClick={() => handleNavigate('/recdanly')}>내 정보 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button
+            className="my-anly"
+            type="submit"
+            onClick={() => handleNavigate("/recdanly")}
+          >
+            나의 분석
+            <FontAwesomeIcon
+              icon={faAngleRight}
+              size="2xs"
+              style={{ color: "#000000", marginLeft: 30 }}
+            />
+          </button>
+          <button
+            className="my-kcal"
+            type="submit"
+            onClick={() => handleNavigate("/recdkcal")}
+          >
+            나의 칼로리
+            <FontAwesomeIcon
+              icon={faAngleRight}
+              size="2xs"
+              style={{ color: "#000000", marginLeft: 30 }}
+            />
+          </button>
+          <button
+            className="myinfo-update"
+            type="submit"
+            onClick={() => handleNavigate("/recdanly")}
+          >
+            내 정보 수정
+            <FontAwesomeIcon
+              icon={faAngleRight}
+              size="2xs"
+              style={{ color: "#000000", marginLeft: 30 }}
+            />
+          </button>
         </div>
         <Link to="/updateinfo">
           <button>정보수정</button>
         </Link>
-
       </div>
 
       <div className="right-section">
@@ -294,7 +319,9 @@ const MyPage = () => {
             </div>
             <div className="remaining-weight">
               <span className="weight-name">남은 체중</span>
-              <p className="remaining">{Math.abs(lastCurrentWeight - lastGoalWeight)}kg</p>
+              <p className="remaining">
+                {Math.abs(lastCurrentWeight - lastGoalWeight)}kg
+              </p>
             </div>
           </div>
         </div>
