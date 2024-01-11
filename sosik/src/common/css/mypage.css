@@ -62,6 +62,7 @@ h2 {
 
 .left-section .update-btn .my-anly,
 .left-section .update-btn .my-kcal,
+.left-section .update-btn .myweight-update,
 .left-section .update-btn .myinfo-update {
   margin-bottom: 20px;
   border-bottom: 1px solid #f2f4f6;
@@ -69,13 +70,13 @@ h2 {
 
 .left-section .update-btn .my-anly:hover,
 .left-section .update-btn .my-kcal:hover,
+.left-section .update-btn .myweight-update:hover,
 .left-section .update-btn .myinfo-update:hover {
   margin-bottom: 20px;
   border-bottom: 1px solid #f2f4f6;
   color: #59bd82;
   font-weight: 900;
 }
-
 
 .right-section {
   position: relative;

@@ -1,12 +1,13 @@
 import React from "react";
-import ReactApexChart from "react-apexcharts";
-import "../common/css/mypage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import UpdateInfo from "./updatemyinfo/UpdateInfo";
+import WeightModal from "./Modal/WeightModal"
+import ReactApexChart from "react-apexcharts";
+import "../common/css/mypage.css";
 
 const MyPage = () => {
   const getData = async () => {
@@ -46,6 +47,7 @@ const MyPage = () => {
     tdeeCalculation: "",
     weightList: [""],
   });
+
 
   const weightChangeOptions = {
     annotations: {},
@@ -157,13 +159,15 @@ const MyPage = () => {
         sizeOffset: 6,
       },
       offsetX: 0,
+
     },
     series: [
       {
         name: "현재 체중",
-        data: users.weightList.map((entry) => ({
+        data: users.weightList.map(entry => ({
           x: entry.createdAt,
           y: entry.currentWeight,
+
         })),
         zIndex: 0,
       },
@@ -240,57 +244,32 @@ const MyPage = () => {
   const handleNavigate = (path) => {
     navigate(path);
   };
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+
   return (
     <div className="my-page">
       <div className="left-section">
         <div className="profile-info">
-          <img
-            src={`http://localhost:5056/members/images/${users.memberId}`}
-            alt=""
-          />
+          <img src={`http://localhost:9000/members/images/${users.memberId}`} alt="" />
           <h2>{users.nickname} 님</h2>
         </div>
         <div className="update-btn">
-          <button
-            className="my-anly"
-            type="submit"
-            onClick={() => handleNavigate("/recdanly")}
-          >
-            나의 분석
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              size="2xs"
-              style={{ color: "#000000", marginLeft: 30 }}
-            />
+          <button className="my-kcal" type="submit" onClick={() => handleNavigate('/recdkcal')}>나의 칼로리<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button className="my-anly" type="submit" onClick={() => handleNavigate('/recdanly')}>나의 분석<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <button className="myweight-update" type="submit" onClick={handleShowModal}>
+            나의 체중 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} />
           </button>
-          <button
-            className="my-kcal"
-            type="submit"
-            onClick={() => handleNavigate("/recdkcal")}
-          >
-            나의 칼로리
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              size="2xs"
-              style={{ color: "#000000", marginLeft: 30 }}
-            />
-          </button>
-          <button
-            className="myinfo-update"
-            type="submit"
-            onClick={() => handleNavigate("/recdanly")}
-          >
-            내 정보 수정
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              size="2xs"
-              style={{ color: "#000000", marginLeft: 30 }}
-            />
-          </button>
+          <button className="myinfo-update" type="submit" onClick={() => handleNavigate('/updateinfo')}>내 정보 수정<FontAwesomeIcon icon={faAngleRight} size="2xs" style={{ color: "#000000", marginLeft: 30 }} /></button>
+          <Link to="/updateinfo">
+            <button>정보수정</button>
+          </Link>
         </div>
-        <Link to="/updateinfo">
-          <button>정보수정</button>
-        </Link>
       </div>
 
       <div className="right-section">
@@ -337,6 +316,7 @@ const MyPage = () => {
           />
         </div>
       </div>
+      {showModal && <WeightModal handleCloseModal={() => setShowModal(false)} />}
     </div>
   );
 };

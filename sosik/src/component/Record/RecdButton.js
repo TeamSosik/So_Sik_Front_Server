@@ -14,6 +14,7 @@ function Recdbutton() {
     { name: '칼로리', value: '1' },
     { name: '분석', value: '2' }
   ];
+
   const buttonStyle = (value) => {
     const baseStyle = {
       backgroundColor: radioValue === value ? '#E6F8E7' : 'initial',
@@ -28,15 +29,22 @@ function Recdbutton() {
       border: '1px solid #ccc',
     };
 
+    if (value === '2' && radioValue === value) {
+      return {
+        ...baseStyle,
+        backgroundColor: '#F8E6E9',
+
+      };
+    }
     return baseStyle;
   };
 
   const handleButtonClick = (value) => {
     setRadioValue(value);
     if (value === '1') {
-      navigate('/recdkcal',{replace:true});
+      navigate('/recdkcal');
     } else if (value === '2') {
-      navigate('/recdanly',{replace:true});
+      navigate('/recdanly');
     }
   };
 
@@ -55,7 +63,6 @@ function Recdbutton() {
               value={radio.value}
               checked={radioValue === radio.value}
               onChange={(e) => { setRadioValue(e.currentTarget.value) }}
-              // onClick={(e) => { setRadioValue(e.currentTarget.value) }}
               onClick={() => handleButtonClick(radio.value)}
               onMouseLeave={() => setRadioValue(radioValue)}
               style={buttonStyle(radio.value)}
