@@ -421,9 +421,6 @@ function Signup() {
                 name="nickname"
                 onChange={handleInputChange}
               />
-              <Button variant="outline-secondary" id="button-addon2">
-                중복확인
-              </Button>
             </InputGroup>
 
             <Form.Group controlId="formFile" className="mb-3">
