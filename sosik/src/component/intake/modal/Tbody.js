@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RecdKcalContext } from '../record/RecdKcal';
 
-const Tbody = ({data, handleModalTogle}) => {
+const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
 
   // 필드
   const {addMealList} = useContext(RecdKcalContext);
@@ -104,6 +104,8 @@ const Tbody = ({data, handleModalTogle}) => {
       handleShowMealView(category);
       // 섭취 목록 불러오기
       addMealList();
+      // 모달 비우기
+      handleDataListChange([]);
 
       return response;
     } catch(e) {
