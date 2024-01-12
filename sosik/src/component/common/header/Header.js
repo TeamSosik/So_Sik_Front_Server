@@ -2,8 +2,8 @@ import React, { useEffect, useState, createContext } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
-import Recipeboardlist from "../../../page/Recipeboardlist.js";
-import Feed from "../../feed/FeedContainer.js";
+import Recipeboardlist from "../../../page/recipeboardlist.js";
+import Feed from "../../Feed/FeedContainer.js";
 import Mainpage from "../../../page/MainPage";
 import Login from "../../member/loginform/Login.js";
 import FoodSearch from "../../food/foodSearch/FoodSearch.js";
@@ -13,6 +13,7 @@ import axios from "axios";
 import RecdKcal from "../../intake/record/RecdKcal.js";
 import RecdAnly from "../../intake/record/RecdAnly.js";
 import UpdateInfo from "../../member/updatemyinfo/UpdateInfo.js";
+import FoodDetail from './../../food/foodDetail/FoodDetail';
 import RedirectionKakao from "../../member/loginform/social/RedirectionKakao.js";
 import FindPw from "../../member/loginform/FindPw.js";
 
@@ -174,6 +175,7 @@ const Header = () => {
           <Route path="/recdkcal" element={<RecdKcal />} />
           <Route path="/recdanly" element={<RecdAnly />} />
           <Route path="/updateinfo" element={<UpdateInfo />} />
+          <Route path="/food/:id" element={<FoodDetail />} />
           <Route path="/redirection" element={<RedirectionKakao />} />
           <Route path="/findPw" element={<FindPw />} />
         </Routes>

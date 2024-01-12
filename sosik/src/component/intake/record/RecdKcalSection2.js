@@ -4,8 +4,10 @@ import {
   faCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import FoodModal from "../modal/FoodModal";
+
+export const RecdKcalSection2Context = createContext();
 
 const RecdKcalSection2 = ({ mealList: mealDataList }) => {
   // 필드
@@ -30,6 +32,12 @@ const RecdKcalSection2 = ({ mealList: mealDataList }) => {
   const handleMealTitleChangeBtnClick = (mealTitleName) => {
     setMealViewName(mealTitleName);
   };
+
+  // 섭취 리스트로 이동하기
+  const handleShowMealView = (mealViewName) => {
+
+    setMealViewName(mealViewName);
+  }
 
   // view
 
@@ -137,22 +145,25 @@ const RecdKcalSection2 = ({ mealList: mealDataList }) => {
   );
 
   return (
-    <div className="recd-kcal-section2">
-      {/* ********** meal-title box 시작 ************ */}
 
-      {mealTitleView}
+    <RecdKcalSection2Context.Provider value={{mealViewName, handleShowMealView}}>
+      <div className="recd-kcal-section2">
+        {/* ********** meal-title box 시작 ************ */}
 
-      {/* ********** meal-title box 끝************ */}
+        {mealTitleView}
 
-      {/* ****************** meal-content box 시작 *************** */}
+        {/* ********** meal-title box 끝************ */}
 
-      <div className="meal-content">
-        {mealListView}
-        {additionMealView}
+        {/* ****************** meal-content box 시작 *************** */}
+
+        <div className="meal-content">
+          {mealListView}
+          {additionMealView}
+        </div>
+
+        {/* ****************** meal-content box 끝 *************** */}
       </div>
-
-      {/* ****************** meal-content box 끝 *************** */}
-    </div>
+    </RecdKcalSection2Context.Provider>
   );
 };
 

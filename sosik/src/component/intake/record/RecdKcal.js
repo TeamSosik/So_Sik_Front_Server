@@ -1,88 +1,99 @@
-import React, { useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "./recdKcal.css";
 import RecdKcalSection2 from "./RecdKcalSection2.js";
 import RecdKcalSection3 from "./RecdKcalSection3.js";
 import Recdbutton from "./RecdButton.js";
+import axios from "axios";
+
+export const RecdKcalContext = createContext();
 
 const RecdKcal = () => {
   // 필드
 
-  const defaultmealList = [
-    {
-      name: "된장찌개 BREAKFAST",
-      foodId: 1,
-      dayTargetCalorieId: 1,
-      calculationCarbo: 50,
-      calculationProtein: 50,
-      calculationFat: 50,
-      calculationKcal: 50,
-      category: "BREAKFAST", //BREAKFAST, LUNCH, DINNER, SNACKS
-      foodAmount: 200,
-      createDate: "2020-12-12", // 현재 없음
-    },
-    {
-      name: "된장찌개 LUNCH",
-      foodId: 1,
-      dayTargetCalorieId: 1,
-      calculationCarbo: 50,
-      calculationProtein: 50,
-      calculationFat: 50,
-      calculationKcal: 50,
-      category: "LUNCH", //BREAKFAST, LUNCH, DINNER, SNACKS
-      foodAmount: 200,
-      createDate: "2020-12-12", // 현재 없음
-    },
-    {
-      name: "된장찌개 LUNCH",
-      foodId: 1,
-      dayTargetCalorieId: 1,
-      calculationCarbo: 50,
-      calculationProtein: 50,
-      calculationFat: 50,
-      calculationKcal: 50,
-      category: "LUNCH", //BREAKFAST, LUNCH, DINNER, SNACKS
-      foodAmount: 200,
-      createDate: "2020-12-12", // 현재 없음
-    },
-    {
-      name: "된장찌개 DINNER",
-      foodId: 1,
-      dayTargetCalorieId: 1,
-      calculationCarbo: 50,
-      calculationProtein: 50,
-      calculationFat: 50,
-      calculationKcal: 50,
-      category: "DINNER", //BREAKFAST, LUNCH, DINNER, SNACKS
-      foodAmount: 200,
-      createDate: "2020-12-12", // 현재 없음
-    },
-    {
-      name: "된장찌개 SNACKS",
-      foodId: 1,
-      dayTargetCalorieId: 1,
-      calculationCarbo: 50,
-      calculationProtein: 50,
-      calculationFat: 50,
-      calculationKcal: 50,
-      category: "SNACKS", //BREAKFAST, LUNCH, DINNER, SNACKS
-      foodAmount: 200,
-      createDate: "2020-12-12", // 현재 없음
-    },
-  ];
-
   // 상태
-  const [mealList, setMealList] = useState(defaultmealList);
+  const [mealList, setMealList] = useState([]);
 
   // 메서드
+
+  // 섭취 음식 목록 불러오기
+  const getData = async () => {
+
+    try {
+      const member = JSON.parse(localStorage.getItem("member"));
+      const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
+      const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+
+      const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
+      const currentUTC = new Date();
+      const koreaTimeOffset = 9 * 60;
+      const koreaTime = new Date(currentUTC.getTime() + koreaTimeOffset * 60 * 1000);
+      // 오늘 날짜
+      const todayInKorea = koreaTime.toISOString().split("T")[0]// yyyy-MM-dd 형식
+
+      console.log(todayInKorea);
+      const data = {
+        memberId: member.memberId,
+        createdAt: todayInKorea
+      }
+
+      console.log(member.memberId);
+
+      const response = await axios({
+
+        method: "get",
+        url: "/intake/",
+        baseURL: "http://localhost:5056",
+        headers: {
+          Authorization: accesstoken,
+          refreshtoken: refreshtoken,
+          "Content-Type": "application/json"
+        },
+        params: data
+
+      });
+
+      console.log("************* 응답 성공 *****************");
+      return response;
+
+    } catch(e) {
+      console.log("************* 에러 발생 ************");
+      console.log(e);
+    }
+  }
+
+  // 섭취 음식 list를 mealList에 담기
+  const addMealList = async () => {
+    
+    const data = await getData();
+
+    console.log(data);
+
+    if(data) {
+      setMealList(() => {
+        return data.data.result;
+      });
+    }
+
+  }
+
+  // 처음 페이지 들어왔을 때 실행
+  useEffect(() => {
+
+    addMealList();
+
+  }, []);
+
 
   // view
 
   return (
-    <div>
-      <Recdbutton></Recdbutton>
-      <RecdKcalSection2 mealList={mealList} />
-      <RecdKcalSection3 mealList={mealList} />
-    </div>
+    <RecdKcalContext.Provider value={{addMealList}}>
+      <div>
+        <Recdbutton></Recdbutton>
+        <RecdKcalSection2 mealList={mealList} />
+        <RecdKcalSection3 mealList={mealList} />
+      </div>
+    </RecdKcalContext.Provider>
   );
 };
 
