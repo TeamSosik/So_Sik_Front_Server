@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./foodDetail.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Loading from "../../common/spinners/Loading.js";
 
-const Fd_section1 = () => {
+const Fd_section1 = ({name}) => {
   return (
     <div className="fd-section1">
-      <div className="food-name">사과</div>
+      <div className="food-name">{name}</div>
       <div className="food-content">
         <p>
           과일의 하나이다. 과육은 기본적으로 노란색에서 연두색 이며, 맛은
@@ -19,7 +22,8 @@ const Fd_section1 = () => {
   );
 };
 
-const Fd_section2 = () => {
+const Fd_section2 = ({data}) => {
+
   return (
     <div className="fd-section2">
       <div className="nutrient-info">
@@ -30,17 +34,17 @@ const Fd_section2 = () => {
       <div className="nutrient-content">
         <div className="nutrient">
           <p className="nutrient-title1">탄수화물</p>
-          <p className="nutrient-title2">100g</p>
+          <p className="nutrient-title2">{data.carbo}g</p>
         </div>
         <div className="nutrient">
           <p className="nutrient-title1">단백질</p>
-          <p className="nutrient-title2">100g</p>
+          <p className="nutrient-title2">{data.protein}g</p>
         </div>
         <div className="nutrient">
           <p className="nutrient-title1">지방</p>
-          <p className="nutrient-title2">100g</p>
+          <p className="nutrient-title2">{data.fat}g</p>
         </div>
-        <div className="nutrient">
+        {/* <div className="nutrient">
           <p className="nutrient-title1">나트륨</p>
           <p className="nutrient-title2">100g</p>
         </div>
@@ -59,13 +63,13 @@ const Fd_section2 = () => {
         <div className="nutrient">
           <p className="nutrient-title1">탄수화물</p>
           <p className="nutrient-title2">100g</p>
-        </div>
+        </div> */}
       </div>
 
       <div className="food-calorie">
         <div className="calorie-intake">
           <p className="kcal-title1">섭취열량</p>
-          <p className="kcal-title2">1000</p>
+          <p className="kcal-title2">{data.kcal}</p>
           <p className="kcal-title3">kcal</p>
         </div>
       </div>
@@ -95,10 +99,83 @@ const Fd_section3 = () => {
 };
 
 const FoodDetail = () => {
+
+  // 필드
+  const {id:foodId} = useParams();
+
+  const defaultData = {
+    foodId: "",
+    name: "",
+    carbo: "",
+    protein: "",
+    fat: "",
+    kcal: "",
+    size: "",
+    createdBy: "",
+    modifiedBy: "",
+    createdAt: "",
+    modifiedAt: ""
+  }
+
+  // 상태
+  const [data, setData] = useState(defaultData);
+  const [loading, setLoading] = useState(false);
+
+  // 메서드
+  // 데이터 조회하기
+  const getData = async () => {
+
+    try {
+
+      const response = await axios({
+        method: "get",
+        url: `/food/v1/${foodId}`,
+        baseURL: "http://localhost:5056/",
+        headers: {
+          "Content-Type": "application/json"
+        }
+
+      });
+
+      setLoading(false);
+
+      return response;
+    } catch(e) {
+      console.log("******** 오류 해결 *******");
+      console.log(e);
+    }
+  }
+
+  const showData = async () => {
+
+    const data = await getData();
+
+    console.log("******* 데이터 확인!!!! ***********");
+    console.log(data.data.result);
+
+    setData(data.data.result);
+
+  }
+
+  // view
+
+  // 처음 시작
+  useEffect(() => {
+
+    setLoading(true);
+
+    showData();
+
+  }, []);
+
+  if(loading) {
+    <Loading />
+  }
+
   return (
     <div>
-      <Fd_section1 />
-      <Fd_section2 />
+      <Fd_section1 name={data.name} />
+      <Fd_section2 data={data} />
       <Fd_section3 />
     </div>
   );
