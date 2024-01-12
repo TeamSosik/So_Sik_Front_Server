@@ -13,8 +13,9 @@ import axios from "axios";
 import RecdKcal from "../../intake/record/RecdKcal.js";
 import RecdAnly from "../../intake/record/RecdAnly.js";
 import UpdateInfo from "../../member/updatemyinfo/UpdateInfo.js";
-import Redirection from "../../member/loginform/social/Redirection.js";
 import FoodDetail from './../../food/foodDetail/FoodDetail';
+import RedirectionKakao from "../../member/loginform/social/RedirectionKakao.js";
+import FindPw from "../../member/loginform/FindPw.js";
 
 export const HeaderContext = createContext();
 
@@ -174,8 +175,9 @@ const Header = () => {
           <Route path="/recdkcal" element={<RecdKcal />} />
           <Route path="/recdanly" element={<RecdAnly />} />
           <Route path="/updateinfo" element={<UpdateInfo />} />
-          <Route path="/redirection" element={<Redirection />} />
           <Route path="/food/:id" element={<FoodDetail />} />
+          <Route path="/redirection" element={<RedirectionKakao />} />
+          <Route path="/findPw" element={<FindPw />} />
         </Routes>
         {/* <RecdButton /> */}
       </HeaderContext.Provider>
