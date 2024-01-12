@@ -24,7 +24,7 @@ const RecdKcalSection3 = ({mealList}) => {
     return (
       <div key={index} className="total-intake">
         <p className="total-intake-name1">{data}</p>
-        <p className="total-intake-name2">{totalIntakeValues[index]}</p>
+        <p className="total-intake-name2">{Math.round(totalIntakeValues[index] * 100) / 100}</p>
       </div>
     );
   });

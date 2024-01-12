@@ -62,6 +62,10 @@ const FoodModal = ({modalBtn}) => {
   console.log("inputValue : ", inputValue);
 
   // 메서드
+  const handleDataListChange = (value) => {
+    setDataList(value);
+  }
+
   // 인풋 값이 변경될 때 호출되는 함수
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -125,7 +129,7 @@ const FoodModal = ({modalBtn}) => {
 
   if(dataList.length !== 0) {
     tbodys = dataList.map((data, index) => {
-      return <Tbody key={index} data={data} handleModalTogle={handleModalTogle}  />
+      return <Tbody key={index} data={data} handleModalTogle={handleModalTogle} handleDataListChange={handleDataListChange}  />
     });
   }
 
@@ -246,6 +250,7 @@ const FoodModal = ({modalBtn}) => {
 
             if (e.target === modalBackground.current) {
               setModalOpen(false);
+              setDataList([]);
             }
           }}
         >
