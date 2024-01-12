@@ -2,8 +2,8 @@ import React, { useEffect, useState, createContext } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
-import Recipeboardlist from "../../../page/recipeboardlist.js";
-import Feed from "../../Feed/FeedContainer.js";
+import Recipeboardlist from "../../../page/Recipeboardlist.js";
+import Feed from "../../feed/Feed.js";
 import Mainpage from "../../../page/MainPage";
 import Login from "../../member/loginform/Login.js";
 import FoodSearch from "../../food/foodSearch/FoodSearch.js";
@@ -13,7 +13,7 @@ import axios from "axios";
 import RecdKcal from "../../intake/record/RecdKcal.js";
 import RecdAnly from "../../intake/record/RecdAnly.js";
 import UpdateInfo from "../../member/updatemyinfo/UpdateInfo.js";
-import FoodDetail from './../../food/foodDetail/FoodDetail';
+import FoodDetail from "./../../food/foodDetail/FoodDetail";
 import RedirectionKakao from "../../member/loginform/social/RedirectionKakao.js";
 import FindPw from "../../member/loginform/FindPw.js";
 
@@ -34,7 +34,6 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       console.log("들어왓어요");
-      // const response = await axios('http://localhost:9000/members/logout');
       const accesstoken = JSON.parse(
         window.localStorage.getItem("accesstoken")
       );
@@ -168,7 +167,7 @@ const Header = () => {
           <Route path="/recipeboardlist" element={<Recipeboardlist />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/mainpage" element={<Mainpage />} />
+          <Route path="/mainpage" element={<Mainpage props={logout} />} />
           <Route path="/foodsearch" element={<FoodSearch />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/mypage" element={<Mypage />} />
