@@ -35,7 +35,7 @@ function Login() {
         .then((result) => {
           const accesstoken = result.data.result.accessToken;
           const refreshtoken = result.data.result.refreshToken;
-          const member = result.data.result.member;
+          const member = result.data
           window.localStorage.setItem(
             "accesstoken",
             JSON.stringify(accesstoken)
@@ -46,6 +46,30 @@ function Login() {
           );
           window.localStorage.setItem("member", JSON.stringify(member));
           alert("정상적으로 로그인 처리 되었습니다.");
+
+
+          const customHeader = {
+            authorization: window.localStorage.getItem("accesstoken"),
+            refreshToken: window.localStorage.getItem("refreshtoken"),
+            memberId: member.memberId
+          };
+      
+          axios.get("http://localhost:5056/members/v1/detail", {
+            headers: customHeader,
+          })
+          .then(function (res) {
+            console.log(res)
+            window.localStorage.setItem("member",JSON.stringify(res.data));
+            navigate("/mainpage"); //리다이렉트
+            
+          })
+          .catch (function(error) {
+            console.error("", error); // 오류 처리
+          });
+          
+            
+
+
           setlogout(false);
           navigate("/mainpage"); //리다이렉트
         });
