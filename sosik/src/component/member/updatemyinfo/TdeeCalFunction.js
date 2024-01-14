@@ -1,4 +1,3 @@
-import React from "react";
 
 const TdeeCalFunction = (memberInfo, member) => {
   let AMR = 0;

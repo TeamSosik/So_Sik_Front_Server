@@ -1,5 +1,3 @@
-import React from "react";
-
 const TdeeCalFunction = (props) => {
   const calculateAge = () => {
     // 생년월일 문자열을 Date 객체로 변환

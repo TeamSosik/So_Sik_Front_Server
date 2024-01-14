@@ -3,12 +3,11 @@ import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import Recipeboardlist from "../../../page/recipeboardlist.js";
-import Feed from "../../Feed/FeedContainer.js";
+import Feed from "../../feed/FeedContainer.js";
 import Mainpage from "../../../page/MainPage";
 import Login from "../../member/loginform/Login.js";
 import FoodSearch from "../../food/foodSearch/FoodSearch.js";
 import Signup from "../../member/signupform/Signup.js";
-import Mypage from "../../member/mypage/Mypage.js";
 import axios from "axios";
 import RecdKcal from "../../intake/record/RecdKcal.js";
 import RecdAnly from "../../intake/record/RecdAnly.js";
@@ -16,6 +15,8 @@ import UpdateInfo from "../../member/updatemyinfo/UpdateInfo.js";
 import FoodDetail from './../../food/foodDetail/FoodDetail';
 import RedirectionKakao from "../../member/loginform/social/RedirectionKakao.js";
 import FindPw from "../../member/loginform/FindPw.js";
+import SnsInfo from "../../member/loginform/social/SnsInfo.js";
+import MyPage from '../../member/mypage/Mypage';
 
 export const HeaderContext = createContext();
 
@@ -33,7 +34,6 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      console.log("들어왓어요");
       // const response = await axios('http://localhost:9000/members/logout');
       const accesstoken = JSON.parse(
         window.localStorage.getItem("accesstoken")
@@ -45,22 +45,21 @@ const Header = () => {
 
       console.log(accesstoken);
       console.log(refreshtoken);
-      console.log(member.email);
+      console.log(member.result.email);
 
       await axios({
         method: "post",
         url: "/members/v1/sign-out",
         baseURL: "http://localhost:5056",
         headers: {
-          authorization: "Bearer " + accesstoken,
-          refreshToken: "Bearer " + refreshtoken,
-          member: member.email,
+          authorization: accesstoken,
+          refreshToken: refreshtoken,
+          member: member.result.email,
           "Content-Type": "application/json",
         },
-        data: JSON.stringify({ email: member.email }),
+        data: JSON.stringify({ email: member.result.email}),
       });
 
-      console.log("성공");
       window.localStorage.removeItem("accesstoken");
       window.localStorage.removeItem("refreshtoken");
       window.localStorage.removeItem("member");
@@ -171,13 +170,15 @@ const Header = () => {
           <Route path="/mainpage" element={<Mainpage />} />
           <Route path="/foodsearch" element={<FoodSearch />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/recdkcal" element={<RecdKcal />} />
           <Route path="/recdanly" element={<RecdAnly />} />
           <Route path="/updateinfo" element={<UpdateInfo />} />
           <Route path="/food/:id" element={<FoodDetail />} />
           <Route path="/redirection" element={<RedirectionKakao />} />
           <Route path="/findPw" element={<FindPw />} />
+          <Route path="/snsInfo" element={<SnsInfo />} />
+
         </Routes>
         {/* <RecdButton /> */}
       </HeaderContext.Provider>

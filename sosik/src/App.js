@@ -1,5 +1,9 @@
+import { Route, Router, Switch } from 'react-router-dom';
 import './App.css';
-import Feed from './component/Feed/Feed';
+import Feed from './component/feed/Feed';
+import Login from './component/member/loginform/Login';
+import MyPage from './component/member/mypage/Mypage';
+import PrivateRoute from './component/common/router/PrivateRoute';
 
 function App() {
   
@@ -36,11 +40,26 @@ function App() {
      
   })
 
+
+  const isLoggedIn = () => {
+    const token = localStorage.getItem('accesstoken'); // 여기서 'yourTokenKey'는 실제로 사용하는 토큰의 키입니다.
+    
+    // 토큰이 존재하는지 여부에 따라 로그인 상태 판단
+    return token !== null;
+  };
+
   
 
   return (
     <div className="App">
         {FeedList}
+        
+        <Router>
+          <Switch>
+          <Route path="/login" component={Login} />
+          <PrivateRoute exact path="/mypage" component={MyPage} loggedIn={isLoggedIn} />
+          </Switch>
+        </Router>
     </div>
   );
 }
