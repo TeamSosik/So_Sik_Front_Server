@@ -1,11 +1,49 @@
 import React from 'react';
 import "./myinfo.css";
+import axios from 'axios';
+import {useEffect,useState} from 'react';
+
 
 const MyInfo = () => {
 
     const userInfo = JSON.parse(window.localStorage.getItem("member"));
     let currentWeight = userInfo.result.weightList?.[0]?.currentWeight
     let targetWeight = userInfo.result.weightList?.[0]?.targetWeight
+
+    const getData = async () => {
+        const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+        const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+
+        let today = new Date();
+        today = today.toISOString();
+        today = today.split("T")[0];
+
+        console.log(today);
+        
+        try {
+            await axios({
+                method: "get",
+                url: 'http://localhost:5056/target-calorie/v1/'+today,
+                headers: {
+                    "authorization":  authorization,
+                    "refreshToken":  refreshToken
+                }
+            })
+            .then(response => {
+                setTodaykcal(response.data.result);
+            });
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const [todaykcal,setTodaykcal] = useState({
+        dayTargetKcal: ""
+    })
 
     return (
         <>
@@ -19,10 +57,11 @@ const MyInfo = () => {
                         <hr />
                         <div className="activity-kcal">
                             <span className="kcal-type-name">오늘 목표 칼로리</span>
-                            <span className="kcal-name">{userInfo.tdeeCalculation}kcal</span>
+                            <span className="kcal-name">{todaykcal.dayTargetKcal}kcal</span>
                         </div>
                     </div>
                 </div>
+                <hr />
                 <div className="weight">
                     <div className="current-weight">
                         <span className="weight-name">현재 체중</span>
@@ -45,5 +84,3 @@ const MyInfo = () => {
 };
 
 export default MyInfo;
-
-
