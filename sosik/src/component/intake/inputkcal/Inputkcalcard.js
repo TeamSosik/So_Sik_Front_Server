@@ -10,11 +10,9 @@ import { useNavigate } from "react-router-dom";
 function Inputkcalcard() {
   const [todayTargetKcal, setTodayTargetkcal] = useState({
     dayTargetKcal: 0,
-    dailyIntakePurpose: 0,
   });
   const [createTodayTargetKcal, setCreateTodayKcal] = useState({
     dayTargetKcal: 0,
-    dailyIntakePurpose: 0,
   });
 
   const handleInputChange = (e) => {
@@ -98,25 +96,6 @@ function Inputkcalcard() {
         <Card.Text>
           <Form onSubmit={handleOnSubmit}>
             <div className="d-flex">
-              <span className="purpose">목적:</span>
-              <Form.Check
-                type="radio"
-                name="dailyIntakePurpose"
-                value="1"
-                className="form-check-lg"
-                onChange={handleInputChange}
-              />
-              <span className="kcalpurpose">체중증량</span>
-              <Form.Check
-                type="radio"
-                name="dailyIntakePurpose"
-                value="2"
-                className="form-check-lg"
-                onChange={handleInputChange}
-              />
-              <span className="kcalpurpose">체중감량</span>
-            </div>
-            <div className="d-flex">
               <Form.Control
                 type="text"
                 name="dayTargetKcal"
@@ -126,9 +105,7 @@ function Inputkcalcard() {
                   todayTargetKcal == null ? 0 : todayTargetKcal.dayTargetKcal
                 }
               />
-              <span className="kcal">
-                {/* {todayTargetKcal == null ? 0 : todayTargetKcal}kcal */}kcal
-              </span>
+              <span className="kcal">kcal</span>
             </div>
             {todayTargetKcal == null ? (
               <Button type="submit" variant="success" className="kcalbutton">
