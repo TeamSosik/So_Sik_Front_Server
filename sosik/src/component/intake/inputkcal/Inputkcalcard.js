@@ -5,21 +5,27 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./inputkcal.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Inputkcalcard() {
   const [todayTargetKcal, setTodayTargetkcal] = useState({
-    dayTargetKcal: "",
-    dailyIntakePurpose: "",
+    dayTargetKcal: 0,
+    dailyIntakePurpose: 0,
+  });
+  const [createTodayTargetKcal, setCreateTodayKcal] = useState({
+    dayTargetKcal: 0,
+    dailyIntakePurpose: 0,
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setTodayTargetkcal({ ...todayTargetKcal, [name]: value });
+    setCreateTodayKcal({ ...createTodayTargetKcal, [name]: value });
+    console.log(value);
   };
 
   const navigate = useNavigate();
-  const getData2 = async () => {
+
+  const getTodayTargetCalorie = async () => {
     const authorization = JSON.parse(localStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
 
@@ -36,10 +42,11 @@ function Inputkcalcard() {
         headers: {
           authorization: "Bearer " + authorization,
           refreshToken: "Bearer " + refreshToken,
+          "Content-Type": "application/json",
         },
       }).then((response) => {
         console.log(response);
-        console.log(response.data.result.dayTargetKcal);
+        console.log(response.data.result);
         setTodayTargetkcal(response.data.result);
       });
     } catch (e) {
@@ -47,23 +54,29 @@ function Inputkcalcard() {
     }
   };
   useEffect(() => {
-    getData2();
+    getTodayTargetCalorie();
   }, []);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-
-    const json = JSON.stringify(todayTargetKcal);
-    const blob = new Blob([json], {
-      type: "application/json",
-    });
-    formData.append("requestTargetCalorier", blob);
-
     try {
-      const response = await axios
-        .post("http://localhost:5056/target-caloire/v1/", todayTargetKcal)
+      const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+      const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+      console.log(createTodayTargetKcal);
+      const requestTargetCalorie = createTodayTargetKcal;
+      console.log(requestTargetCalorie);
+      await axios
+        .post(
+          "http://localhost:5056/target-calorie/v1/",
+          requestTargetCalorie,
+          {
+            headers: {
+              authorization: "Bearer " + authorization,
+              refreshToken: "Bearer " + refreshToken,
+            },
+          }
+        )
         .then((result) => {
           alert("목표칼로리 기입에 성공하였습니다.");
           navigate("/mainpage");
@@ -89,7 +102,7 @@ function Inputkcalcard() {
               <Form.Check
                 type="radio"
                 name="dailyIntakePurpose"
-                value="0"
+                value="1"
                 className="form-check-lg"
                 onChange={handleInputChange}
               />
@@ -97,7 +110,7 @@ function Inputkcalcard() {
               <Form.Check
                 type="radio"
                 name="dailyIntakePurpose"
-                value="1"
+                value="2"
                 className="form-check-lg"
                 onChange={handleInputChange}
               />
@@ -109,15 +122,23 @@ function Inputkcalcard() {
                 name="dayTargetKcal"
                 className="kcalform mr-2"
                 onChange={handleInputChange}
+                placeholder={
+                  todayTargetKcal == null ? 0 : todayTargetKcal.dayTargetKcal
+                }
               />
-              <span className="kcal">kcal</span>
+              <span className="kcal">
+                {/* {todayTargetKcal == null ? 0 : todayTargetKcal}kcal */}kcal
+              </span>
             </div>
-            {/* <Button variant="success" className="kcalbutton">
-            수정
-          </Button> */}
-            <Button type="submit" variant="success" className="kcalbutton">
-              등록
-            </Button>
+            {todayTargetKcal == null ? (
+              <Button type="submit" variant="success" className="kcalbutton">
+                등록
+              </Button>
+            ) : (
+              <Button type="submit" variant="success" className="kcalbutton">
+                수정
+              </Button>
+            )}
           </Form>
         </Card.Text>
       </Card.Body>
