@@ -1,12 +1,40 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
+import React, { useState } from "react";
 
-function WeightModal({ handleCloseModal }) {
-    const handleSave = () => {
-        // TODO: 여기에 데이터 저장 로직 추가
+function WeightModal({ handleCloseModal, accessToken }) {
+    const [currentWeight, setCurrentWeight] = useState("");
+    const [targetWeight, setTargetWeight] = useState("");
+    const [isDuplicate, setIsDuplicate] = useState(false);
 
-        // 데이터 저장 후 모달 닫기
-        handleCloseModal();
+
+    const handleWeightInput = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(
+                "http://localhost:5056/members/v1/weight",
+                {
+                    currentWeight: currentWeight,
+                    targetWeight: targetWeight
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }
+            );
+
+            console.log(response);
+
+            if (response.data) {
+                setIsDuplicate(true);
+            } else {
+                setIsDuplicate(false);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -22,20 +50,30 @@ function WeightModal({ handleCloseModal }) {
                     <Modal.Title>나의 체중 수정</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* 체중 수정 폼 등을 추가 */}
                     <form>
-                        {/* 예시: 체중 입력 필드 */}
-                        <label htmlFor="weightInput">체중 입력</label>
-                        <input type="text" id="weightInput" name="weight" />
+                        <label htmlFor="weightInput">현재 체중 입력</label>
+                        <input
+                            type="text"
+                            className="currentweightInput"
+                            name="currentWeight"
+                            value={currentWeight}
+                            onChange={(e) => setCurrentWeight(e.target.value)} />
 
-                        {/* 기타 필요한 입력 필드 추가 */}
+                        <label htmlFor="weightInput">목표 체중 입력</label>
+                        <input
+                            type="text"
+                            className="targetweightInput"
+                            name="targetWeight"
+                            value={targetWeight}
+                            onChange={(e) => setTargetWeight(e.target.value)}
+                        />
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseModal}>
                         닫기
                     </Button>
-                    <Button variant="primary" onClick={handleSave}>저장</Button>
+                    <Button variant="primary" onClick={handleWeightInput}>저장</Button>
                 </Modal.Footer>
             </Modal>
         </div>

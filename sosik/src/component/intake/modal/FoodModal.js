@@ -7,6 +7,7 @@ import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Tbody from "./Tbody";
 import PageButton from "./PageButton";
+import Loading from "../../common/spinners/Loading";
 
 const FoodModal = ({modalBtn}) => {
 
@@ -56,10 +57,15 @@ const FoodModal = ({modalBtn}) => {
   const [inputValue, setInputValue] = useState("");
   const [dataList, setDataList] = useState([]);
   const [pageData, setPageData] = useState(() => defaultPageData);
+  const [loading, setLoading] = useState(false);
 
   console.log("inputValue : ", inputValue);
 
   // 메서드
+  const handleDataListChange = (value) => {
+    setDataList(value);
+  }
+
   // 인풋 값이 변경될 때 호출되는 함수
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -123,7 +129,7 @@ const FoodModal = ({modalBtn}) => {
 
   if(dataList.length !== 0) {
     tbodys = dataList.map((data, index) => {
-      return <Tbody key={index} data={data} handleModalTogle={handleModalTogle}  />
+      return <Tbody key={index} data={data} handleModalTogle={handleModalTogle} handleDataListChange={handleDataListChange}  />
     });
   }
 
@@ -137,6 +143,9 @@ const FoodModal = ({modalBtn}) => {
     }
 
     try {
+
+      setLoading(true);
+
       // 음식 데이터 요청하기
       const response = await axios({
         method: "get",
@@ -150,6 +159,9 @@ const FoodModal = ({modalBtn}) => {
       console.log("************** 데이터 왔다 시작 ***************");
       console.log(response);
       console.log("************** 데이터 왔다 끝 ***************");
+
+      setLoading(false);
+
       return response;
     } catch(e) {
       console.log("********** 에러 발생 *************");
@@ -238,6 +250,7 @@ const FoodModal = ({modalBtn}) => {
 
             if (e.target === modalBackground.current) {
               setModalOpen(false);
+              setDataList([]);
             }
           }}
         >
@@ -261,37 +274,41 @@ const FoodModal = ({modalBtn}) => {
               모달 닫기
             </button>
 
-            { dataList.length !== 0 ?
-              <>
-                <table>
-                  <thead>
-                    <tr style={{ marginLeft: "50px" }}>
-                      <th style={{ width: "25%", textAlign: "center" }}> 음식</th>
-                      <th style={{ width: "10%", textAlign: "center" }}> 탄수화물</th>
-                      <th style={{ width: "10%", textAlign: "center" }}> 단백질</th>
-                      <th style={{ width: "10%", textAlign: "center" }}> 지방</th>
-                      <th style={{ width: "25%", textAlign: "center" }}> 칼로리</th>
-                      <th style={{ width: "10%", textAlign: "center" }}> g/ml</th>
-                    </tr>
-                  </thead>
+            {
+              loading ? <Loading />
 
-                  {/* ********** 검색 데이터 뿌려주기 시작 ********** */}
+              :
 
-                  {tbodys}
+              dataList.length !== 0 ?
+                <>
+                  <table>
+                    <thead>
+                      <tr style={{ marginLeft: "50px" }}>
+                        <th style={{ width: "25%", textAlign: "center" }}> 음식</th>
+                        <th style={{ width: "10%", textAlign: "center" }}> 탄수화물</th>
+                        <th style={{ width: "10%", textAlign: "center" }}> 단백질</th>
+                        <th style={{ width: "10%", textAlign: "center" }}> 지방</th>
+                        <th style={{ width: "25%", textAlign: "center" }}> 칼로리</th>
+                        <th style={{ width: "10%", textAlign: "center" }}> g/ml</th>
+                      </tr>
+                    </thead>
 
-                  {/* ********** 검색 데이터 뿌려주기 끝 ********** */}
+                    {/* ********** 검색 데이터 뿌려주기 시작 ********** */}
 
-                </table>
+                    {tbodys}
 
-                {/* 페이지 번호 시작 */}
-                <PageButton handlePageBtnClick={handlePageBtnClick} pageData={pageData} />
-                {/* 페이지 번호 끝 */}
-              </>
-              : 
-              <div>
-                데이터가 없습니다.
-              </div>
-            
+                    {/* ********** 검색 데이터 뿌려주기 끝 ********** */}
+
+                  </table>
+
+                  {/* 페이지 번호 시작 */}
+                  <PageButton handlePageBtnClick={handlePageBtnClick} pageData={pageData} />
+                  {/* 페이지 번호 끝 */}
+                </>
+                : 
+                <div>
+                  데이터가 없습니다.
+                </div>
             }
           </div>
         </div>

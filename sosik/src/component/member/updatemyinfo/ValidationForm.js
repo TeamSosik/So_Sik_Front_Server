@@ -1,5 +1,3 @@
-import React from "react";
-
 const ValidationForm = (memberInfo) => {
   const { currentWeight, targetWeight, height, activityLevel } = memberInfo;
 

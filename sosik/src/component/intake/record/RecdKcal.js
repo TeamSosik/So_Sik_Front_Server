@@ -4,6 +4,7 @@ import RecdKcalSection2 from "./RecdKcalSection2.js";
 import RecdKcalSection3 from "./RecdKcalSection3.js";
 import Recdbutton from "./RecdButton.js";
 import axios from "axios";
+import Loading from "../../common/spinners/Loading.js";
 
 export const RecdKcalContext = createContext();
 
@@ -12,6 +13,7 @@ const RecdKcal = () => {
 
   // 상태
   const [mealList, setMealList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // 메서드
 
@@ -53,6 +55,9 @@ const RecdKcal = () => {
       });
 
       console.log("************* 응답 성공 *****************");
+
+      setLoading(false);
+
       return response;
 
     } catch(e) {
@@ -79,12 +84,20 @@ const RecdKcal = () => {
   // 처음 페이지 들어왔을 때 실행
   useEffect(() => {
 
+    setLoading(true);
+
     addMealList();
 
   }, []);
 
 
   // view
+
+  // 로딩 화면
+  if(loading) {
+
+    return <Loading />
+  }
 
   return (
     <RecdKcalContext.Provider value={{addMealList}}>
