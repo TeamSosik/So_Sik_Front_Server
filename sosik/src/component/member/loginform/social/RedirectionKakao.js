@@ -20,11 +20,12 @@ const RedirectionKakao = (props) => {
           "Access-Control-Allow-Origin": "*", //이건 cors 에러때문에 넣어둔것. 당신의 프로젝트에 맞게 지워도됨
         },
       }).then((res) => { //백에서 완료후 우리사이트 전용 토큰 넘겨주는게 성공했다면     
+        const memberId = res.data.member.memberId
         const member = {  
           email: res.data.info.kakao_account.email,
           nickname: res.data.info.kakao_account.profile.nickname,
           profileImage: res.data.info.kakao_account.profile.profile_image_url,
-          memberId: res.data.member.memberId,
+          memberId: memberId,
           isEnrolled : res.data.isEnrolled,
           weightList : res.data.weightList
         }
@@ -42,19 +43,21 @@ const RedirectionKakao = (props) => {
           const customHeader = {
             authorization: window.localStorage.getItem("accesstoken"),
             refreshToken: window.localStorage.getItem("refreshtoken"),
-            memberId: window.localStorage.getItem("member").memberId
+            memberId: memberId
           };
-      
+
           axios.get("http://localhost:5056/members/v1/detail", {
             headers: customHeader,
           })
+
           .then(function (res) {
+            alert("환영합니다!")
             window.localStorage.setItem("member",JSON.stringify(res.data));
             navigate("/mainpage"); //리다이렉트
-            
           })
+          
           .catch (function(error) {
-            console.error("", error); // 오류 처리
+            alert("에러가 발생했습니다!")
           });
         }
       });
