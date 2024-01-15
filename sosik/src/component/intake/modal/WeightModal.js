@@ -12,7 +12,14 @@ function WeightModal({ handleCloseModal, accessToken }) {
     const handleWeightInput = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(
+            const accesstoken = JSON.parse(
+                window.localStorage.getItem("accesstoken")
+            );
+            const refreshtoken = JSON.parse(
+                window.localStorage.getItem("refreshtoken")
+            );
+
+            await axios.post(
                 "http://localhost:5056/members/v1/weight",
                 {
                     currentWeight: currentWeight,
@@ -20,18 +27,16 @@ function WeightModal({ handleCloseModal, accessToken }) {
                 },
                 {
                     headers: {
-                        Authorization: `Bearer ${accessToken}`
+                        authorization: accesstoken,
+                        refreshtoken: refreshtoken,
+                        "Content-Type": "application/json"
                     }
                 }
-            );
-
-            console.log(response);
-
-            if (response.data) {
-                setIsDuplicate(true);
-            } else {
-                setIsDuplicate(false);
-            }
+            )
+            .then(function (response) {
+                handleCloseModal();
+                console.log(response);
+            });
         } catch (error) {
             console.error(error);
         }
@@ -70,10 +75,8 @@ function WeightModal({ handleCloseModal, accessToken }) {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
-                        닫기
-                    </Button>
                     <Button variant="primary" onClick={handleWeightInput}>저장</Button>
+                    <Button variant="secondary" onClick={handleCloseModal}>닫기</Button>
                 </Modal.Footer>
             </Modal>
         </div>
