@@ -18,6 +18,7 @@ import RedirectionKakao from "../../member/loginform/social/RedirectionKakao.js"
 import FindPw from "../../member/loginform/FindPw.js";
 import SnsInfo from "../../member/loginform/social/SnsInfo.js";
 import MyPage from '../../member/mypage/Mypage';
+import SearchBox from "../header/SearchBox.js";
 
 export const HeaderContext = createContext();
 
@@ -106,16 +107,11 @@ const Header = () => {
         </Link>
         {/* </a> */}
         <nav id="gnb">
-          <ul className="depth-1">
+        <SearchBox></SearchBox>
+          {/* <ul className="depth-1">
             <li>
               <Link to="/foodsearch">칼로리</Link>
             </li>
-            {/* <li><a href="">랭킹</a>
-                <ul className="depth-2">
-                  <li><a href="">레시피</a>
-                  </li></ul>
-              </li> */}
-
             <li>
               <Link to="/feed">SNS</Link>
             </li>
@@ -133,7 +129,7 @@ const Header = () => {
                 </li>
               </ul>
             </li>
-          </ul>
+          </ul> */}
         </nav>
         <div className="utWrap">
           <ul className="logWrap">{loginview}</ul>

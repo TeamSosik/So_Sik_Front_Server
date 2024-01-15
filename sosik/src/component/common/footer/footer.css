@@ -28,6 +28,7 @@ footer .inner {
 footer .ft_link {
   display: flex;
   margin-bottom: 2.25rem;
+  padding-left: inherit;
 }
 
 footer .ft_link li {
@@ -53,6 +54,7 @@ footer .ft_link li a {
 footer .ft_info {
   display: flex;
   margin-bottom: 12px;
+  padding-left: inherit;
 }
 
 footer .ft_info li {

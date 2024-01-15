@@ -1,0 +1,31 @@
+.header-search {
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+
+.header-search input {
+    width: calc(100% - 10.625rem);
+    height: 3.5rem;
+    margin-right: 0.625rem;
+    padding: 0 2.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    border-radius: 46px 0 0 46px;
+    background-color: #F5F5F5;
+}
+
+.header-search button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 3.5rem;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 500;
+    border-radius: 0 46px 46px 0;
+    background-color: #59BD82;
+}

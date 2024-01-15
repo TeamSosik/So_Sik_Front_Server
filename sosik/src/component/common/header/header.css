@@ -194,6 +194,7 @@ li {
 }
 ul li a{
   text-decoration: none;
+  color: black;
 }
 
 input {
@@ -314,6 +315,7 @@ header .utWrap {
 
 header .utWrap .logWrap {
     font-size: 1rem;
+    margin-bottom: 0;
 }
 
 header .utWrap .searchWrap {
