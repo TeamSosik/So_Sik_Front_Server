@@ -56,14 +56,13 @@ const RecdKcal = () => {
 
       console.log("************* 응답 성공 *****************");
 
-      setLoading(false);
-
       return response;
 
     } catch(e) {
       console.log("************* 에러 발생 ************");
       console.log(e);
     }
+    setLoading(false);
   }
 
   // 섭취 음식 list를 mealList에 담기
