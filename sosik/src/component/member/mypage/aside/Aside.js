@@ -4,13 +4,34 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "./aside.css";
 import WeightModal from "../../../intake/modal/WeightModal";
+import axios from "axios";
 
 const Aside = ({ props }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
-  const handleShowModal = () => {
-    setShowModal(true);
+  const handleShowModal = async (e) => {
+    e.preventDefault();
+    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+    try {
+      const response = await axios.get(
+        "http://localhost:5056/members/v1/checkRecode",
+        {
+          headers: {
+            authorization: authorization,
+            refreshtoken: refreshToken,
+          },
+        }
+      );
+      console.log(response);
+      if (response.data) {
+        window.alert("오늘은 이미 기록하였습니다!");
+        setShowModal(false);
+      } else {
+        setShowModal(true);
+      }
+    } catch (error) {}
   };
 
   const handleNavigate = (path) => {
@@ -57,7 +78,7 @@ const Aside = ({ props }) => {
             type="submit"
             onClick={handleShowModal}
           >
-            나의 체중 수정
+            나의 체중 기록
             <FontAwesomeIcon
               icon={faAngleRight}
               size="2xs"
