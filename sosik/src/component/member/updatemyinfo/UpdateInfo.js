@@ -20,10 +20,9 @@ import ValidationForm from "./ValidationForm";
 
 function UpdateInfo() {
   const navigate = useNavigate();
-  const member = JSON.parse(window.localStorage.getItem("member"));
+  const member = JSON.parse(window.localStorage.getItem("member")).result;
 
   const handleInputChange = (e) => {
-    console.log("input change ***");
     const { name, value } = e.target;
     setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
@@ -73,11 +72,11 @@ function UpdateInfo() {
       await axios({
         method: "patch", // 통신 방식
         headers: {
-          authorization: "Bearer " + accesstoken,
-          refreshToken: "Bearer " + refreshtoken,
+          authorization: accesstoken,
+          refreshToken: refreshtoken,
           "Content-Type": "multipart/form-data",
         },
-        url: "/members/v1/",
+        url: "/members/v1",
         baseURL: "http://localhost:5056", // 서버
         data: formData,
       }).then(function (response) {

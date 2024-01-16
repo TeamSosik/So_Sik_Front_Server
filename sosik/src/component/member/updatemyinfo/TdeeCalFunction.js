@@ -1,4 +1,3 @@
-
 const TdeeCalFunction = (memberInfo, member) => {
   let AMR = 0;
   const calculateAge = () => {
