@@ -1,5 +1,5 @@
 .inputkcalcard {
-  width: 30rem;
+  width: 25rem;
   padding: 20px;
   padding-left: 40px;
   padding-right: 40px;
@@ -32,7 +32,7 @@
   font-weight: bold;
   margin-top: 20px;
   width: 20%;
-  margin-left: 145px;
+  margin-left: 120px;
 }
 
 .kcal {
@@ -77,6 +77,6 @@
   margin-right: 10px;
 }
 .purpose {
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin: 0 5px;
 }
