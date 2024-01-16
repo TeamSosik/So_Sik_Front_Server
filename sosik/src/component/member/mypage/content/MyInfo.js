@@ -18,7 +18,7 @@ const MyInfo = () => {
         today = today.toISOString();
         today = today.split("T")[0];
 
-        console.log(today);
+        // console.log(today);
         
         try {
             await axios({
@@ -30,7 +30,12 @@ const MyInfo = () => {
                 }
             })
             .then(response => {
-                setTodaykcal(response.data.result);
+                if(response.data.result.dayTargetKcal !== null){
+                    setTodaykcal(response.data.result.dayTargetKcal);
+                    return 
+                }
+                // console.log(response)
+
             });
         } catch(e) {
             console.log(e)
@@ -38,13 +43,13 @@ const MyInfo = () => {
     }
 
     useEffect(() => {
-        getData();
+        getData();          
     }, []);
 
-    const [todaykcal,setTodaykcal] = useState({
-        dayTargetKcal: ""
-    })
+    const [todaykcal,setTodaykcal] = useState("")
+    
 
+  
     return (
         <>
             <div className="kcal-weight">
@@ -57,7 +62,7 @@ const MyInfo = () => {
                         <hr />
                         <div className="activity-kcal">
                             <span className="kcal-type-name">오늘 목표 칼로리</span>
-                            <span className="kcal-name">{todaykcal.dayTargetKcal}kcal</span>
+                            <span className="kcal-name">{todaykcal}kcal</span>
                         </div>
                     </div>
                 </div>
