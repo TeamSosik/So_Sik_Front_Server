@@ -62,15 +62,12 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
     const calculationProtein = data.protein * foodAmount.foodAmount / 100;
     const calculationFat = data.fat * foodAmount.foodAmount / 100;
     const calculationKcal = data.kcal * foodAmount.foodAmount / 100;
-    // memberId
-    const member = JSON.parse(localStorage.getItem("member"));
+
     const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
     const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
     const intakeData = {
-      memberId: member.memberId,          // TODO controller에서 처리하는지 물어보기
       foodId: data.foodId,
-      dayTargetCalorieId: 1,              // TODO 어디서 가져오는 거지?
       calculationCarbo: calculationCarbo,
       calculationProtein: calculationProtein,
       calculationFat: calculationFat,
@@ -87,7 +84,7 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
       const response = await axios({
 
         method: "post",
-        url: "/intake/food",
+        url: "/intake/v1/food",
         baseURL: "",
         headers: {
           "Content-Type": "application/json",
