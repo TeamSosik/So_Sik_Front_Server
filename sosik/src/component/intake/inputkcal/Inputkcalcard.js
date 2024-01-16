@@ -5,12 +5,22 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./inputkcal.css";
-import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import { OverlayTrigger } from "react-bootstrap";
+import RenderTooltip from "./RenderTooltip";
 
 function Inputkcalcard() {
   const [todayTargetKcal, setTodayTargetkcal] = useState({
     dayTargetKcal: 0,
   });
+  const [managementData, setManagementData] = useState({
+    tdeeCalculation: 0,
+    currentWeight: 0,
+    managementWeek: 0,
+    targetWeight: 0,
+  });
+
   const [createTodayTargetKcal, setCreateTodayKcal] = useState({
     dayTargetKcal: 0,
   });
@@ -20,8 +30,6 @@ function Inputkcalcard() {
     setCreateTodayKcal({ ...createTodayTargetKcal, [name]: value });
     console.log(value);
   };
-
-  const navigate = useNavigate();
 
   const getTodayTargetCalorie = async () => {
     const authorization = JSON.parse(localStorage.getItem("accesstoken"));
@@ -38,8 +46,8 @@ function Inputkcalcard() {
         method: "get",
         url: "http://localhost:5056/target-calorie/v1/" + today,
         headers: {
-          authorization: "Bearer " + authorization,
-          refreshToken: "Bearer " + refreshToken,
+          authorization: authorization,
+          refreshToken: refreshToken,
           "Content-Type": "application/json",
         },
       }).then((response) => {
@@ -51,13 +59,33 @@ function Inputkcalcard() {
       console.log(e);
     }
   };
+  const getManagementData = async () => {
+    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+
+    try {
+      await axios({
+        method: "get",
+        url: "http://localhost:5056/members/v1/managementData",
+        headers: {
+          authorization: authorization,
+          refreshToken: refreshToken,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        console.log(response);
+        console.log(response.data.result);
+        setManagementData(response.data.result);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
     getTodayTargetCalorie();
+    getManagementData();
   }, []);
-
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleOnModify = async (e) => {
     try {
       const authorization = JSON.parse(localStorage.getItem("accesstoken"));
       const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
@@ -70,16 +98,47 @@ function Inputkcalcard() {
           requestTargetCalorie,
           {
             headers: {
-              authorization: "Bearer " + authorization,
-              refreshToken: "Bearer " + refreshToken,
+              authorization: authorization,
+              refreshToken: refreshToken,
             },
           }
         )
         .then((result) => {
           alert("목표칼로리 기입에 성공하였습니다.");
-          navigate("/mainpage");
+          window.location.reload();
         });
     } catch (error) {}
+  };
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    if (todayTargetKcal === null) {
+      try {
+        const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+        const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+        console.log(createTodayTargetKcal);
+        const requestTargetCalorie = createTodayTargetKcal;
+        console.log(requestTargetCalorie);
+        await axios
+          .post(
+            "http://localhost:5056/target-calorie/v1/",
+            requestTargetCalorie,
+            {
+              headers: {
+                authorization: authorization,
+                refreshToken: refreshToken,
+              },
+            }
+          )
+          .then((result) => {
+            alert("목표칼로리 기입에 성공하였습니다.");
+            window.location.reload();
+          });
+      } catch (error) {}
+      console.log("Submit for Registration");
+    } else {
+      console.log("Submit for Modification");
+      handleOnModify(); // 수정 버튼일 경우 handleOnModify 호출
+    }
   };
 
   return (
@@ -92,7 +151,15 @@ function Inputkcalcard() {
       <Card.Body>
         <Card.Title className="inputkcalcardtitle mb-2">
           오늘의 목표칼로리
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 100, hide: 300 }}
+            overlay={RenderTooltip(managementData)}
+          >
+            <FontAwesomeIcon icon={faCircleQuestion} />
+          </OverlayTrigger>
         </Card.Title>
+
         <Card.Text>
           <Form onSubmit={handleOnSubmit}>
             <div className="d-flex">
@@ -107,7 +174,7 @@ function Inputkcalcard() {
               />
               <span className="kcal">kcal</span>
             </div>
-            {todayTargetKcal == null ? (
+            {todayTargetKcal === null ? (
               <Button type="submit" variant="success" className="kcalbutton">
                 등록
               </Button>
