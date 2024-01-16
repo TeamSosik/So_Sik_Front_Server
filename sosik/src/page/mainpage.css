@@ -1,0 +1,147 @@
+@font-face {
+    font-family: 'SUITE Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 300 400 500 600 700 800 900;
+    font-style: normal;
+}
+
+.cont_main .inner_responsible[data-v-4b6b04e7] {
+    font-family: 'SUITE Variable';
+    font-size: 0;
+    font-weight: 900;
+    margin-top: 200px;
+    margin-bottom: 150px;
+    text-align: center;
+}
+
+.cont_main .inner_responsible .box_responsible[data-v-4b6b04e7] {
+    display: inline-block;
+    position: relative;
+    width: calc(33.333% - 16px);
+    height: 669px;
+    margin-left: 16px;
+    border-radius: 24px;
+    transition: transform 0.5s ease;
+    /* 기본적인 애니메이션 설정 */
+}
+
+.cont_main .inner_responsible .box_responsible[data-v-4b6b04e7]:hover {
+    transform: translateY(-30px);
+    /* 원하는 만큼의 이동 거리 지정 */
+    cursor: pointer;
+}
+
+.cont_main .inner_responsible .box_responsible.type_esg .name_responsible[data-v-4b6b04e7],
+.cont_main .inner_responsible .box_responsible.type_esg[data-v-4b6b04e7] {
+    background-color: #59BD82;
+}
+
+.cont_main .inner_responsible .box_responsible.type_esg .text_responsible[data-v-4b6b04e7] {
+    color: #fff
+}
+
+.cont_main .inner_responsible .box_responsible.type_green[data-v-4b6b04e7] {
+    background-color: #9DE18F
+}
+
+.cont_main .inner_responsible .box_responsible.type_green .name_responsible[data-v-4b6b04e7] {
+    background-color: #1ed47e
+}
+
+.cont_main .inner_responsible .box_responsible.type_green .text_responsible[data-v-4b6b04e7] {
+    color: #fff
+}
+
+.cont_main .inner_responsible .box_responsible.type_policy[data-v-4b6b04e7] {
+    background-color: #333
+}
+
+.cont_main .inner_responsible .box_responsible.type_policy .name_responsible[data-v-4b6b04e7] {
+    background-color: #fae100
+}
+
+.cont_main .inner_responsible .box_responsible.type_policy .text_responsible[data-v-4b6b04e7] {
+    color: #fff
+}
+
+
+
+.cont_main .inner_responsible .name_responsible[data-v-4b6b04e7] {
+    display: inline-block;
+    width: 272px;
+    height: 58px;
+    margin: 2px 2px 0 0;
+    line-height: 58px;
+    font-size: 17px;
+    color: #000;
+    text-align: center;
+    border-radius: 29px;
+    letter-spacing: -.5px
+}
+
+.cont_main .inner_responsible .img_responsible[data-v-4b6b04e7] {
+    position: absolute;
+    top: 164px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%)
+}
+
+.cont_main .inner_responsible .img_responsible[data-v-4b6b04e7]:not(.type_esg) {
+    width: 322px
+}
+
+.cont_main .inner_responsible .img_responsible.type_esg[data-v-4b6b04e7] {
+    width: 100%
+}
+
+.cont_main .inner_responsible .text_responsible[data-v-4b6b04e7] {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    /* 가운데 정렬을 위해 50%로 설정 */
+    transform: translateX(-50%);
+    /* 가운데 정렬을 위해 음수의 50%만큼 이동 */
+    font-size: 40px;
+    line-height: 1.46;
+    letter-spacing: -.6px;
+    max-width: 340px
+}
+
+.cont_main .inner_responsible .btn_area[data-v-4b6b04e7] {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    padding: 16px 0 0 16px;
+    background-color: white;
+    border-radius: 36px 0 0 0
+}
+
+.cont_main .inner_responsible .btn_area[data-v-4b6b04e7]:after,
+.cont_main .inner_responsible .btn_area[data-v-4b6b04e7]:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background-size: 100% auto;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cpath d='M24 0c0 13.3-10.7 24-24 24v2h26V0h-2z' fill='%23fff' fill-rule='evenodd' clip-rule='evenodd'/%3E%3C/svg%3E")
+}
+
+.cont_main .inner_responsible .btn_area[data-v-4b6b04e7]:before {
+    left: -24px;
+    bottom: 0
+}
+
+.cont_main .inner_responsible .btn_area[data-v-4b6b04e7]:after {
+    right: 0;
+    top: -24px
+}
+
+.cont_main .inner_responsible .btn_arr_big[data-v-4b6b04e7] {
+    width: 64px;
+    height: 64px;
+    margin: 0 2px 2px 0
+}
