@@ -4,8 +4,7 @@ import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import Recipeboardlist from "../../../page/Recipeboardlist.js";
 import Feed from "../../feed/Feed.js";
-
-import Mainpage from "../../../page/MainPage";
+import Mainpage from "../../../page/MainPage.js";
 import Login from "../../member/loginform/Login.js";
 import FoodSearch from "../../food/foodSearch/FoodSearch.js";
 import Signup from "../../member/signupform/Signup.js";
@@ -19,6 +18,8 @@ import FindPw from "../../member/loginform/FindPw.js";
 import SnsInfo from "../../member/loginform/social/SnsInfo.js";
 import MyPage from '../../member/mypage/Mypage';
 import SearchBox from "../header/SearchBox.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 export const HeaderContext = createContext();
 
@@ -36,7 +37,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      console.log("들어왓어요");
+      console.log("들어왔어요");
 
       const accesstoken = JSON.parse(
         window.localStorage.getItem("accesstoken")
@@ -60,7 +61,7 @@ const Header = () => {
           member: member.result.email,
           "Content-Type": "application/json",
         },
-        data: JSON.stringify({ email: member.result.email}),
+        data: JSON.stringify({ email: member.result.email }),
       });
 
       window.localStorage.removeItem("accesstoken");
@@ -81,18 +82,23 @@ const Header = () => {
     loginview = (
       <>
         <li>
+          <Link to="/recipeboardlist" style={{ marginRight: "30px" }}>
+            커뮤니티
+          </Link>
           <Link to="/mypage" style={{ marginRight: "30px" }}>
             마이페이지
           </Link>
-          <Link to="/mainpage" onClick={handleLogout}>
+          <Link to="/mainpage" style={{ marginRight: "30px" }} onClick={handleLogout}>
             로그아웃
           </Link>
+          <FontAwesomeIcon icon={faBell} size="lg" style={{color: "#59BD82"}} onClick={"#"} cursor={"pointer"}/>
         </li>
       </>
     );
   } else {
     loginview = (
       <li>
+        <Link to="/recipeboardlist" style={{ marginRight: "30px" }}>커뮤니티</Link>
         <Link to="/login">로그인</Link>
       </li>
     );
@@ -107,7 +113,7 @@ const Header = () => {
         </Link>
         {/* </a> */}
         <nav id="gnb">
-        <SearchBox></SearchBox>
+          <SearchBox></SearchBox>
           {/* <ul className="depth-1">
             <li>
               <Link to="/foodsearch">칼로리</Link>
@@ -133,12 +139,6 @@ const Header = () => {
         </nav>
         <div className="utWrap">
           <ul className="logWrap">{loginview}</ul>
-          <div className="searchWrap">
-            <input type="text" placeholder="어떤 요리가 궁금하신가요?" />
-            <button className="" type="button" id="topSearchBtn">
-              검색
-            </button>
-          </div>
           {/* <div class="searchWrap">
             <input type="text" name="q"/>
               <button id="topSearchBtn" class="" type="button" onclick="topSearch()">검색</button>
