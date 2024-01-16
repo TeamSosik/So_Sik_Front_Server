@@ -6,7 +6,7 @@ import Recipesearch from "../component/community/recipeboard/recipelist/Recipese
 function Recipeboardinfo() {
   return (
     <div>
-      <Recipebutton></Recipebutton>
+      {/* <Recipebutton></Recipebutton> */}
       <Recipesearch></Recipesearch>
       <Recipecard></Recipecard>
     </div>
