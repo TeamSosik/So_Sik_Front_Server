@@ -24,10 +24,15 @@ function Inputkcalcard() {
   const [createTodayTargetKcal, setCreateTodayKcal] = useState({
     dayTargetKcal: 0,
   });
+  const [updateTodayTargetKcal, setUpdateTodayTargetKcal] = useState({
+    dayTargetKcal: 0,
+    createdAt: "",
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCreateTodayKcal({ ...createTodayTargetKcal, [name]: value });
+    setUpdateTodayTargetKcal({ ...updateTodayTargetKcal, [name]: value });
     console.log(value);
   };
 
@@ -86,16 +91,22 @@ function Inputkcalcard() {
     getManagementData();
   }, []);
   const handleOnModify = async (e) => {
+    let today = new Date();
+    today = today.toISOString();
+    today = today.split("T")[0];
+    updateTodayTargetKcal.createdAt = today;
+    console.log(updateTodayTargetKcal.createdAt);
     try {
       const authorization = JSON.parse(localStorage.getItem("accesstoken"));
       const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+
       console.log(createTodayTargetKcal);
-      const requestTargetCalorie = createTodayTargetKcal;
-      console.log(requestTargetCalorie);
+      const requestUpdateTargetCalorie = updateTodayTargetKcal;
+      console.log(requestUpdateTargetCalorie);
       await axios
-        .post(
+        .patch(
           "http://localhost:5056/target-calorie/v1/",
-          requestTargetCalorie,
+          requestUpdateTargetCalorie,
           {
             headers: {
               authorization: authorization,
@@ -104,7 +115,7 @@ function Inputkcalcard() {
           }
         )
         .then((result) => {
-          alert("목표칼로리 기입에 성공하였습니다.");
+          alert("목표칼로리 수정에 성공하셨습니다.");
           window.location.reload();
         });
     } catch (error) {}

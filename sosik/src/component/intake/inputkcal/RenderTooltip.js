@@ -4,6 +4,7 @@ import { Tooltip } from "react-bootstrap";
 
 const RenderTooltip = (props) => (
   <Tooltip id="button-tooltip" {...props}>
+    <br />
     <strong>나의 TDEE</strong> - {props.tdeeCalculation} kcal
     <br />
     <br />
