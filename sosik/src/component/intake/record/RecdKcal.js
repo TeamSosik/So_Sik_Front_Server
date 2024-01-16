@@ -66,7 +66,6 @@ const RecdKcal = () => {
       console.log("************* 에러 발생 ************");
       console.log(e);
     }
-
   }
 
   // 섭취 음식 list를 mealList에 담기
