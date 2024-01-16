@@ -17,10 +17,10 @@
   margin-right: 5px;
 }
 
-.logindiv1{
-    display: block;
-    margin: auto;
-    width: 150px;
+.logindiv1 {
+  display: block;
+  margin: auto;
+  width: 150px;
 }
 
 .loginfont {
@@ -46,15 +46,11 @@
 }
 
 .logincontainer {
-    margin-top: 130px;
-    margin-bottom: 130px;
+  margin-top: 130px;
 }
 
-.error-message{
-    font-size: 12px;
-    color: rgb(255, 52, 52);
-    margin: 5px;
+.error-message {
+  font-size: 12px;
+  color: rgb(255, 52, 52);
+  margin: 5px;
 }
-
-
-
