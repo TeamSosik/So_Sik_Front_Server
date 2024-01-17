@@ -5,7 +5,7 @@ import RecdKcalSection3 from "./RecdKcalSection3.js";
 import Recdbutton from "./RecdButton.js";
 import axios from "axios";
 import Loading from "../../common/spinners/Loading.js";
-import Calendarview from "../../intake/calendar/Calendarview.js"
+import Calendarview from "../../intake/calendar/Calendarview.js";
 import Inputkcal from "../Inputkcal.js";
 
 export const RecdKcalContext = createContext();
@@ -16,6 +16,7 @@ const RecdKcal = () => {
   // 상태
   const [mealList, setMealList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadDate, setLoadDate] = useState("");
 
   // 메서드
 
@@ -50,28 +51,17 @@ const RecdKcal = () => {
         },
       });
 
-      console.log("************* 응답 성공 *****************");
-      console.log("************* 응답 하하 *****************");
-
-      console.log("******* 하하하하하하하 ********");
       setLoading(false);
 
       return response;
     } catch (e) {
-      console.log("******* 하하하하하하하 ********");
       setLoading(false);
-
-      console.log("************* 에러 발생 ************");
-      console.log(e);
     }
   };
 
   // 섭취 음식 list를 mealList에 담기
   const addMealList = async () => {
     const data = await getData();
-    console.log("히히히히히히")
-
-    console.log(data);
 
     if (data) {
       setMealList(() => {
@@ -93,13 +83,15 @@ const RecdKcal = () => {
   if (loading) {
     return <Loading />;
   }
-
+  const highFunction = (text) => {
+    setLoadDate(text);
+  };
   return (
     <RecdKcalContext.Provider value={{ addMealList }}>
       <div>
         <Recdbutton></Recdbutton>
-        <Inputkcal></Inputkcal>
-        <Calendarview></Calendarview>
+        <Inputkcal props={loadDate} />
+        <Calendarview propFunction={highFunction} />
         <RecdKcalSection2 mealList={mealList} />
         <RecdKcalSection3 mealList={mealList} />
       </div>
