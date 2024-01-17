@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -19,6 +19,63 @@ import TdeeCalFunction from "./TdeeCalFunction";
 import ValidationForm from "./ValidationForm";
 
 function UpdateInfo() {
+  const [users, setUsers] = useState({
+    memberId: "",
+    email: "",
+    name: "",
+    gender: "",
+    height: "",
+    role: "",
+    activityLevel: "",
+    nickname: "",
+    profileImage: "",
+    birthday: "",
+    tdeeCalculation: "",
+    weightList: [""],
+  });
+  const getMemberDetail = async () => {
+    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+
+    try {
+      await axios({
+        method: "get",
+        url: "http://localhost:5056/members/v1/detail",
+        headers: {
+          authorization: authorization,
+          refreshToken: refreshToken,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        console.log(response);
+        console.log(response.data.result);
+        setUsers(response.data.result);
+        const { weightList, height } = response.data.result;
+        const data = response.data.result;
+        const { currentWeight, targetWeight } =
+          weightList[weightList.length - 1];
+        setMemberInfo({
+          currentWeight: currentWeight,
+          targetWeight: targetWeight,
+          height: height,
+        });
+        // a = {
+        //   ...a,
+        //   currentWeight:
+        //     data.weightList[data.weightList.length - 1].currentWeight,
+        //   targetWeight:
+        //     data.weightList[data.weightList.length - 1].targetWeight,
+        // };
+
+        // setMemberInfo(a);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getMemberDetail();
+  }, []);
   const navigate = useNavigate();
   const member = JSON.parse(window.localStorage.getItem("member")).result;
 
@@ -26,15 +83,15 @@ function UpdateInfo() {
     const { name, value } = e.target;
     setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
-
   const [memberInfo, setMemberInfo] = useState({
-    currentWeight: 0,
-    targetWeight: 0,
-    height: 0,
+    currentWeight: "",
+    targetWeight: "",
+    height: "",
     activityLevel: "",
     tdeeCalculation: 0,
     profileImage: "", // 사용자가 프로필 이미지를 선택하지 않았을 때를 나타내기 위해서 null로 설정
   });
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setMemberInfo((prevInfo) => ({
@@ -100,8 +157,10 @@ function UpdateInfo() {
               <Form.Control
                 aria-describedby="basic-addon2"
                 name="currentWeight"
+                defaultValue={memberInfo.currentWeight}
                 onChange={handleInputChange}
               />
+
               <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
             </InputGroup>
 
@@ -112,6 +171,7 @@ function UpdateInfo() {
               <Form.Control
                 aria-describedby="basic-addon2"
                 name="targetWeight"
+                defaultValue={memberInfo.targetWeight}
                 onChange={handleInputChange}
               />
               <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
@@ -124,6 +184,7 @@ function UpdateInfo() {
               <Form.Control
                 aria-describedby="basic-addon2"
                 name="height"
+                defaultValue={memberInfo.height}
                 onChange={handleInputChange}
               />
               <InputGroup.Text id="basic-addon2">cm</InputGroup.Text>

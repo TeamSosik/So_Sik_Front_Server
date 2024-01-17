@@ -53,7 +53,7 @@ function WeightModal({ handleCloseModal, accessToken }) {
         centered // 중앙 정렬
       >
         <Modal.Header closeButton>
-          <Modal.Title>나의 체중 수정</Modal.Title>
+          <Modal.Title>나의 체중 기록</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -78,7 +78,7 @@ function WeightModal({ handleCloseModal, accessToken }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleWeightInput}>
-            저장
+            기록
           </Button>
           <Button variant="secondary" onClick={handleCloseModal}>
             닫기
