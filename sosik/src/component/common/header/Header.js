@@ -2,7 +2,7 @@ import React, { useEffect, useState, createContext } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
-import Recipeboardlist from "../../../page/Recipeboardlist.js";
+import Recipeboardlist from "../../../page/recipeboardlist.js";
 import Feed from "../../feed/Feed.js";
 import Mainpage from "../../../page/MainPage.js";
 import Login from "../../member/loginform/Login.js";
@@ -35,6 +35,13 @@ const Header = () => {
       setlogout(false);
     }
   }, [logout]);
+
+  const StyleDiv = {
+    position: 'absolute',
+    right: '-5px'
+  }
+
+  
 
   const handleLogout = async () => {
     try {
@@ -96,10 +103,11 @@ const Header = () => {
           <Link to="/mainpage" style={{ marginRight: "30px" }} onClick={handleLogout}>
             로그아웃
           </Link>
-          
-          <NotificationList/>
           {showNotification && <NotificationList logout={logout} />}
         </li>
+          <div className="notification">
+            <NotificationList style={StyleDiv} />
+          </div>
       </>
     );
   } else {

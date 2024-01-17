@@ -48,9 +48,9 @@ const NotificationList = () => {
         option: { text: 'View All', onClick: () => console.log('Clicked') },
 
       }}
-    // icon={
-    //   <FontAwesomeIcon icon={faBell} style={{color: "#1c8d6b"}} />
-    // }
+    icon={
+      "https://img.freepik.com/premium-vector/3d-notification-bell-icon_165488-3330.jpg"
+    }
 
     />
   );
