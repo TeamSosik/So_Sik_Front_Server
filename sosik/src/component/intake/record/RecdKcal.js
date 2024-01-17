@@ -5,6 +5,7 @@ import RecdKcalSection3 from "./RecdKcalSection3.js";
 import Recdbutton from "./RecdButton.js";
 import axios from "axios";
 import Loading from "../../common/spinners/Loading.js";
+import Calendarview from "../../intake/calendar/Calendarview.js"
 import Inputkcal from "../Inputkcal.js";
 
 export const RecdKcalContext = createContext();
@@ -68,6 +69,7 @@ const RecdKcal = () => {
   // 섭취 음식 list를 mealList에 담기
   const addMealList = async () => {
     const data = await getData();
+    console.log("히히히히히히")
 
     console.log(data);
 
@@ -97,6 +99,7 @@ const RecdKcal = () => {
       <div>
         <Recdbutton></Recdbutton>
         <Inputkcal></Inputkcal>
+        <Calendarview></Calendarview>
         <RecdKcalSection2 mealList={mealList} />
         <RecdKcalSection3 mealList={mealList} />
       </div>
