@@ -25,44 +25,47 @@ const RecdKcal = () => {
       const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
       const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
-      const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
+      // const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
       const currentUTC = new Date();
-      const koreaTimeOffset = 9 * 60;
-      const koreaTime = new Date(currentUTC.getTime() + koreaTimeOffset * 60 * 1000);
+      const koreaTimeOffset = 9 * 60 * 60 * 1000;
+      const koreaTime = new Date(currentUTC.getTime() + koreaTimeOffset);
       // 오늘 날짜
       const todayInKorea = koreaTime.toISOString().split("T")[0]// yyyy-MM-dd 형식
 
       console.log(todayInKorea);
-      const data = {
-        memberId: member.memberId,
-        createdAt: todayInKorea
-      }
 
       console.log(member.memberId);
+
+      const url = `/intake/v1/${todayInKorea}`;
 
       const response = await axios({
 
         method: "get",
-        url: "/intake/",
+        url: url,
         baseURL: "http://localhost:5056",
         headers: {
           Authorization: accesstoken,
           refreshtoken: refreshtoken,
           "Content-Type": "application/json"
         },
-        params: data
-
       });
 
       console.log("************* 응답 성공 *****************");
+      console.log("************* 응답 하하 *****************");
+
+      console.log("******* 하하하하하하하 ********");
+      setLoading(false);
 
       return response;
 
     } catch(e) {
+
+      console.log("******* 하하하하하하하 ********");
+      setLoading(false);
+
       console.log("************* 에러 발생 ************");
       console.log(e);
     }
-    setLoading(false);
   }
 
   // 섭취 음식 list를 mealList에 담기
