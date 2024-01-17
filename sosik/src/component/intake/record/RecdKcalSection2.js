@@ -49,11 +49,8 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList }) => {
       return;
     }
 
-
     const response = await deleteMeal(id);
 
-    // 삭제 완료
-    // console.log("********** 섭취 음식 삭제 완료 ************");
     const status = response.status;
 
     if(status === 200) {
@@ -69,7 +66,7 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList }) => {
     const url = `http://localhost:5056/intake/v1/${id}`;
 
     try {
-      // axios 요청
+
       const response = await axios.delete(url, {
         headers: {
           authorization: accesstoken,
@@ -81,11 +78,8 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList }) => {
       return response;
 
     } catch(e) {
-      console.log("*************** 에러 발생!!!!!! *******************");
       console.log(e);
     }
-
-
 
   }
 
@@ -141,9 +135,6 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList }) => {
   );
 
   const mealListView = mealList.map((data, index) => {
-
-    console.log("ㅎㅁㄴㅇㄻㄴㅇㄹㄴㅁㅇㄹㄴㅁㅇㄹ");
-    console.log(data);
 
     return (
       <div key={index} className="meal">
