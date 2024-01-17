@@ -10,8 +10,11 @@ import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { OverlayTrigger } from "react-bootstrap";
 import RenderTooltip from "./RenderTooltip";
 
-function Inputkcalcard() {
+function Inputkcalcard(props) {
   const [todayTargetKcal, setTodayTargetkcal] = useState({
+    dayTargetKcal: 0,
+  });
+  const [clickedTargetKcal, setClickedTargetKcal] = useState({
     dayTargetKcal: 0,
   });
   const [managementData, setManagementData] = useState({
@@ -34,6 +37,31 @@ function Inputkcalcard() {
     setCreateTodayKcal({ ...createTodayTargetKcal, [name]: value });
     setUpdateTodayTargetKcal({ ...updateTodayTargetKcal, [name]: value });
     console.log(value);
+  };
+
+  const getClickedTargetCalorie = async (props) => {
+    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+
+    console.log(props);
+
+    try {
+      await axios({
+        method: "get",
+        url: "http://localhost:5056/target-calorie/v1/" + props,
+        headers: {
+          authorization: authorization,
+          refreshToken: refreshToken,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        console.log(response);
+        console.log(response.data.result);
+        setClickedTargetKcal(response.data.result);
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getTodayTargetCalorie = async () => {
@@ -180,11 +208,32 @@ function Inputkcalcard() {
                 className="kcalform mr-2"
                 onChange={handleInputChange}
                 placeholder={
-                  todayTargetKcal == null ? 0 : todayTargetKcal.dayTargetKcal
+                  props == null
+                    ? todayTargetKcal == null
+                      ? 0
+                      : todayTargetKcal.dayTargetKcal
+                    : clickedTargetKcal == null
+                    ? 0
+                    : clickedTargetKcal.dayTargetKcal
                 }
               />
               <span className="kcal">kcal</span>
             </div>
+            {props === null ? (
+              todayTargetKcal == null ? (
+                // todayTargetKcal이 null인 경우
+                <Button type="submit" variant="success" className="kcalbutton">
+                  등록
+                </Button>
+              ) : (
+                // 그 외의 경우
+                <Button type="submit" variant="success" className="kcalbutton">
+                  수정
+                </Button>
+              )
+            ) : (
+              <></>
+            )}
             {todayTargetKcal === null ? (
               <Button type="submit" variant="success" className="kcalbutton">
                 등록

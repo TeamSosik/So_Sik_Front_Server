@@ -1,10 +1,11 @@
 import Inputkcalcard from "./inputkcal/Inputkcalcard.js";
 
-function Inputkcal() {
+function Inputkcal({ props }) {
+  console.log(props);
   return (
     <div>
       <div className="a">
-        <Inputkcalcard />
+        <Inputkcalcard props={props} />
       </div>
     </div>
   );
