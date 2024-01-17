@@ -180,7 +180,7 @@ footer .ft_top {
   width: 3rem;
   height: 3rem;
   margin-top: 1.875rem;
-  text-indent: -9999px;
+  /* text-indent: -9999px; */
   border-radius: 12px;
   border: solid 1px #d4d4d4;
   background-color: #fff;
