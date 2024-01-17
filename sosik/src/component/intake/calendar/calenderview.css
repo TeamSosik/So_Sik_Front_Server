@@ -167,7 +167,7 @@
     display: flex;
     float: left;
     text-align: center;
-    margin-left: 3px;
+    margin-left: 1px;
   }
   
   .dot2 {
@@ -178,7 +178,7 @@
     display: flex;
     float: left;
     text-align: center;
-    margin-left: 3px;
+    margin-left: 1px;
   }
 
   .dot3 {
@@ -189,8 +189,18 @@
     display: flex;
     float: left;
     text-align: center;
-    margin-left: 3px;
+    margin-left: 1px;
   }
 
+  .dot4 {
+    height: 8px;
+    width: 8px;
+    background-color: #b596e7;
+    border-radius: 50%;
+    display: flex;
+    float: left;
+    text-align: center;
+    margin-left: 1px;
+  }
  
   

@@ -18,13 +18,14 @@ import FindPw from "../../member/loginform/FindPw.js";
 import SnsInfo from "../../member/loginform/social/SnsInfo.js";
 import MyPage from '../../member/mypage/Mypage';
 import SearchBox from "../header/SearchBox.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import NotificationList from "./NotificationList.js";
+
 
 export const HeaderContext = createContext();
 
 const Header = () => {
   const [logout, setlogout] = useState(true);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const access = window.localStorage.getItem("accesstoken");
@@ -76,6 +77,10 @@ const Header = () => {
     }
   };
 
+  const handleBellClick = () => {
+    setShowNotification(!showNotification);
+  };
+
   let loginview = "";
 
   if (logout === false) {
@@ -91,7 +96,9 @@ const Header = () => {
           <Link to="/mainpage" style={{ marginRight: "30px" }} onClick={handleLogout}>
             로그아웃
           </Link>
-          <FontAwesomeIcon icon={faBell} size="lg" style={{color: "#59BD82"}} onClick={"#"} cursor={"pointer"}/>
+          
+          <NotificationList/>
+          {showNotification && <NotificationList logout={logout} />}
         </li>
       </>
     );
@@ -107,42 +114,14 @@ const Header = () => {
   return (
     <BrowserRouter>
       <header id="header" className="nav-down">
-        {/* <a className="logo" href="/"> */}
         <Link to="/mainpage" className="logo">
           <img src={logo} alt="Logo" />
         </Link>
-        {/* </a> */}
         <nav id="gnb">
           <SearchBox></SearchBox>
-          {/* <ul className="depth-1">
-            <li>
-              <Link to="/foodsearch">칼로리</Link>
-            </li>
-            <li>
-              <Link to="/feed">SNS</Link>
-            </li>
-            <li>
-              <Link to="/recipeboardlist">커뮤니티</Link>
-              <ul className="depth-2">
-                <li>
-                  <Link to="/recipeboardlist">요리해요</Link>
-                </li>
-                <li>
-                  <a href="">고민있어요</a>
-                </li>
-                <li>
-                  <a href="">성공했어요</a>
-                </li>
-              </ul>
-            </li>
-          </ul> */}
         </nav>
         <div className="utWrap">
           <ul className="logWrap">{loginview}</ul>
-          {/* <div class="searchWrap">
-            <input type="text" name="q"/>
-              <button id="topSearchBtn" class="" type="button" onclick="topSearch()">검색</button>
-          </div> */}
 
           <button
             type="button"
@@ -154,12 +133,9 @@ const Header = () => {
             <div className="bar"></div>
           </button>
         </div>
-        {/* <div class="scrollindicator" style="visibility: visible;">
-          <div class="scrollprogress" style="transform: translate3d(-100%, 0px, 0px);"></div>
-              <Link to="/mypage">마이페이지</Link>
-        </div> */}
       </header>
 
+  
       <HeaderContext.Provider value={{ setlogout }}>
         <Routes>
           <Route path="/recipeboardlist" element={<Recipeboardlist />} />
@@ -176,9 +152,7 @@ const Header = () => {
           <Route path="/redirection" element={<RedirectionKakao />} />
           <Route path="/findPw" element={<FindPw />} />
           <Route path="/snsInfo" element={<SnsInfo />} />
-
         </Routes>
-        {/* <RecdButton /> */}
       </HeaderContext.Provider>
     </BrowserRouter>
   );

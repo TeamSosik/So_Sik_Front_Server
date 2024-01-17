@@ -2,6 +2,10 @@ import React from "react";
 import "./myinfo.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { OverlayTrigger } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import RenderTooltip from "./RenderTooltip";
+import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 
 const MyInfo = ({ props }) => {
   const lastWeightEntry = props.weightList[props.weightList.length - 1];
@@ -50,7 +54,17 @@ const MyInfo = ({ props }) => {
         <div className="kcal">
           <div className="kcal-type">
             <div className="tdee-kcal">
-              <span className="kcal-type-name">TDEE 칼로리</span>
+              <span className="kcal-type-name">
+                TDEE 칼로리{" "}
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 100, hide: 300 }}
+                  overlay={RenderTooltip}
+                >
+                  <FontAwesomeIcon icon={faCircleQuestion} />
+                </OverlayTrigger>
+              </span>
+
               <span className="kcal-name">{props.tdeeCalculation}kcal</span>
             </div>
             <hr />

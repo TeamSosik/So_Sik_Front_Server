@@ -50,3 +50,14 @@
     margin: 0 auto;
     /* 좌우 여백을 자동으로 설정하여 가운데 정렬 */
 }
+
+.recd-anly-section1 #chart .period-select-box {
+    text-align: right;
+}
+
+.recd-anly-section1 #chart .period-select-box select {
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 10px;
+}
