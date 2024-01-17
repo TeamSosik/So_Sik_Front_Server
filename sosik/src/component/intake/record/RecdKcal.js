@@ -27,17 +27,12 @@ const RecdKcal = () => {
 
       // const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
       const currentUTC = new Date();
-      const koreaTimeOffset = 9 * 60;
-      const koreaTime = new Date(
-        currentUTC.getTime() + koreaTimeOffset * 60 * 1000
-      );
       const koreaTimeOffset = 9 * 60 * 60 * 1000;
       const koreaTime = new Date(currentUTC.getTime() + koreaTimeOffset);
       // 오늘 날짜
       const todayInKorea = koreaTime.toISOString().split("T")[0]; // yyyy-MM-dd 형식
 
       console.log(todayInKorea);
-
 
       console.log(member.memberId);
 
@@ -52,7 +47,6 @@ const RecdKcal = () => {
           refreshtoken: refreshtoken,
           "Content-Type": "application/json",
         },
-
       });
 
       console.log("************* 응답 성공 *****************");
@@ -62,16 +56,14 @@ const RecdKcal = () => {
       setLoading(false);
 
       return response;
-
-    } catch(e) {
-
+    } catch (e) {
       console.log("******* 하하하하하하하 ********");
       setLoading(false);
 
       console.log("************* 에러 발생 ************");
       console.log(e);
     }
-  }
+  };
 
   // 섭취 음식 list를 mealList에 담기
   const addMealList = async () => {
