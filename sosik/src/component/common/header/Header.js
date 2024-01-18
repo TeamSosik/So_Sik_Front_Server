@@ -2,7 +2,6 @@ import React, { useEffect, useState, createContext } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
-import Recipeboardlist from "../../../page/recipeboardlist.js";
 import Feed from "../../feed/Feed.js";
 import Mainpage from "../../../page/MainPage.js";
 import Login from "../../member/loginform/Login.js";
@@ -19,14 +18,12 @@ import SnsInfo from "../../member/loginform/social/SnsInfo.js";
 import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
-import NotificationList from './NotificationList';
-
+import NotificationList from "./NotificationList";
 
 export const HeaderContext = createContext();
 
 const Header = () => {
   const [logout, setlogout] = useState(true);
-
 
   useEffect(() => {
     const access = window.localStorage.getItem("accesstoken");
@@ -101,7 +98,9 @@ const Header = () => {
   } else {
     loginview = (
       <li>
-        <Link to="/freeboard" style={{ marginRight: "30px" }}>커뮤니티</Link>
+        <Link to="/freeboard" style={{ marginRight: "30px" }}>
+          커뮤니티
+        </Link>
         <Link to="/login">로그인</Link>
       </li>
     );
@@ -134,7 +133,6 @@ const Header = () => {
 
       <HeaderContext.Provider value={{ setlogout }}>
         <Routes>
-          <Route path="/recipeboardlist" element={<Recipeboardlist />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mainpage" element={<Mainpage props={logout} />} />

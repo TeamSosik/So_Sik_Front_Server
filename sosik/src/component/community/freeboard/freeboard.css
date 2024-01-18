@@ -1,11 +1,12 @@
-body {
-    margin-top: 200px;
-}
-
 h3 {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 3rem;
     font-weight: 900;
+}
+
+.freeboard {
+    margin-top: 200px;
+    margin-bottom: 200px;
 }

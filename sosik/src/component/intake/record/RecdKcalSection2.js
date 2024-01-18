@@ -19,7 +19,11 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   const defaultMealViewName = "BREAKFAST";
   let leftBtnMealTitle = "";
   let rightBtnMealTitle = "";
-
+  const today = new Date();
+  const formattedToday = `${today.getFullYear()}-${(today.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${today.getDate().toString().padStart(2, "0")}`;
+  const isToday = formattedToday === props;
   // 상태
   const [mealViewName, setMealViewName] = useState(defaultMealViewName); // 아침, 점심, 저녁, 간식 화면 변경 상태
 
@@ -185,11 +189,6 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
     />
   );
 
-  const today = new Date();
-  const formattedToday = `${today.getFullYear()}-${(today.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}-${today.getDate().toString().padStart(2, "0")}`;
-  const isToday = formattedToday === props;
   const additionMealView = isToday && (
     <div className="additionMeal">
       <div className="additionMeal-name">
