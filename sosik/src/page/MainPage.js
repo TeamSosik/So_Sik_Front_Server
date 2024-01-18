@@ -8,7 +8,7 @@ function Mainpage() {
             <div data-v-4b6b04e7="" className="cont_main area_responsible">
 
                 <div data-v-4b6b04e7="" className="inner_main inner_responsible">
-                    <Link to="/recipeboardlist">
+                    <Link to="/foodsearch">
                         <div data-v-4b6b04e7="" className="box_responsible type_esg">
                             <span data-v-4b6b04e7="" className="title_responsible" />
                             <img data-v-a968263a="" data-v-4b6b04e7="" src="https://t1.kakaocdn.net/kakaocorp/kakaocorp/service/main/esg.gif" className="img_responsible type_esg" />
@@ -23,7 +23,7 @@ function Mainpage() {
                         </div>
                     </Link>
 
-                    <Link to="/recipeboardlist">
+                    <Link to="/freeboard">
                         <div data-v-4b6b04e7="" className="box_responsible type_green">
                             <span data-v-4b6b04e7="" className="title_responsible" />
                             <img data-v-a968263a="" data-v-4b6b04e7="" src="https://t1.kakaocdn.net/kakaocorp/kakaocorp/service/main/green.gif" className="img_responsible" />
