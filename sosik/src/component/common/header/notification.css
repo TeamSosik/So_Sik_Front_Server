@@ -1,0 +1,11 @@
+.notification-btn {
+    border: none;
+    padding: 0;
+}
+
+.notification-toast {
+    box-shadow: none;
+    position: fixed;
+    margin-top: 1rem;
+    padding: 0.3rem;
+}

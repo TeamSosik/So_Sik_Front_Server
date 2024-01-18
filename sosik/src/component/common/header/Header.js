@@ -20,12 +20,14 @@ import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
 import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
+import NotificationList from "./NotificationList.js";
 
 
 export const HeaderContext = createContext();
 
 const Header = () => {
   const [logout, setlogout] = useState(true);
+
 
   useEffect(() => {
     const access = window.localStorage.getItem("accesstoken");
@@ -77,7 +79,6 @@ const Header = () => {
     }
   };
 
-
   let loginview = "";
 
   if (logout === false) {
@@ -97,7 +98,7 @@ const Header = () => {
           >
             로그아웃
           </Link>
-
+          <NotificationList />
         </li>
       </>
     );

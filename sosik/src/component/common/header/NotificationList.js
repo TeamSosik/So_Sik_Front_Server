@@ -1,60 +1,29 @@
-import React from "react";
-import Notifications from "react-notifications-menu";
-import logo from "../../../images/logo.png"
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Toast from 'react-bootstrap/Toast';
+import './notification.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
-const NotificationList = () => {
+function NotificationList() {
+  const [showA, setShowA] = useState(false);
+
+  const toggleShowA = () => setShowA(!showA);
 
   return (
-    <Notifications
-      data={[
-        {
-          image: "logo",
-          message: 'Kameshwaran S had shared a feedback with you.',
-          detailPage: '/',
-        },
-        {
-          image: logo,
-          message: (
-            <p>
-              Kameshwaran S had shared a{' '}
-              <span style={{ color: '#7ac2fa' }}>feedback</span> with you.
-            </p>
-          ),
-          detailPage: '/',
-        },
-        {
-          image: logo,
-          message: (
-            <p>
-              Kameshwaran S had shared a{' '}
-              <span style={{ color: '#7ac2fa' }}>feedback</span> with you.
-            </p>
-          ),
-          detailPage: '/',
-        },
-        {
-          image: logo,
-          message: (
-            <p>
-              Kameshwaran S had shared a{' '}
-              <span style={{ color: '#7ac2fa' }}>feedback</span> with you.
-            </p>
-          ),
-          detailPage: '/',
-        },
-      ]}
-      header={{
-        title: 'Notifications',
-        option: { text: 'View All', onClick: () => console.log('Clicked') },
-
-      }}
-    // icon={
-    //   <FontAwesomeIcon icon={faBell} style={{color: "#1c8d6b"}} />
-    // }
-
-    />
+    <>
+      <Button onClick={toggleShowA} className="notification-btn" variant="link" >
+        <FontAwesomeIcon icon={faBell} size="lg" style={{ color: "#59BD82" }} cursor={"pointer"} />
+      </Button>
+      <Toast show={showA} onClose={toggleShowA} className="notification-toast">
+        <Toast.Header>
+          <strong className="me-auto">알림</strong>
+          <small>11 mins ago</small>
+        </Toast.Header>
+        <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+      </Toast>
+    </>
   );
-};
-
+}
 
 export default NotificationList;
