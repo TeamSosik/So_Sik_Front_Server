@@ -66,6 +66,43 @@ const RecdKcal = () => {
     }
   };
 
+  // 섭취 음식 list를 mealList에 담기
+  const addMealList2 = async (date) => {
+    const data = await getData2(date);
+
+    if (data) {
+      setMealList(() => {
+        return data.data.result;
+      });
+    }
+  };
+
+  // 섭취 음식 목록 불러오기
+  const getData2 = async (date) => {
+    try {
+
+      const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
+      const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+
+      const url = `/intake/v1/${date}`;
+
+      const response = await axios({
+        method: "get",
+        url: url,
+        baseURL: "http://localhost:5056",
+        headers: {
+          Authorization: accesstoken,
+          refreshtoken: refreshtoken,
+          "Content-Type": "application/json",
+        },
+      });
+
+
+      return response;
+    } catch (e) {
+    }
+  };
+
   // 처음 페이지 들어왔을 때 실행
   useEffect(() => {
     setLoading(true);
@@ -73,13 +110,14 @@ const RecdKcal = () => {
     addMealList();
   }, []);
 
-  // view
+  // view()
 
   // 로딩 화면
   if (loading) {
     return <Loading />;
   }
   const highFunction = (text) => {
+    addMealList2(text);
     setLoadDate(text);
   };
   return (

@@ -162,7 +162,7 @@
   .dot {
     height: 8px;
     width: 8px;
-    background-color: #a4e1f8;
+    background-color: #ff5757;
     border-radius: 50%;
     display: flex;
     float: left;
@@ -173,7 +173,7 @@
   .dot2 {
     height: 8px;
     width: 8px;
-    background-color: #958cf4;
+    background-color: #f9c109;
     border-radius: 50%;
     display: flex;
     float: left;
@@ -184,7 +184,7 @@
   .dot3 {
     height: 8px;
     width: 8px;
-    background-color: #873dff;
+    background-color: #ebff7b;
     border-radius: 50%;
     display: flex;
     float: left;
@@ -195,12 +195,78 @@
   .dot4 {
     height: 8px;
     width: 8px;
-    background-color: #b596e7;
+    background-color: #4fff69;
     border-radius: 50%;
     display: flex;
     float: left;
     text-align: center;
     margin-left: 1px;
   }
- 
+
+  .dot_1 {
+    height: 8px;
+    width: 8px;
+    background-color: #ff5757;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 1px;
+  }
+  
+  .dot2_1 {
+    height: 8px;
+    width: 8px;
+    background-color: #f9c109;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 1px;
+  }
+
+  .dot3_1 {
+    height: 8px;
+    width: 8px;
+    background-color: #ebff7b;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 1px;
+  }
+
+  .dot4_1 {
+    height: 8px;
+    width: 8px;
+    background-color: #4fff69;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 1px;
+  }
+
+  .meals-container {
+    margin-top: 20px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .meals {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-right: 15px;
+  }
+  
+  .dot_1,
+  .dot2_1,
+  .dot3_1,
+  .dot4_1 {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 1px;
+    margin-right: 5px; 
+  }
+  
+  
   
