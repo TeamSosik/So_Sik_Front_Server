@@ -10,10 +10,9 @@ import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { OverlayTrigger } from "react-bootstrap";
 import RenderTooltip from "./RenderTooltip";
 
-function Inputkcalcard(props) {
-  const [todayTargetKcal, setTodayTargetkcal] = useState({
-    dayTargetKcal: 0,
-  });
+function Inputkcalcard({ props }) {
+  console.log(props);
+
   const [clickedTargetKcal, setClickedTargetKcal] = useState({
     dayTargetKcal: 0,
   });
@@ -42,21 +41,18 @@ function Inputkcalcard(props) {
   const getClickedTargetCalorie = async (props) => {
     const authorization = JSON.parse(localStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
-
-    console.log(props);
+    const loadDate = props.props;
 
     try {
       await axios({
         method: "get",
-        url: "http://localhost:5056/target-calorie/v1/" + props,
+        url: "http://localhost:5056/target-calorie/v1/" + loadDate,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
           "Content-Type": "application/json",
         },
       }).then((response) => {
-        console.log(response);
-        console.log(response.data.result);
         setClickedTargetKcal(response.data.result);
       });
     } catch (e) {
@@ -64,34 +60,6 @@ function Inputkcalcard(props) {
     }
   };
 
-  const getTodayTargetCalorie = async () => {
-    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
-
-    let today = new Date();
-    today = today.toISOString();
-    today = today.split("T")[0];
-
-    console.log(today);
-
-    try {
-      await axios({
-        method: "get",
-        url: "http://localhost:5056/target-calorie/v1/" + today,
-        headers: {
-          authorization: authorization,
-          refreshToken: refreshToken,
-          "Content-Type": "application/json",
-        },
-      }).then((response) => {
-        console.log(response);
-        console.log(response.data.result);
-        setTodayTargetkcal(response.data.result);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
   const getManagementData = async () => {
     const authorization = JSON.parse(localStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
@@ -106,18 +74,18 @@ function Inputkcalcard(props) {
           "Content-Type": "application/json",
         },
       }).then((response) => {
-        console.log(response);
-        console.log(response.data.result);
         setManagementData(response.data.result);
       });
     } catch (e) {
       console.log(e);
     }
   };
+
   useEffect(() => {
-    getTodayTargetCalorie();
+    getClickedTargetCalorie(props);
     getManagementData();
-  }, []);
+  }, [props]);
+
   const handleOnModify = async (e) => {
     let today = new Date();
     today = today.toISOString();
@@ -128,9 +96,7 @@ function Inputkcalcard(props) {
       const authorization = JSON.parse(localStorage.getItem("accesstoken"));
       const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
 
-      console.log(createTodayTargetKcal);
       const requestUpdateTargetCalorie = updateTodayTargetKcal;
-      console.log(requestUpdateTargetCalorie);
       await axios
         .patch(
           "http://localhost:5056/target-calorie/v1/",
@@ -150,13 +116,11 @@ function Inputkcalcard(props) {
   };
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    if (todayTargetKcal === null) {
+    if (clickedTargetKcal === null) {
       try {
         const authorization = JSON.parse(localStorage.getItem("accesstoken"));
         const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
-        console.log(createTodayTargetKcal);
         const requestTargetCalorie = createTodayTargetKcal;
-        console.log(requestTargetCalorie);
         await axios
           .post(
             "http://localhost:5056/target-calorie/v1/",
@@ -176,7 +140,7 @@ function Inputkcalcard(props) {
       console.log("Submit for Registration");
     } else {
       console.log("Submit for Modification");
-      handleOnModify(); // 수정 버튼일 경우 handleOnModify 호출
+      handleOnModify();
     }
   };
 
@@ -208,40 +172,25 @@ function Inputkcalcard(props) {
                 className="kcalform mr-2"
                 onChange={handleInputChange}
                 placeholder={
-                  props == null
-                    ? todayTargetKcal == null
-                      ? 0
-                      : todayTargetKcal.dayTargetKcal
-                    : clickedTargetKcal == null
+                  clickedTargetKcal == null
                     ? 0
                     : clickedTargetKcal.dayTargetKcal
                 }
               />
               <span className="kcal">kcal</span>
             </div>
-            {props === null ? (
-              todayTargetKcal == null ? (
-                // todayTargetKcal이 null인 경우
+            {props.props === new Date().toISOString().split("T")[0] ? (
+              clickedTargetKcal === null ? (
                 <Button type="submit" variant="success" className="kcalbutton">
                   등록
                 </Button>
               ) : (
-                // 그 외의 경우
                 <Button type="submit" variant="success" className="kcalbutton">
                   수정
                 </Button>
               )
             ) : (
-              <></>
-            )}
-            {todayTargetKcal === null ? (
-              <Button type="submit" variant="success" className="kcalbutton">
-                등록
-              </Button>
-            ) : (
-              <Button type="submit" variant="success" className="kcalbutton">
-                수정
-              </Button>
+              <div className="blank"></div>
             )}
           </Form>
         </Card.Text>
