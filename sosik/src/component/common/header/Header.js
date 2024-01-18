@@ -18,7 +18,9 @@ import FindPw from "../../member/loginform/FindPw.js";
 import SnsInfo from "../../member/loginform/social/SnsInfo.js";
 import MyPage from '../../member/mypage/Mypage';
 import SearchBox from "../header/SearchBox.js";
-import NotificationList from "./NotificationList.js";
+// import NotificationList from "./NotificationList.js";
+import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
+import FreeBoard from "../../community/freeboard/FreeBoard.js";
 
 
 export const HeaderContext = createContext();
@@ -77,9 +79,9 @@ const Header = () => {
     }
   };
 
-  const handleBellClick = () => {
-    setShowNotification(!showNotification);
-  };
+  // const handleBellClick = () => {
+  //   setShowNotification(!showNotification);
+  // };
 
   let loginview = "";
 
@@ -87,7 +89,7 @@ const Header = () => {
     loginview = (
       <>
         <li>
-          <Link to="/recipeboardlist" style={{ marginRight: "30px" }}>
+          <Link to="/freeboard" style={{ marginRight: "30px" }}>
             커뮤니티
           </Link>
           <Link to="/mypage" style={{ marginRight: "30px" }}>
@@ -96,16 +98,16 @@ const Header = () => {
           <Link to="/mainpage" style={{ marginRight: "30px" }} onClick={handleLogout}>
             로그아웃
           </Link>
-          
-          <NotificationList/>
-          {showNotification && <NotificationList logout={logout} />}
+
+          {/* <NotificationList />
+          {showNotification && <NotificationList logout={logout} />} */}
         </li>
       </>
     );
   } else {
     loginview = (
       <li>
-        <Link to="/recipeboardlist" style={{ marginRight: "30px" }}>커뮤니티</Link>
+        <Link to="/freeboard" style={{ marginRight: "30px" }}>커뮤니티</Link>
         <Link to="/login">로그인</Link>
       </li>
     );
@@ -135,7 +137,7 @@ const Header = () => {
         </div>
       </header>
 
-  
+
       <HeaderContext.Provider value={{ setlogout }}>
         <Routes>
           <Route path="/recipeboardlist" element={<Recipeboardlist />} />
@@ -152,6 +154,8 @@ const Header = () => {
           <Route path="/redirection" element={<RedirectionKakao />} />
           <Route path="/findPw" element={<FindPw />} />
           <Route path="/snsInfo" element={<SnsInfo />} />
+          <Route path="/freeboard" element={<FreeBoard />} />
+          <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
