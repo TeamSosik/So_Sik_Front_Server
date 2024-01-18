@@ -11,7 +11,7 @@ import axios from "axios";
 
 export const RecdKcalSection2Context = createContext();
 
-const RecdKcalSection2 = ({ mealList: mealDataList, addMealList }) => {
+const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   // 필드
   const nutrientDetails = ["탄수화물", "단백질", "지방", "kcal"];
   const mealTitleList = ["BREAKFAST", "LUNCH", "DINNER", "SNACKS"];
@@ -19,6 +19,7 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList }) => {
   const defaultMealViewName = "BREAKFAST";
   let leftBtnMealTitle = "";
   let rightBtnMealTitle = "";
+
 
   // 상태
   const [mealViewName, setMealViewName] = useState(defaultMealViewName); // 아침, 점심, 저녁, 간식 화면 변경 상태
@@ -192,7 +193,10 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList }) => {
     />
   );
 
-  const additionMealView = (
+  const today = new Date();
+  const formattedToday = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+  const isToday = formattedToday === props;
+  const additionMealView = isToday && (
     <div className="additionMeal">
       <div className="additionMeal-name">
         <div>식사 추가하기</div>
