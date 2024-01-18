@@ -15,8 +15,6 @@ function Calendarview(props) {
     const response = await getData2(formattedDate);
     addPieChartData(formattedDate);
 
-    console.log(response);
-    // event.preventDefault();
   };
 
   const [breakfastdot, setbreakfastDot] = useState([]);
@@ -68,7 +66,6 @@ function Calendarview(props) {
       const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
       const url = `/intake/v1/${today}`;
-
       const response = await axios({
 
         method: "get",
@@ -81,23 +78,17 @@ function Calendarview(props) {
         },
 
       });
-
       return response;
-
     } catch(e) {
-
       console.log(e);
     }
     
   }
 
-
   const addPieChartData = async (formattedDate) => {
     const data = await getData2(formattedDate);
-    console.log(data);
     
     const nutrientDataList = data.data.result;
-    console.log(nutrientDataList);
     const updatedValues = [0, 0, 0, 0];
     nutrientDataList.forEach((data) => {
       updatedValues[0] += data.calculationCarbo;
@@ -128,7 +119,6 @@ function Calendarview(props) {
         value={clickedDate ? moment(clickedDate).toDate() : new Date()}
         className="mx-auto w-full text-sm border-b"
         onClickDay={(value, event) => {
-          console.log("클릭");
           handleDayClick(value, event);
         }}
         tileContent={({ date }) => {
@@ -149,19 +139,30 @@ function Calendarview(props) {
               {clickedDate === formattedDate && totalIntakeValues[3] !== 0 && (
                   <div>{totalIntakeValues[3]}kcal</div>
                 )}
+                
             </div>
           );
         }}
       />
-      {clickedDate ? (
-        <div className="text-gray-500 mt-4 text-center">
-          {moment(clickedDate).format('YYYY-MM-DD')}
+      
+      <div className="meals-container">
+        <div className="meals">
+          <span className="dot_1"></span>
+          <span>아침식사</span>
         </div>
-      ) : (
-        <div className="text-gray-500 mt-4 text-center">
-          {moment(new Date()).format('YYYY-MM-DD')}
+        <div className="meals">
+          <span className="dot2_1"></span>
+          <span>점심식사</span>
         </div>
-      )}
+        <div className="meals">
+          <span className="dot3_1"></span>
+          <span>저녁식사</span>
+        </div>
+        <div className="meals">
+          <span className="dot4_1"></span>
+          <span>간식</span>
+        </div>
+      </div>
     </div>
   );
 }
