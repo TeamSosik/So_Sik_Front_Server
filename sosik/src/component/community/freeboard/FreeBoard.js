@@ -6,7 +6,7 @@ import FreeBoardList from './FreeBoardList';
 
 function FreeBoard() {
     return (
-        <div>
+        <div className='freeboard'>
             <h3>자유게시판</h3>
             <FreeBoardSearchBox></FreeBoardSearchBox>
             <FreeBoardList></FreeBoardList>
