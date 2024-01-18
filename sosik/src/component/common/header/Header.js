@@ -18,9 +18,7 @@ import FindPw from "../../member/loginform/FindPw.js";
 import SnsInfo from "../../member/loginform/social/SnsInfo.js";
 import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
-import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
-import NotificationList from "./NotificationList.js";
 import { Autocomplete } from './autocompletion/AutoCompletion';
 
 
@@ -28,6 +26,7 @@ export const HeaderContext = createContext();
 
 const Header = () => {
   const [logout, setlogout] = useState(true);
+
 
   useEffect(() => {
     const access = window.localStorage.getItem("accesstoken");
@@ -76,7 +75,6 @@ const Header = () => {
     }
   };
 
-
   let loginview = "";
 
   if (logout === false) {
@@ -96,7 +94,7 @@ const Header = () => {
           >
             로그아웃
           </Link>
-
+          <NotificationList />
         </li>
       </>
     );
@@ -151,7 +149,6 @@ const Header = () => {
           <Route path="/findPw" element={<FindPw />} />
           <Route path="/snsInfo" element={<SnsInfo />} />
           <Route path="/freeboard" element={<FreeBoard />} />
-          <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
