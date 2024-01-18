@@ -23,7 +23,6 @@ const RecdKcal = () => {
   // 섭취 음식 목록 불러오기
   const getData = async () => {
     try {
-      const member = JSON.parse(localStorage.getItem("member"));
       const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
       const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
@@ -80,7 +79,6 @@ const RecdKcal = () => {
   // 섭취 음식 목록 불러오기
   const getData2 = async (date) => {
     try {
-
       const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
       const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
@@ -97,10 +95,8 @@ const RecdKcal = () => {
         },
       });
 
-
       return response;
-    } catch (e) {
-    }
+    } catch (e) {}
   };
 
   // 처음 페이지 들어왔을 때 실행
@@ -122,13 +118,17 @@ const RecdKcal = () => {
   };
   return (
     <RecdKcalContext.Provider value={{ addMealList }}>
-      <div>
-        <Recdbutton></Recdbutton>
+      <Recdbutton></Recdbutton>
+      <div className="position">
         <Inputkcal props={loadDate} />
         <Calendarview propFunction={highFunction} />
-        <RecdKcalSection2 mealList={mealList} addMealList={addMealList} props={loadDate}/>
-        <RecdKcalSection3 mealList={mealList} />
       </div>
+      <RecdKcalSection2
+        mealList={mealList}
+        addMealList={addMealList}
+        props={loadDate}
+      />
+      <RecdKcalSection3 mealList={mealList} />
     </RecdKcalContext.Provider>
   );
 };

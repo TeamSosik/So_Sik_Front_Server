@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "./inputkcal.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { OverlayTrigger } from "react-bootstrap";
@@ -153,7 +153,7 @@ function Inputkcalcard({ props }) {
     >
       <Card.Body>
         <Card.Title className="inputkcalcardtitle mb-2">
-          오늘의 목표칼로리
+          오늘의 목표칼로리{" "}
           <OverlayTrigger
             placement="right"
             delay={{ show: 100, hide: 300 }}

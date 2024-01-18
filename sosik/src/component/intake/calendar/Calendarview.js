@@ -96,23 +96,23 @@ function Calendarview(props) {
       updatedValues[2] += data.calculationFat;
       updatedValues[3] += data.calculationKcal;
     });
-  
-    setTotalIntakeValues(updatedValues);
-  }
 
-  useEffect(() => {    
-      getData();
-      getData2();
-      handleDayClick(new Date());
+    setTotalIntakeValues(updatedValues);
+  };
+
+  useEffect(() => {
+    getData();
+    getData2();
+    handleDayClick(new Date());
   }, []);
 
   const mark = breakfastdot;
   const mark2 = lunchdot;
   const mark3 = dinnerdot;
   const mark4 = snackdot;
- 
+
   return (
-    <div>
+    <div className="calendarposition">
       <Calendar
         formatDay={(locale, date) => moment(date).format("DD")}
         showNeighboringMonth={false}
@@ -129,22 +129,37 @@ function Calendarview(props) {
           const hasMark4 = mark4.includes(formattedDate);
 
           return (
-            <div >
+            <div>
               <div className="absoluteDiv">
-              {hasMark && <div className="flex justify-center items-center"><div className="dot"></div></div>}
-              {hasMark2 && <div className="flex justify-center items-center"><div className="dot2"></div></div>}
-              {hasMark3 && <div className="flex justify-center items-center"><div className="dot3"></div></div>}
-              {hasMark4 && <div className="flex justify-center items-center"><div className="dot4"></div></div>}
+                {hasMark && (
+                  <div className="flex justify-center items-center">
+                    <div className="dot"></div>
+                  </div>
+                )}
+                {hasMark2 && (
+                  <div className="flex justify-center items-center">
+                    <div className="dot2"></div>
+                  </div>
+                )}
+                {hasMark3 && (
+                  <div className="flex justify-center items-center">
+                    <div className="dot3"></div>
+                  </div>
+                )}
+                {hasMark4 && (
+                  <div className="flex justify-center items-center">
+                    <div className="dot4"></div>
+                  </div>
+                )}
               </div>
               {clickedDate === formattedDate && totalIntakeValues[3] !== 0 && (
-                  <div>{totalIntakeValues[3]}kcal</div>
-                )}
-                
+                <div>{totalIntakeValues[3]}kcal</div>
+              )}
             </div>
           );
         }}
       />
-      
+
       <div className="meals-container">
         <div className="meals">
           <span className="dot_1"></span>
