@@ -2,7 +2,7 @@ import React, { useEffect, useState, createContext } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
-import Recipeboardlist from "../../../page/Recipeboardlist.js";
+import Recipeboardlist from "../../../page/recipeboardlist.js";
 import Feed from "../../feed/Feed.js";
 import Mainpage from "../../../page/MainPage.js";
 import Login from "../../member/loginform/Login.js";
@@ -19,7 +19,7 @@ import SnsInfo from "../../member/loginform/social/SnsInfo.js";
 import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
-import { Autocomplete } from './autocompletion/AutoCompletion';
+import NotificationList from './NotificationList';
 
 
 export const HeaderContext = createContext();

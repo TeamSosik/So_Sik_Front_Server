@@ -150,9 +150,7 @@ const InputBox = styled.div`
     props.isHaveInputValue ? activeBorderRadius : inactiveBorderRadius};
   z-index: 3;
 
-  &:focus-within {
-    box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
-  }
+
 `
 
 const Input = styled.input`
