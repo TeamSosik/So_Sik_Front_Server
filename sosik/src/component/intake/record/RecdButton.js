@@ -48,7 +48,7 @@ function Recdbutton() {
   };
 
   return (
-    <Row>
+    <Row className="rowcss">
       <Col></Col>
       <Col xs={4}>
         <ButtonGroup className="recdbutton">

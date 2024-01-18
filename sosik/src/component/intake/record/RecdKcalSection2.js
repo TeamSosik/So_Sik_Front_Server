@@ -20,7 +20,6 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   let leftBtnMealTitle = "";
   let rightBtnMealTitle = "";
 
-
   // 상태
   const [mealViewName, setMealViewName] = useState(defaultMealViewName); // 아침, 점심, 저녁, 간식 화면 변경 상태
 
@@ -38,15 +37,13 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
 
   // 섭취 리스트로 이동하기
   const handleShowMealView = (mealViewName) => {
-
     setMealViewName(mealViewName);
-  }
+  };
 
   const handleMealDeleteClick = async (id, e) => {
-
     const result = window.confirm("정말로 삭제하시겠습니까?");
 
-    if(!result) {
+    if (!result) {
       return;
     }
 
@@ -54,35 +51,31 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
 
     const status = response.status;
 
-    if(status === 200) {
+    if (status === 200) {
       addMealList();
     }
-  }
+  };
 
   const deleteMeal = async (id) => {
-
     const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
     const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
     const url = `http://localhost:5056/intake/v1/${id}`;
 
     try {
-
       const response = await axios.delete(url, {
         headers: {
           authorization: accesstoken,
           refreshtoken: refreshtoken,
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       });
 
       return response;
-
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
-
-  }
+  };
 
   // view
 
@@ -136,7 +129,6 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   );
 
   const mealListView = mealList.map((data, index) => {
-
     return (
       <div key={index} className="meal">
         {/* ***** 영양소 이름 시작 *****  */}
@@ -165,18 +157,18 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
         {/* ****** 영양소 내용 box 끝 **** */}
 
         {/* 삭제 box 시작 */}
-
-        <div className="meal-delete">
-          <FontAwesomeIcon
-            className="meal-delete-icon"
-            icon={faTrash} 
-            style={{color: "#59bd82"}}
-            onClick={() => {
-              handleMealDeleteClick(data.id);
-            }}
-          />
-        </div>
-
+        {isToday && (
+          <div className="meal-delete">
+            <FontAwesomeIcon
+              className="meal-delete-icon"
+              icon={faTrash}
+              style={{ color: "#59bd82" }}
+              onClick={() => {
+                handleMealDeleteClick(data.id);
+              }}
+            />
+          </div>
+        )}
         {/* 삭제 버튼 box 끝 */}
       </div>
 
@@ -194,7 +186,9 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   );
 
   const today = new Date();
-  const formattedToday = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+  const formattedToday = `${today.getFullYear()}-${(today.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${today.getDate().toString().padStart(2, "0")}`;
   const isToday = formattedToday === props;
   const additionMealView = isToday && (
     <div className="additionMeal">
@@ -209,8 +203,9 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   );
 
   return (
-
-    <RecdKcalSection2Context.Provider value={{mealViewName, handleShowMealView}}>
+    <RecdKcalSection2Context.Provider
+      value={{ mealViewName, handleShowMealView }}
+    >
       <div className="recd-kcal-section2">
         {/* ********** meal-title box 시작 ************ */}
 

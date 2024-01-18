@@ -16,9 +16,8 @@ import FoodDetail from "./../../food/foodDetail/FoodDetail";
 import RedirectionKakao from "../../member/loginform/social/RedirectionKakao.js";
 import FindPw from "../../member/loginform/FindPw.js";
 import SnsInfo from "../../member/loginform/social/SnsInfo.js";
-import MyPage from '../../member/mypage/Mypage';
+import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
-// import NotificationList from "./NotificationList.js";
 import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
 
@@ -27,7 +26,6 @@ export const HeaderContext = createContext();
 
 const Header = () => {
   const [logout, setlogout] = useState(true);
-  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const access = window.localStorage.getItem("accesstoken");
@@ -79,9 +77,6 @@ const Header = () => {
     }
   };
 
-  // const handleBellClick = () => {
-  //   setShowNotification(!showNotification);
-  // };
 
   let loginview = "";
 
@@ -95,12 +90,14 @@ const Header = () => {
           <Link to="/mypage" style={{ marginRight: "30px" }}>
             마이페이지
           </Link>
-          <Link to="/mainpage" style={{ marginRight: "30px" }} onClick={handleLogout}>
+          <Link
+            to="/mainpage"
+            style={{ marginRight: "30px" }}
+            onClick={handleLogout}
+          >
             로그아웃
           </Link>
 
-          {/* <NotificationList />
-          {showNotification && <NotificationList logout={logout} />} */}
         </li>
       </>
     );
@@ -136,7 +133,6 @@ const Header = () => {
           </button>
         </div>
       </header>
-
 
       <HeaderContext.Provider value={{ setlogout }}>
         <Routes>
