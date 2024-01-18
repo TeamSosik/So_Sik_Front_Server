@@ -126,7 +126,7 @@ const RecdKcal = () => {
         <Recdbutton></Recdbutton>
         <Inputkcal props={loadDate} />
         <Calendarview propFunction={highFunction} />
-        <RecdKcalSection2 mealList={mealList} addMealList={addMealList} />
+        <RecdKcalSection2 mealList={mealList} addMealList={addMealList} props={loadDate}/>
         <RecdKcalSection3 mealList={mealList} />
       </div>
     </RecdKcalContext.Provider>
