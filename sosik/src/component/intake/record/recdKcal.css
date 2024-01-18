@@ -132,8 +132,8 @@
     /* justify-content: center; */
     /* 요소를 수평 가운데 정렬 */
 
-    float: right;
-    width: 70%;
+    float: left;
+    width: 60%;
     /* height: 90px; */
     /* text-align: center;
     margin-top: 40px;
@@ -141,6 +141,17 @@
     padding: 20px;
     border-radius: 37px;
     background: #FFF; */
+}
+
+.recd-kcal-section2 .meal-content .meal .meal-delete{
+    float: left;
+    width: 10%;
+    /* margin 말고 크기 변화에 따른 자동 위치 전환이 필요합니다. */
+    margin-top: 10px;
+}
+
+.recd-kcal-section2 .meal-content .meal .meal-delete .meal-delete-icon{
+    cursor: pointer;
 }
 
 .recd-kcal-section2 .meal-content .meal .nutrient .nutrient-detail, 

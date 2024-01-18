@@ -2,14 +2,16 @@ import {
   faAngleLeft,
   faAngleRight,
   faCirclePlus,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { createContext, useState } from "react";
 import FoodModal from "../modal/FoodModal";
+import axios from "axios";
 
 export const RecdKcalSection2Context = createContext();
 
-const RecdKcalSection2 = ({ mealList: mealDataList }) => {
+const RecdKcalSection2 = ({ mealList: mealDataList, addMealList }) => {
   // 필드
   const nutrientDetails = ["탄수화물", "단백질", "지방", "kcal"];
   const mealTitleList = ["BREAKFAST", "LUNCH", "DINNER", "SNACKS"];
@@ -37,6 +39,48 @@ const RecdKcalSection2 = ({ mealList: mealDataList }) => {
   const handleShowMealView = (mealViewName) => {
 
     setMealViewName(mealViewName);
+  }
+
+  const handleMealDeleteClick = async (id, e) => {
+
+    const result = window.confirm("정말로 삭제하시겠습니까?");
+
+    if(!result) {
+      return;
+    }
+
+    const response = await deleteMeal(id);
+
+    const status = response.status;
+
+    if(status === 200) {
+      addMealList();
+    }
+  }
+
+  const deleteMeal = async (id) => {
+
+    const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
+    const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+
+    const url = `http://localhost:5056/intake/v1/${id}`;
+
+    try {
+
+      const response = await axios.delete(url, {
+        headers: {
+          authorization: accesstoken,
+          refreshtoken: refreshtoken,
+          "Content-Type": "application/json"
+        }
+      });
+
+      return response;
+
+    } catch(e) {
+      console.log(e);
+    }
+
   }
 
   // view
@@ -91,6 +135,7 @@ const RecdKcalSection2 = ({ mealList: mealDataList }) => {
   );
 
   const mealListView = mealList.map((data, index) => {
+
     return (
       <div key={index} className="meal">
         {/* ***** 영양소 이름 시작 *****  */}
@@ -117,6 +162,21 @@ const RecdKcalSection2 = ({ mealList: mealDataList }) => {
         </div>
 
         {/* ****** 영양소 내용 box 끝 **** */}
+
+        {/* 삭제 box 시작 */}
+
+        <div className="meal-delete">
+          <FontAwesomeIcon
+            className="meal-delete-icon"
+            icon={faTrash} 
+            style={{color: "#59bd82"}}
+            onClick={() => {
+              handleMealDeleteClick(data.id);
+            }}
+          />
+        </div>
+
+        {/* 삭제 버튼 box 끝 */}
       </div>
 
       // {/* **** meal box 끝 **** */}
