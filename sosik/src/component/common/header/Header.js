@@ -20,6 +20,8 @@ import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
 import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
+import NotificationList from "./NotificationList.js";
+import { Autocomplete } from './autocompletion/AutoCompletion';
 
 
 export const HeaderContext = createContext();
@@ -38,8 +40,6 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      console.log("들어왔어요");
-
       const accesstoken = JSON.parse(
         window.localStorage.getItem("accesstoken")
       );
@@ -69,7 +69,6 @@ const Header = () => {
       window.localStorage.removeItem("refreshtoken");
       window.localStorage.removeItem("member");
 
-      // console.log(response);
       setlogout(true);
       alert("로그아웃 되었습니다.");
     } catch (error) {
@@ -117,6 +116,7 @@ const Header = () => {
           <img src={logo} alt="Logo" />
         </Link>
         <nav id="gnb">
+          {/* <Autocomplete></Autocomplete> */}
           <SearchBox></SearchBox>
         </nav>
         <div className="utWrap">
