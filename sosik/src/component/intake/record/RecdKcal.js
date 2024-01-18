@@ -34,10 +34,6 @@ const RecdKcal = () => {
       // 오늘 날짜
       const todayInKorea = koreaTime.toISOString().split("T")[0]; // yyyy-MM-dd 형식
 
-      console.log(todayInKorea);
-
-      console.log(member.memberId);
-
       const url = `/intake/v1/${todayInKorea}`;
 
       const response = await axios({

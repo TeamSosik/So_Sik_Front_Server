@@ -7,12 +7,11 @@ import "./calenderview.css";
 function Calendarview(props) {
   const [clickedDate, setClickedDate] = useState(null);
   const [totalIntakeValues, setTotalIntakeValues] = useState([0, 0, 0, 0]);
-  
 
   const handleDayClick = async (value, event) => {
     const formattedDate = moment(value).format("YYYY-MM-DD");
     setClickedDate(clickedDate === formattedDate ? null : formattedDate);
-    props.propFunction(clickedDate);
+    props.propFunction(formattedDate);
     const response = await getData2(formattedDate);
     addPieChartData(formattedDate);
 

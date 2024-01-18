@@ -1,7 +1,6 @@
 import Inputkcalcard from "./inputkcal/Inputkcalcard.js";
 
-function Inputkcal({ props }) {
-  console.log(props);
+function Inputkcal(props) {
   return (
     <div>
       <div className="a">
