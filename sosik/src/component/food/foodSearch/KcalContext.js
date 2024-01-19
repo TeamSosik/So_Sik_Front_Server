@@ -1,9 +1,5 @@
 import React, { navigation } from "react";
 
-/**
- * 기능 : 칼로리 정보 컨텍스트
- * @returns
- */
 const KcalContext = ({ data }) => {
   // 필드
   const kcalUnit = "kcal"; // 칼로리 단위
@@ -16,7 +12,6 @@ const KcalContext = ({ data }) => {
   // 메서드
   const handleFoodNameClick = (e) => {
     const foodId = e.target.id;
-    console.log(foodId);
     navigation(`/food/${foodId}`);
   };
 
