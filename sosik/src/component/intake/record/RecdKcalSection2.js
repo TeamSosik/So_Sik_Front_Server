@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { createContext, useState } from "react";
 import FoodModal from "../modal/FoodModal";
 import axios from "axios";
+import RecdKcalSection4 from "./RecdKcalSection4";
 
 export const RecdKcalSection2Context = createContext();
 
@@ -24,6 +25,7 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
     .toString()
     .padStart(2, "0")}-${today.getDate().toString().padStart(2, "0")}`;
   const isToday = formattedToday === props;
+  
   // 상태
   const [mealViewName, setMealViewName] = useState(defaultMealViewName); // 아침, 점심, 저녁, 간식 화면 변경 상태
 
@@ -133,6 +135,7 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   );
 
   const mealListView = mealList.map((data, index) => {
+
     return (
       <div key={index} className="meal">
         {/* ***** 영양소 이름 시작 *****  */}
@@ -174,6 +177,7 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
           </div>
         )}
         {/* 삭제 버튼 box 끝 */}
+
       </div>
 
       // {/* **** meal box 끝 **** */}
@@ -215,8 +219,11 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
         {/* ****************** meal-content box 시작 *************** */}
 
         <div className="meal-content">
+
           {mealListView}
           {additionMealView}
+          <RecdKcalSection4 realMealTitleName={realMealTitleName} mealList={mealList}  />
+        
         </div>
 
         {/* ****************** meal-content box 끝 *************** */}
