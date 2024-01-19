@@ -3,8 +3,7 @@ import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Recipeboardlist from "../../../page/recipeboardlist.js";
-import Feed from "../../Feed/Feed.js"
+import Feed from "../../feed/Feed.js";
 
 import Mainpage from "../../../page/MainPage.js";
 
