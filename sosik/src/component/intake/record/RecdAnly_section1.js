@@ -40,11 +40,9 @@ const RecdAnly_section1 = () => {
         params: params
       });
 
-      console.log(response);
       return response;
 
     } catch(e) {
-      console.log("/에러 발생!!!!!");
       console.log(e);
     }
 
@@ -67,15 +65,12 @@ const RecdAnly_section1 = () => {
     .map((data, index) => {
 
       let {name, value} = data;
-      console.log(typeof value);
 
       return {
         x: name,
         y: value,
       }
     });
-
-    console.log(newData);
 
     setData(() => {
 
@@ -86,7 +81,6 @@ const RecdAnly_section1 = () => {
   const handlePeriodChange = (e) => {
     const {value} = e.target;
 
-    console.log("period value : ", value);
     setParams((current) => {
       return {
         ...current,

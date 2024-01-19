@@ -36,7 +36,6 @@ function WeightModal({ handleCloseModal, accessToken }) {
         .then(function (response) {
           handleCloseModal();
           window.location.reload();
-          console.log(response);
         });
     } catch (error) {
       console.error(error);
