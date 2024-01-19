@@ -44,10 +44,6 @@ const Header = () => {
       );
       const member = JSON.parse(window.localStorage.getItem("member"));
 
-      console.log(accesstoken);
-      console.log(refreshtoken);
-      console.log(member.result.email);
-
       await axios({
         method: "post",
         url: "/members/v1/sign-out",
