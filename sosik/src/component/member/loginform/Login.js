@@ -58,7 +58,6 @@ function Login() {
               headers: customHeader,
             })
             .then(function (res) {
-              console.log(res);
               window.localStorage.setItem("member", JSON.stringify(res.data));
               navigate("/mainpage"); //리다이렉트
             })
