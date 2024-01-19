@@ -1,4 +1,4 @@
-import React from "react";
+import React, { navigation } from "react";
 
 /**
  * 기능 : 칼로리 정보 컨텍스트
@@ -14,41 +14,25 @@ const KcalContext = ({ data }) => {
   // 상태
 
   // 메서드
+  const handleFoodNameClick = (e) => {
+    const foodId = e.target.id;
+    console.log(foodId);
+    navigation(`/food/${foodId}`);
+  };
 
   // view
 
   return (
-    <div className="kcalContex">
+    <div className="kcalContex" onClick={handleFoodNameClick}>
       {/* titleBox */}
+
+      {/* contentBox */}
+      <img src={data.url} className="kcalContextContentBox" />
       <div className="kcalContexTitle">
         <span>{data.title}</span>
       </div>
-      {/* contentBox */}
-      <div className="kcalContextContentBox">
-        {/* 칼로리 */}
-        <div className="content1">
-          <span>{data.kcalData.count}</span>
-          <span>{countUnit} </span>
-          <span>{nutrientList[0]}: </span>
-          <span>{data.kcalData.kcal}</span>
-          <span>{kcalUnit}</span>
-        </div>
-        {/* 지방 */}
-        <div className="content2">
-          {/* 지방 */}
-          <span>{nutrientList[1]}: </span>
-          <span>{data.kcalData.fat}</span>
-          <span>{gUnit}</span>
-          {/* 탄수화물 */}
-          <span>{nutrientList[2]}: </span>
-          <span>{data.kcalData.carbo}</span>
-          <span>{gUnit}</span>
-          {/* 단백질 */}
-          <span>{nutrientList[3]}: </span>
-          <span>{data.kcalData.protien}</span>
-          <span>{gUnit}</span>
-        </div>
-      </div>
+      {/* 칼로리 */}
+      <span className="brand">{data.brand}</span>
     </div>
   );
 };
