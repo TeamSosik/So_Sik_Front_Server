@@ -46,7 +46,7 @@ function SnsInfo() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "year" || name === "month" || name === "day") {
-      console.log(name, value);
+
       setMemberInfo((prevInfo) => ({
         ...prevInfo,
         birthday: {
@@ -75,7 +75,7 @@ function SnsInfo() {
   const days = GenerateOptions(1, 31);
 
   const handleSubmit = async (e) => {
-    console.log(member)
+
     e.preventDefault();
     memberInfo.tdeeCalculation = TdeeCalFunction(memberInfo, member);
 
@@ -117,7 +117,6 @@ function SnsInfo() {
       headers: customHeader,
     })
     .then(function (res) {
-      console.log(res)
       window.localStorage.setItem("member",JSON.stringify(res.data));
       navigate("/mainpage"); //리다이렉트
       

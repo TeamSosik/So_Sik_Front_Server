@@ -17,8 +17,6 @@ const PageButton = ({handlePageBtnClick, pageData}) => {
     const pageNum = pageData.page;// 현재 페이지 번호
     const totalNum = pageData.totalNum;// 전체 게시글 수
     const lastPageNum = pageData.totalPages;// 마지막 페이지
-
-    console.log(pageData);
     
     /// 필요한 변수 모음
     // const lastPageNum = Math.ceil(totalNum / bound);// 마지막 페이지
@@ -26,12 +24,6 @@ const PageButton = ({handlePageBtnClick, pageData}) => {
     const nowPageSite = Math.ceil(pageNum / showPages);// 현재 페이지의 위치
     const lastPageSite = Math.ceil(lastPageNum / showPages) // 마지막 페이지의 위치 // >> 만들 때 필요할 듯
     const nowPage = pageNum;// 현재 페이지
-
-    console.log(lastPageNum);
-    console.log(showPages);
-    console.log(nowPageSite);
-    console.log(lastPageSite);
-    console.log(nowPage);
     
     /// view에 보일 페이지 번호
     let result = [];
@@ -85,10 +77,6 @@ const PageButton = ({handlePageBtnClick, pageData}) => {
     
     return result;
   }
-
-
-  console.log("hihi");
-
 
   return (
     <div className="pageButtonBox">

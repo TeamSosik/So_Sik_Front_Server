@@ -20,8 +20,6 @@ const MyInfo = ({ props }) => {
     today = today.toISOString();
     today = today.split("T")[0];
 
-    // console.log(today);
-
     try {
       await axios({
         method: "get",
@@ -35,7 +33,6 @@ const MyInfo = ({ props }) => {
           setTodaykcal(response.data.result.dayTargetKcal);
           return;
         }
-        // console.log(response)
       });
     } catch (e) {
       console.log(e);
