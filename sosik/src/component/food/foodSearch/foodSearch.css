@@ -1,106 +1,67 @@
 .foodSearchBox {
-  width: 1200px;
-  height: 1000px;
-}
-
-.searchBox {
   width: 100%;
-  height: 20%;
-  /* background-color: aquamarine; */
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.searchBox > .searchAllBox {
-  width: 40%;
-  height: 30%;
-  /* background-color: coral; */
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 5rem;
-  border: 0.3rem solid #59bd82;
-}
-
-.searchBox > .searchAllBox > .searchValueBox {
-  width: 80%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.searchBox > .searchAllBox > .searchValueBox > input[type="text"] {
-  width: 80%;
-  height: 50%;
-  border: none;
+  height: 1200px;
+  margin-top: 400px;
   text-align: center;
-  font-size: 1.5rem;
-  margin-left: 3rem;
-}
-
-.searchBox > .searchAllBox > .searchValueBox > input[type="text"]:focus {
-  outline: none;
-}
-
-.searchBox > .searchAllBox > .searchImageBox {
-  width: 20%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.searchBox > .searchAllBox > .searchImageBox > img {
-  width: 33%;
-  height: 33%;
-  cursor: pointer;
 }
 
 /* kcalContexListtBox */
 .kcalContexListBox {
-  width: 100%;
-  height: 70%;
-
+  width: 90%;
   display: flex;
   flex-flow: row wrap;
+
   /* align-items: center; */
-  align-content: flex-start;
+  margin-left: 10%;
 }
 
 .kcalContexListBox > .kcalContex {
-  width: 32%;
+  width: 20%;
   height: 20%;
   border-radius: 10px;
   box-shadow: 5px 5px 1px -1px #f1f1f1;
-  margin: 0 0.5rem 5rem 0.5rem;
-
+  margin: 0 1rem 5rem 1rem;
+  padding-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+@keyframes moveAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.kcalContex:hover {
+  animation: moveAnimation 2s;
 }
 
 .kcalContexListBox > .kcalContex > .kcalContexTitle {
   width: 80%;
-  height: 40%;
-  font-size: 20px;
-
+  height: 20%;
+  font-size: 25px;
+  padding-top: 15px;
+  font-weight: bolder;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .kcalContexListBox > .kcalContex > .kcalContextContentBox {
-  width: 80%;
-  height: 40%;
-  background-color: #cdefc6;
+  width: 60%;
+  height: 50%;
   border-radius: 10px;
 
   font-size: 14px;
@@ -110,15 +71,18 @@
   align-items: center;
   flex-direction: column;
 }
+.brand {
+  color: #15a775;
+}
 
 /* buttonBox */
 .pageButtonBox {
   width: 100%;
   height: 10%;
-
-  display: flex;
+  padding-right: 12%;
   justify-content: center;
   align-items: center;
+  margin-top: 1%;
 }
 
 .pageButtonBox > .pageButtonList {

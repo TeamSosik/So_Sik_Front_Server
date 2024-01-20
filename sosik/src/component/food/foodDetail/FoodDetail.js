@@ -44,26 +44,6 @@ const Fd_section2 = ({data}) => {
           <p className="nutrient-title1">지방</p>
           <p className="nutrient-title2">{data.fat}g</p>
         </div>
-        {/* <div className="nutrient">
-          <p className="nutrient-title1">나트륨</p>
-          <p className="nutrient-title2">100g</p>
-        </div>
-        <div className="nutrient">
-          <p className="nutrient-title1">콜레스테롤</p>
-          <p className="nutrient-title2">100g</p>
-        </div>
-        <div className="nutrient">
-          <p className="nutrient-title1">탄수화물</p>
-          <p className="nutrient-title2">100g</p>
-        </div>
-        <div className="nutrient">
-          <p className="nutrient-title1">탄수화물</p>
-          <p className="nutrient-title2">100g</p>
-        </div>
-        <div className="nutrient">
-          <p className="nutrient-title1">탄수화물</p>
-          <p className="nutrient-title2">100g</p>
-        </div> */}
       </div>
 
       <div className="food-calorie">
@@ -141,7 +121,6 @@ const FoodDetail = () => {
 
       return response;
     } catch(e) {
-      console.log("******** 오류 해결 *******");
       console.log(e);
     }
   }
@@ -150,11 +129,7 @@ const FoodDetail = () => {
 
     const data = await getData();
 
-    console.log("******* 데이터 확인!!!! ***********");
-    console.log(data.data.result);
-
     setData(data.data.result);
-
   }
 
   // view

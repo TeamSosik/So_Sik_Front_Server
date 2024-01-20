@@ -24,7 +24,7 @@ const Aside = ({ props }) => {
           },
         }
       );
-      console.log(response);
+      
       if (response.data) {
         window.alert("오늘은 이미 기록하였습니다!");
         setShowModal(false);

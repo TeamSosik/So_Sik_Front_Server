@@ -11,7 +11,6 @@ import { OverlayTrigger } from "react-bootstrap";
 import RenderTooltip from "./RenderTooltip";
 
 function Inputkcalcard({ props }) {
-  console.log(props);
 
   const [clickedTargetKcal, setClickedTargetKcal] = useState({
     dayTargetKcal: 0,
@@ -35,7 +34,6 @@ function Inputkcalcard({ props }) {
     const { name, value } = e.target;
     setCreateTodayKcal({ ...createTodayTargetKcal, [name]: value });
     setUpdateTodayTargetKcal({ ...updateTodayTargetKcal, [name]: value });
-    console.log(value);
   };
 
   const getClickedTargetCalorie = async (props) => {
@@ -91,7 +89,7 @@ function Inputkcalcard({ props }) {
     today = today.toISOString();
     today = today.split("T")[0];
     updateTodayTargetKcal.createdAt = today;
-    console.log(updateTodayTargetKcal.createdAt);
+
     try {
       const authorization = JSON.parse(localStorage.getItem("accesstoken"));
       const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
@@ -137,9 +135,8 @@ function Inputkcalcard({ props }) {
             window.location.reload();
           });
       } catch (error) {}
-      console.log("Submit for Registration");
+      
     } else {
-      console.log("Submit for Modification");
       handleOnModify();
     }
   };

@@ -26,13 +26,13 @@ const SearchBox = () => {
     }
 
     try {
-      console.log("음식 검색========"+event.target.value)
+
       axios({
         url: 'http://localhost:5056/food/v1/search', 
         params: params
       })
       .then(function (res) {
-        console.log(res.data.result)
+
         if (res.data === null){
           return 
         }
@@ -40,15 +40,10 @@ const SearchBox = () => {
           setDropDownList(()=>{
             const array = res.data.result
             return array.map((data) => {
-              console.log(data.name)
               return  data.name
             })
           })
         }
-
-      
-        
-        
       })
     } catch (error) {
       console.error("가입에 실패하였습니다. 잠시 후 다시 시도해주세요", error); // 오류 처리

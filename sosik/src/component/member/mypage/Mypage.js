@@ -34,8 +34,6 @@ const MyPage = () => {
           "Content-Type": "application/json",
         },
       }).then((response) => {
-        console.log(response);
-        console.log(response.data.result);
         setUsers(response.data.result);
       });
     } catch (e) {

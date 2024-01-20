@@ -40,10 +40,6 @@ const RecdAnly_section2 = () => {
       // 오늘 날짜
       const todayInKorea = koreaTime.toISOString().split("T")[0]// yyyy-MM-dd 형식
 
-      console.log(todayInKorea);
-
-      console.log(member.memberId);
-
       const url = `/intake/v1/${todayInKorea}`;
 
       const response = await axios({
@@ -59,18 +55,14 @@ const RecdAnly_section2 = () => {
 
       });
 
-      console.log("************* 응답 성공 *****************");
-
       setLoading(false);
 
       return response;
 
     } catch(e) {
-      console.log("************* 에러 발생 ************");
       setLoading(false);
 
       console.log(e);
-      
     }
     
   }
@@ -78,8 +70,6 @@ const RecdAnly_section2 = () => {
   const addPieChartData = async () => {
     
     const data = await getData();
-
-    console.log(data);
 
     if(!data) {
       setPieChartData([]);
@@ -99,8 +89,6 @@ const RecdAnly_section2 = () => {
       totalIntakeValues[2] += data.calculationFat;
       totalIntakeValues[3] += data.calculationKcal;
     });
-
-    console.log(totalIntakeValues);
 
     // 영양소 목록 만들기
     const nutrientList = nutrientDetails.map((data, index) => {

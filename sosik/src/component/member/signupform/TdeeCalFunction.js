@@ -17,7 +17,6 @@ const TdeeCalFunction = (props) => {
 
     // 생일이 지났다면 나이 그대로, 그렇지 않다면 1을 빼줌
     const finalAge = isBirthdayPassed ? age : age - 1;
-    console.log(finalAge);
     return finalAge;
   };
 

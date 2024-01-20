@@ -25,7 +25,6 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
   const handleFoodNameClick = (e) => {
 
     const foodId = e.target.id;
-    console.log(foodId);
     navigation(`/food/${foodId}`);
 
   }
@@ -34,7 +33,6 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
   // 섭취량이 변경되면 호출된다.
   const handleFoodAmountChange = (e) => {
     const {name, value} = e.target;
-    console.log("value : ", value);
 
     setFoodAmount(() => {
       return {
@@ -45,14 +43,6 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
 
   // 섭취 음식 등록
   const handleIntakeRegistrationBtnClick = async (e) => {
-
-    console.log(`*********** data : ${data} ************`);
-    console.log(data);
-    console.log(typeof data);
-
-    // 숫자인지 검사한다.
-    console.log("foodAmount : ", foodAmount);
-    console.log(typeof foodAmount);
 
     if(isNaN(foodAmount.foodAmount)) {
       alert("숫자를 입력해주세요");
@@ -77,8 +67,6 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
     }
     const jsonIntakeData = JSON.stringify(intakeData);
 
-    console.log(intakeData);
-
     // 요청하기
     try {
       const response = await axios({
@@ -94,7 +82,6 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
         data: jsonIntakeData
       });
 
-      console.log(response);
       // modal 닫기
       handleModalTogle(false);
       // 섭취 리스트로 이동하기
