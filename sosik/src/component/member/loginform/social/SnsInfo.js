@@ -22,7 +22,7 @@ import GenerateOptions from "../../signupform/GenerateOptions";
 
 function SnsInfo() {
   const navigate = useNavigate();
-  const member = JSON.parse(window.localStorage.getItem("member"));
+  const member = JSON.parse(window.sessionStorage.getItem("member"));
 
 
   const [memberInfo, setMemberInfo] = useState({
@@ -99,7 +99,7 @@ function SnsInfo() {
     try {
       axios.patch('http://localhost:5056/oauth/v1', formData, { headers })
       .then(function (res) {
-        window.localStorage.setItem("member",JSON.stringify(res.data));
+        window.sessionStorage.setItem("member",JSON.stringify(res.data));
         alert("정상 등록되었습니다.")
       })
     } catch (error) {
@@ -108,8 +108,8 @@ function SnsInfo() {
 
 
     const customHeader = {
-      authorization: window.localStorage.getItem("accesstoken"),
-      refreshToken: window.localStorage.getItem("refreshtoken"),
+      authorization: window.sessionStorage.getItem("accesstoken"),
+      refreshToken: window.sessionStorage.getItem("refreshtoken"),
       memberId: member.memberId
     };
 
@@ -117,7 +117,7 @@ function SnsInfo() {
       headers: customHeader,
     })
     .then(function (res) {
-      window.localStorage.setItem("member",JSON.stringify(res.data));
+      window.sessionStorage.setItem("member",JSON.stringify(res.data));
       navigate("/mainpage"); //리다이렉트
       
     })

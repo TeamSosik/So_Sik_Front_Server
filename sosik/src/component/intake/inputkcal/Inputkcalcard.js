@@ -37,8 +37,8 @@ function Inputkcalcard({ props }) {
   };
 
   const getClickedTargetCalorie = async (props) => {
-    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
     const loadDate = props.props;
 
     try {
@@ -59,8 +59,8 @@ function Inputkcalcard({ props }) {
   };
 
   const getManagementData = async () => {
-    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
     try {
       await axios({
@@ -91,8 +91,8 @@ function Inputkcalcard({ props }) {
     updateTodayTargetKcal.createdAt = today;
 
     try {
-      const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-      const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+      const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+      const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
       const requestUpdateTargetCalorie = updateTodayTargetKcal;
       await axios
@@ -116,8 +116,8 @@ function Inputkcalcard({ props }) {
     e.preventDefault();
     if (clickedTargetKcal === null) {
       try {
-        const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-        const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+        const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+        const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
         const requestTargetCalorie = createTodayTargetKcal;
         await axios
           .post(

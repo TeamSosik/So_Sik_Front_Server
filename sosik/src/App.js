@@ -42,7 +42,7 @@ function App() {
 
 
   const isLoggedIn = () => {
-    const token = localStorage.getItem('accesstoken'); // 여기서 'yourTokenKey'는 실제로 사용하는 토큰의 키입니다.
+    const token = sessionStorage.getItem('accesstoken'); // 여기서 'yourTokenKey'는 실제로 사용하는 토큰의 키입니다.
     
     // 토큰이 존재하는지 여부에 따라 로그인 상태 판단
     return token !== null;

@@ -30,9 +30,9 @@ const RedirectionKakao = (props) => {
           weightList : res.data.weightList
         }
         
-        window.localStorage.setItem("accesstoken",JSON.stringify(res.data.accessToken));
-        window.localStorage.setItem("refreshtoken",JSON.stringify(res.data.refreshToken));
-        window.localStorage.setItem("member",JSON.stringify(member));
+        window.sessionStorage.setItem("accesstoken",JSON.stringify(res.data.accessToken));
+        window.sessionStorage.setItem("refreshtoken",JSON.stringify(res.data.refreshToken));
+        window.sessionStorage.setItem("member",JSON.stringify(member));
 
         if(res.data.isEnrolled === false){
           alert("가입을 마무리 해주세요!")
@@ -41,8 +41,8 @@ const RedirectionKakao = (props) => {
         else{
           setlogout(false);
           const customHeader = {
-            authorization: window.localStorage.getItem("accesstoken"),
-            refreshToken: window.localStorage.getItem("refreshtoken"),
+            authorization: window.sessionStorage.getItem("accesstoken"),
+            refreshToken: window.sessionStorage.getItem("refreshtoken"),
             memberId: memberId
           };
 
@@ -52,7 +52,7 @@ const RedirectionKakao = (props) => {
 
           .then(function (res) {
             alert("환영합니다!")
-            window.localStorage.setItem("member",JSON.stringify(res.data));
+            window.sessionStorage.setItem("member",JSON.stringify(res.data));
             navigate("/mainpage"); //리다이렉트
           })
           
