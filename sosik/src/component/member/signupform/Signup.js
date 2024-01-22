@@ -73,7 +73,6 @@ function Signup() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "year" || name === "month" || name === "day") {
-      console.log(name, value);
       setMemberInfo((prevInfo) => ({
         ...prevInfo,
         birthday: {
@@ -118,7 +117,6 @@ function Signup() {
       const response = await axios.post(
         "http://localhost:5056/members/v1/checkEmail/" + memberInfo.email
       );
-      console.log(response);
       if (response.data) {
         setIsDuplicate(true);
       } else {
@@ -147,7 +145,6 @@ function Signup() {
     formData.append("member", blob);
 
     try {
-      console.log(memberInfo);
       const response = await axios({
         method: "post", // 통신 방식
         headers: {

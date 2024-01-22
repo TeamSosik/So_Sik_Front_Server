@@ -8,7 +8,6 @@ const KcalContext = ({ data }) => {
 
   // 메서드 상세페이지 이동
   const handleFoodCardClick = (foodId) => {
-    // const foodId = e.target.id;
     console.log(foodId);
     navigation(`/food/${foodId}`);
   };

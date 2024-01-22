@@ -13,14 +13,12 @@ const MyInfo = ({ props }) => {
   let targetWeight = lastWeightEntry.targetWeight;
 
   const getData = async () => {
-    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
     let today = new Date();
     today = today.toISOString();
     today = today.split("T")[0];
-
-    // console.log(today);
 
     try {
       await axios({
@@ -35,7 +33,6 @@ const MyInfo = ({ props }) => {
           setTodaykcal(response.data.result.dayTargetKcal);
           return;
         }
-        // console.log(response)
       });
     } catch (e) {
       console.log(e);

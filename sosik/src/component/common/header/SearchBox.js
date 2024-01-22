@@ -4,23 +4,36 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const SearchBox = () => {
-  const [wholeTextArray, setWholeTextArray] = useState([""]);
-  const [inputValue, setInputValue] = useState("");
-  const [isHaveInputValue, setIsHaveInputValue] = useState(false);
-  const [dropDownList, setDropDownList] = useState(wholeTextArray);
-  const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
+const SearchBox = () => {  
+  const [wholeTextArray,setWholeTextArray] = useState([""])
+  const [inputValue, setInputValue] = useState('')
+  const [isHaveInputValue, setIsHaveInputValue] = useState(false)
+  const [dropDownList, setDropDownList] = useState(wholeTextArray)
+  const [dropDownItemIndex, setDropDownItemIndex] = useState(-1)
 
+  const navigate = useNavigate();
+  
   const clickDropDownItem = (clickedItem) => {
     setInputValue(() => clickedItem);
     setIsHaveInputValue(() => false);
     navigate("/foodsearch", { state: { yourParameter: clickedItem } }); //리다이렉트
   };
+  
+  const handleDocumentClick = e => {
+    if (!e.target.closest('.dropdown-container')) {
+      setIsHaveInputValue(false);
+    }
+  };
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    document.addEventListener('click', handleDocumentClick);
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, []);
 
-  const changeInputValue = (event) => {
-    setInputValue(() => event.target.value);
+  const changeInputValue = event => {
+    setInputValue(() => event.target.value)
 
     const params = {
       inputValue: event.target.value,
@@ -28,21 +41,23 @@ const SearchBox = () => {
 
     try {
       axios({
-        url: "http://localhost:5056/food/v1/search",
-        params: params,
-      }).then(function (res) {
-        console.log(res.data.result);
-        if (res.data === null) {
-          return;
-        } else {
-          setDropDownList(() => {
-            const array = res.data.result;
-            return array.map((data) => {
-              return data.name;
-            });
-          });
+        url: 'http://localhost:5056/food/v1/search', 
+        params: params
+      })
+      .then(function (res) {
+
+        if (res.data === null){
+          return 
         }
-      });
+        else{
+          setDropDownList(()=>{
+            const array = res.data.result
+            return array.map((data) => {
+              return  data.name
+            })
+          })
+        }
+      })
     } catch (error) {
       console.error("가입에 실패하였습니다. 잠시 후 다시 시도해주세요", error); // 오류 처리
     }
@@ -180,7 +195,9 @@ const DropDownBox = styled.ul`
 
 const DropDownItem = styled.li`
   padding: 0 16px;
-
+  &:hover{
+    cursor: pointer;
+  }
   &.selected {
     background-color: lightgray;
   }

@@ -22,8 +22,8 @@ const RecdAnly_section1 = () => {
   // 섭취 랭크 요청
   const getData = async (params) => {
 
-    const accesstoken = window.localStorage.getItem("accesstoken");
-    const refreshtoken = window.localStorage.getItem("refreshtoken");
+    const accesstoken = window.sessionStorage.getItem("accesstoken");
+    const refreshtoken = window.sessionStorage.getItem("refreshtoken");
 
     try {
 
@@ -40,11 +40,9 @@ const RecdAnly_section1 = () => {
         params: params
       });
 
-      console.log(response);
       return response;
 
     } catch(e) {
-      console.log("/에러 발생!!!!!");
       console.log(e);
     }
 
@@ -67,15 +65,12 @@ const RecdAnly_section1 = () => {
     .map((data, index) => {
 
       let {name, value} = data;
-      console.log(typeof value);
 
       return {
         x: name,
         y: value,
       }
     });
-
-    console.log(newData);
 
     setData(() => {
 
@@ -86,7 +81,6 @@ const RecdAnly_section1 = () => {
   const handlePeriodChange = (e) => {
     const {value} = e.target;
 
-    console.log("period value : ", value);
     setParams((current) => {
       return {
         ...current,

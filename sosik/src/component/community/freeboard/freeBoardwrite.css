@@ -1,0 +1,30 @@
+.writeBox {
+  width: 60%;
+  /* margin-top: 100px; */
+
+  margin: 150px auto 0 auto;
+}
+
+.writeBox .title input[name='title'] {
+  height: 3rem;
+}
+
+.writeBox .buttonBox {
+  /* width: 80%; */
+  text-align: center;
+}
+
+.writebutton{
+  margin-top: 90px;
+  margin-bottom: 80px;
+  text-align: center;
+  height: 50px;
+  width: 200px;
+  background-color: #F8F6E6;
+  color: black;
+  border: #ccc;
+  &:hover {
+    color: #ccc;
+    background-color: #F8F6E6; 
+  }
+}

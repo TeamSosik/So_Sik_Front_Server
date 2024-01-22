@@ -12,10 +12,10 @@ function WeightModal({ handleCloseModal, accessToken }) {
     e.preventDefault();
     try {
       const accesstoken = JSON.parse(
-        window.localStorage.getItem("accesstoken")
+        window.sessionStorage.getItem("accesstoken")
       );
       const refreshtoken = JSON.parse(
-        window.localStorage.getItem("refreshtoken")
+        window.sessionStorage.getItem("refreshtoken")
       );
 
       await axios
@@ -36,7 +36,6 @@ function WeightModal({ handleCloseModal, accessToken }) {
         .then(function (response) {
           handleCloseModal();
           window.location.reload();
-          console.log(response);
         });
     } catch (error) {
       console.error(error);

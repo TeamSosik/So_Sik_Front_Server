@@ -12,8 +12,8 @@ const Aside = ({ props }) => {
 
   const handleShowModal = async (e) => {
     e.preventDefault();
-    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
     try {
       const response = await axios.get(
         "http://localhost:5056/members/v1/checkRecode",
@@ -24,7 +24,7 @@ const Aside = ({ props }) => {
           },
         }
       );
-      console.log(response);
+      
       if (response.data) {
         window.alert("오늘은 이미 기록하였습니다!");
         setShowModal(false);

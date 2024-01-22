@@ -21,8 +21,8 @@ const MyPage = () => {
     weightList: [""],
   });
   const getMemberDetail = async () => {
-    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
     try {
       await axios({
@@ -34,8 +34,6 @@ const MyPage = () => {
           "Content-Type": "application/json",
         },
       }).then((response) => {
-        console.log(response);
-        console.log(response.data.result);
         setUsers(response.data.result);
       });
     } catch (e) {
