@@ -1,0 +1,21 @@
+.recipeinfotitle{
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+.recipeheader{
+    display: flex;
+}
+.recipeinfonamedate{
+    display: flex;
+    margin-top: auto;
+    margin-left: auto;
+}
+.pick{
+    margin-top: 20px;
+    margin-left: 4px;
+}
+.recipeheaderesult{
+    margin-bottom: 40px;
+    margin-top: 130px;
+}
