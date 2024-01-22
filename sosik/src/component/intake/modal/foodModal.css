@@ -3,7 +3,8 @@
   justify-content: center;
 }
 
-.modal-open-button, .modal-close-btn {
+.modal-open-button,
+.modal-close-btn {
   cursor: pointer;
   margin-left: auto;
 }
@@ -19,7 +20,6 @@
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  
 }
 
 .modal-content {
@@ -29,7 +29,6 @@
   padding: 15px;
   z-index: 1000;
   overflow: hidden;
-  
 }
 .modal-content button {
   font-size: 16px;
@@ -38,15 +37,13 @@
   font-size: 16px;
 }
 
-.modal-search{
+.modal-search {
   text-align: center;
-
 }
 
 .registrationBtn {
   cursor: pointer;
 }
-
 
 /* buttonBox */
 .pageButtonBox {
@@ -72,7 +69,7 @@
   width: 7rem;
   height: 2rem;
   font-size: 1rem;
-  background-color: #f8f6e6;
+  background-color: transparent;
   margin-left: 0.3rem;
   border: none;
 
@@ -83,18 +80,15 @@
 }
 
 .pageButtonBox > .pageButtonList > button:hover {
-  background-color: #fdf3a2;
+  background-color: #59bd82;
 }
 
 .pageButtonBox > .pageButtonList > button.nowPageBtn {
-  background-color: #fdf3a2;
+  background-color: #59bd82;
 }
 
 /* 음식 이름 */
 .foodName:hover {
   cursor: pointer;
-  color: #0f6ffd
+  color: #0f6ffd;
 }
-
-
-
