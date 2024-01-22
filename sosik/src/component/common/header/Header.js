@@ -19,6 +19,7 @@ import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
 import NotificationList from "./NotificationList";
+import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js"
 
 export const HeaderContext = createContext();
 
@@ -143,6 +144,7 @@ const Header = () => {
           <Route path="/findPw" element={<FindPw />} />
           <Route path="/snsInfo" element={<SnsInfo />} />
           <Route path="/freeboard" element={<FreeBoard />} />
+          <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
