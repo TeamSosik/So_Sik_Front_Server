@@ -30,9 +30,9 @@ const RecdAnly_section2 = () => {
   const getData = async () => {
 
     try {
-      const member = JSON.parse(localStorage.getItem("member"));
-      const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
-      const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+      const member = JSON.parse(sessionStorage.getItem("member"));
+      const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
+      const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
       const currentUTC = new Date();
       const koreaTimeOffset = 9 * 60 * 60 * 1000;

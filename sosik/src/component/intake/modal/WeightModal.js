@@ -12,10 +12,10 @@ function WeightModal({ handleCloseModal, accessToken }) {
     e.preventDefault();
     try {
       const accesstoken = JSON.parse(
-        window.localStorage.getItem("accesstoken")
+        window.sessionStorage.getItem("accesstoken")
       );
       const refreshtoken = JSON.parse(
-        window.localStorage.getItem("refreshtoken")
+        window.sessionStorage.getItem("refreshtoken")
       );
 
       await axios

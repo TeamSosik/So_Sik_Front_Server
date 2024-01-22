@@ -63,8 +63,8 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   };
 
   const deleteMeal = async (id) => {
-    const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
     const url = `http://localhost:5056/intake/v1/${id}`;
 

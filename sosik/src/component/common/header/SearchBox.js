@@ -15,7 +15,22 @@ const SearchBox = () => {
   const clickDropDownItem = clickedItem => {
     setInputValue(() => clickedItem)
     setIsHaveInputValue(() => false)
+    
   }
+
+  const handleDocumentClick = e => {
+    if (!e.target.closest('.dropdown-container')) {
+      setIsHaveInputValue(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleDocumentClick);
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, []);
+
 
   const changeInputValue = event => {
     setInputValue(() => event.target.value)
@@ -180,7 +195,9 @@ const DropDownBox = styled.ul`
 
 const DropDownItem = styled.li`
   padding: 0 16px;
-
+  &:hover{
+    cursor: pointer;
+  }
   &.selected {
     background-color: lightgray;
   }
