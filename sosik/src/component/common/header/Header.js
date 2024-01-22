@@ -26,7 +26,7 @@ const Header = () => {
   const [logout, setlogout] = useState(true);
 
   useEffect(() => {
-    const access = window.localStorage.getItem("accesstoken");
+    const access = window.sessionStorage.getItem("accesstoken");
     if (access === null) {
       setlogout(true);
     } else {
@@ -37,12 +37,12 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       const accesstoken = JSON.parse(
-        window.localStorage.getItem("accesstoken")
+        window.sessionStorage.getItem("accesstoken")
       );
       const refreshtoken = JSON.parse(
-        window.localStorage.getItem("refreshtoken")
+        window.sessionStorage.getItem("refreshtoken")
       );
-      const member = JSON.parse(window.localStorage.getItem("member"));
+      const member = JSON.parse(window.sessionStorage.getItem("member"));
 
       await axios({
         method: "post",
@@ -57,9 +57,9 @@ const Header = () => {
         data: JSON.stringify({ email: member.result.email }),
       });
 
-      window.localStorage.removeItem("accesstoken");
-      window.localStorage.removeItem("refreshtoken");
-      window.localStorage.removeItem("member");
+      window.sessionStorage.removeItem("accesstoken");
+      window.sessionStorage.removeItem("refreshtoken");
+      window.sessionStorage.removeItem("member");
 
       setlogout(true);
       alert("로그아웃 되었습니다.");

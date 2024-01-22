@@ -23,8 +23,8 @@ function Calendarview(props) {
   const [snackdot, setsnackDot] = useState([]);
   
   const getData = async (value) => {
-    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
     try {
       const response = await axios({
@@ -62,8 +62,8 @@ function Calendarview(props) {
   // 하루 총 칼로리가져오기
   const getData2 = async (today) => {
     try {
-      const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
-      const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+      const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
+      const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
       const url = `/intake/v1/${today}`;
       const response = await axios({

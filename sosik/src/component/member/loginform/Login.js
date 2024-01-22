@@ -36,20 +36,20 @@ function Login() {
           const accesstoken = result.data.result.accessToken;
           const refreshtoken = result.data.result.refreshToken;
           const member = result.data;
-          window.localStorage.setItem(
+          window.sessionStorage.setItem(
             "accesstoken",
             JSON.stringify(accesstoken)
           );
-          window.localStorage.setItem(
+          window.sessionStorage.setItem(
             "refreshtoken",
             JSON.stringify(refreshtoken)
           );
-          window.localStorage.setItem("member", JSON.stringify(member));
+          window.sessionStorage.setItem("member", JSON.stringify(member));
           alert("정상적으로 로그인 처리 되었습니다.");
 
           const customHeader = {
-            authorization: window.localStorage.getItem("accesstoken"),
-            refreshToken: window.localStorage.getItem("refreshtoken"),
+            authorization: window.sessionStorage.getItem("accesstoken"),
+            refreshToken: window.sessionStorage.getItem("refreshtoken"),
             memberId: member.memberId,
           };
 
@@ -58,7 +58,7 @@ function Login() {
               headers: customHeader,
             })
             .then(function (res) {
-              window.localStorage.setItem("member", JSON.stringify(res.data));
+              window.sessionStorage.setItem("member", JSON.stringify(res.data));
               navigate("/mainpage"); //리다이렉트
             })
             .catch(function (error) {

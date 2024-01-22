@@ -53,8 +53,8 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
     const calculationFat = data.fat * foodAmount.foodAmount / 100;
     const calculationKcal = data.kcal * foodAmount.foodAmount / 100;
 
-    const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
     const intakeData = {
       foodId: data.foodId,

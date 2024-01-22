@@ -34,8 +34,8 @@ function UpdateInfo() {
     weightList: [""],
   });
   const getMemberDetail = async () => {
-    const authorization = JSON.parse(localStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
     try {
       await axios({
@@ -75,7 +75,7 @@ function UpdateInfo() {
     getMemberDetail();
   }, []);
   const navigate = useNavigate();
-  const member = JSON.parse(window.localStorage.getItem("member")).result;
+  const member = JSON.parse(window.sessionStorage.getItem("member")).result;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -118,10 +118,10 @@ function UpdateInfo() {
 
     try {
       const accesstoken = JSON.parse(
-        window.localStorage.getItem("accesstoken")
+        window.sessionStorage.getItem("accesstoken")
       );
       const refreshtoken = JSON.parse(
-        window.localStorage.getItem("refreshtoken")
+        window.sessionStorage.getItem("refreshtoken")
       );
 
       await axios({

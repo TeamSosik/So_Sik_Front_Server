@@ -22,8 +22,8 @@ const RecdAnly_section1 = () => {
   // 섭취 랭크 요청
   const getData = async (params) => {
 
-    const accesstoken = window.localStorage.getItem("accesstoken");
-    const refreshtoken = window.localStorage.getItem("refreshtoken");
+    const accesstoken = window.sessionStorage.getItem("accesstoken");
+    const refreshtoken = window.sessionStorage.getItem("refreshtoken");
 
     try {
 
