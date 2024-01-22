@@ -48,6 +48,10 @@ const FoodModal = ({ modalBtn }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // 입력된 값을 사용하거나 다른 작업 수행
+    // 데이터가 없으면 검색을 멈춘다.
+    if(!inputValue) {
+      return;
+    }
 
     // 음식 서비스에 요청하기
     const data = await getDataList();
@@ -109,9 +113,10 @@ const FoodModal = ({ modalBtn }) => {
 
   // 데이터 불러오기
   const getDataList = async () => {
+
     const params = {
       name: inputValue,
-      page: pageData.page,
+      page: 1,
       size: pageData.size,
     };
 
