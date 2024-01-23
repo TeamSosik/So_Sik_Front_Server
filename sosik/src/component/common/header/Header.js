@@ -21,13 +21,12 @@ import FreeBoard from "../../community/freeboard/FreeBoard.js";
 import NotificationList from "./NotificationList";
 import FreeBoardList from "../../community/freeboard/FreeBoardList.js";
 import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
-// import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js"
+import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js"
 
 export const HeaderContext = createContext();
 
 const Header = () => {
   const [logout, setlogout] = useState(true);
-
   useEffect(() => {
     const access = window.sessionStorage.getItem("accesstoken");
     if (access === null) {
@@ -147,7 +146,7 @@ const Header = () => {
           <Route path="/freeboard" element={<FreeBoard />} />
           <Route path="/freeboardlist" element={<FreeBoardList />} />
           <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
-          {/* <Route path="/freeboard/:id" element={<FreeBoardInfo />} /> */}
+          <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
