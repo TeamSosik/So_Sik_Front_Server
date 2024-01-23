@@ -1,6 +1,6 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { RecdKcalSection2Context } from '../record/RecdKcalSection2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -98,7 +98,22 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
 
   }
 
+  // 처음 렌더링 될 때 실행
+  const init = () => {
+    
+    setFoodAmount(() => {
+      return defaultFoodAmount;
+    });
+  }
+
   // view
+
+  // 처음 시작
+  useEffect(() => {
+    
+    init();
+    
+  }, [data]);
 
   return (
     <tbody>
@@ -121,7 +136,7 @@ const Tbody = ({data, handleModalTogle, handleDataListChange}) => {
           <input
             type="text"
             name="foodAmount"
-            defaultValue={""}
+            value={foodAmount.foodAmount}
             onChange={handleFoodAmountChange}
             style={{ width: "50px" }}
           />
