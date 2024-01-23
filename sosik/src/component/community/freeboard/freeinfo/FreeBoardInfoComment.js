@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Form, ListGroup, Image, Col, Row, Card } from "react-bootstrap";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./freeboardinfocomment.css";
 
 const FreeBoardInfoComment = ({ commentlist , postId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-
-  const createdAtDate = new Date();
-  const formattedDate = `${createdAtDate.getFullYear()}-${(createdAtDate.getMonth() + 1).toString().padStart(2, '0')}-${createdAtDate.getDate().toString().padStart(2, '0')} ${createdAtDate.getHours().toString().padStart(2, '0')}:${createdAtDate.getMinutes().toString().padStart(2, '0')}`;
+  
   useEffect(() => {
     setComments(commentlist.map(comment => ({
       memberId: comment.memberId,
       createdAt: formatDate(comment.createdAt),
-      content: comment.content
+      content: comment.content,
+      id: comment.id
     })));
   }, [commentlist]);
   
@@ -27,18 +28,17 @@ const FreeBoardInfoComment = ({ commentlist , postId }) => {
   
     return `${year}-${month}-${day} ${hour}:${minute}`;
   };
-
+  
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
-  const currentDate = new Date();
+
+  const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
+  const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
+  const member = JSON.parse(window.sessionStorage.getItem("member"));
 
   const handleAddComment = () => {
     if (newComment.trim() !== "") {
-      const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
-      const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
-      const member = JSON.parse(window.sessionStorage.getItem("member"));
-  
       axios.post(
         'http://127.0.0.1:5056/comment/v1/create',
         {
@@ -54,13 +54,13 @@ const FreeBoardInfoComment = ({ commentlist , postId }) => {
         }
       )
       .then((response) => {
-        console.log(response);
         setComments(prevComments => [
           ...prevComments,
           {
-            memberId: member.result.member.memberId,
-            createdAt: formattedDate,
-            content: newComment,
+            memberId: response.data.result.memberId,
+            createdAt: formatDate(response.data.result.createdAt),
+            content: response.data.result.content,
+            id: response.data.result.id
           }
         ]);
   
@@ -69,6 +69,25 @@ const FreeBoardInfoComment = ({ commentlist , postId }) => {
       .catch(error => {
         console.error(error);
       });
+    }
+  };
+  
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:5056/comment/v1/${commentId}`, {
+        headers: {
+          Authorization: authorization,
+          RefreshToken: refreshToken,
+          memberId: member.result.member.memberId,
+        },
+      });
+  
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== commentId)
+      );
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -126,11 +145,24 @@ const FreeBoardInfoComment = ({ commentlist , postId }) => {
                     width="35"
                     height="35"
                   />
-
-                  <span>{comment.memberId} | {comment.createdAt}</span>
+                
+                  <span className="commentinfo">{comment.memberId} | {comment.createdAt}</span>
+                  <span className="commentmanager">
+                    {member.result.member.memberId === comment.memberId && (
+                      <>
+                        <span ><FontAwesomeIcon icon={faPen} style={{color: "#a5a5a5",}}/></span>  
+            
+                        <span className="commentdelete" onClick={() => handleDeleteComment(comment.id)}>
+                      <FontAwesomeIcon icon={faTrash} style={{ color: "#a5a5a5" }} />
+                    </span>
+                      </>
+                    )}
+                  </span>
                   <br />
+                  
                 </div>
                 <div className="commenttext">{comment.content}</div>
+                <hr/>
               </ListGroup.Item>
             ))}
           </ListGroup>
