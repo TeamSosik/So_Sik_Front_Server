@@ -1,0 +1,11 @@
+.freewrite-btn {
+    color: #59BD82;
+    background-color: transparent;
+    border-color: #59BD82;
+}
+
+.freewrite-btn:hover,
+.freewrite-btn:active {
+    background-color: #59BD82;
+    border-color: transparent;
+}
