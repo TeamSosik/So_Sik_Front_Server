@@ -35,7 +35,7 @@ function Login() {
         .then((result) => {
           const accesstoken = result.data.result.accessToken;
           const refreshtoken = result.data.result.refreshToken;
-          const member = result.data;
+          const member = result.data.result.member;
           window.sessionStorage.setItem(
             "accesstoken",
             JSON.stringify(accesstoken)
