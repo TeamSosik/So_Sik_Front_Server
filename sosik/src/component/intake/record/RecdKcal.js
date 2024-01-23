@@ -7,12 +7,13 @@ import axios from "axios";
 import Loading from "../../common/spinners/Loading.js";
 import Calendarview from "../../intake/calendar/Calendarview.js";
 import Inputkcal from "../Inputkcal.js";
+import { useLocation } from "react-router-dom";
 
 export const RecdKcalContext = createContext();
 
 const RecdKcal = () => {
   // 필드
-
+  
   // 상태
   const [mealList, setMealList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,8 +24,8 @@ const RecdKcal = () => {
   // 섭취 음식 목록 불러오기
   const getData = async () => {
     try {
-      const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
-      const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+      const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
+      const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
       // const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
       const currentUTC = new Date();
@@ -79,8 +80,8 @@ const RecdKcal = () => {
   // 섭취 음식 목록 불러오기
   const getData2 = async (date) => {
     try {
-      const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
-      const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+      const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
+      const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
       const url = `/intake/v1/${date}`;
 
@@ -118,7 +119,7 @@ const RecdKcal = () => {
   };
   return (
     <RecdKcalContext.Provider value={{ addMealList }}>
-      <Recdbutton></Recdbutton>
+      <Recdbutton defaultRadioValue={"1"}></Recdbutton>
       <div className="position">
         <Inputkcal props={loadDate} />
         <Calendarview propFunction={highFunction} />
