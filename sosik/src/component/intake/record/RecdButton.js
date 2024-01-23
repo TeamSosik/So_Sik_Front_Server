@@ -6,8 +6,8 @@ import "./recdButton.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function Recdbutton() {
-  const [radioValue, setRadioValue] = useState("1");
+function Recdbutton({defaultRadioValue}) {
+  const [radioValue, setRadioValue] = useState(defaultRadioValue);
   const navigate = useNavigate();
 
   const radios = [
@@ -38,12 +38,16 @@ function Recdbutton() {
     return baseStyle;
   };
 
-  const handleButtonClick = (value) => {
-    setRadioValue(value);
-    if (value === "1") {
-      navigate("/recdkcal");
-    } else if (value === "2") {
+  const handleButtonClick = () => {
+
+    if (defaultRadioValue === "1") {
       navigate("/recdanly");
+      return;
+    }
+    
+    if (defaultRadioValue === "2") {
+
+      navigate("/recdkcal");
     }
   };
 
@@ -60,12 +64,8 @@ function Recdbutton() {
               type="radio"
               name="radio"
               value={radio.value}
-              checked={radioValue === radio.value}
-              onChange={(e) => {
-                setRadioValue(e.currentTarget.value);
-              }}
-              onClick={() => handleButtonClick(radio.value)}
-              onMouseLeave={() => setRadioValue(radioValue)}
+              checked={defaultRadioValue === radio.value}
+              onClick={handleButtonClick}
               style={buttonStyle(radio.value)}
             >
               {radio.name}
