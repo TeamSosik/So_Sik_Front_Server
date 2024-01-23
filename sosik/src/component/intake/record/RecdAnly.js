@@ -6,9 +6,11 @@ import RecdAnly_section2 from "./RecdAnly_section2";
 
 const RecdAnly = () => {  
 
+
+
   return (
     <div>
-      <RecdButton />
+      <RecdButton defaultRadioValue={"2"} />
       <RecdAnly_section1 />
       <RecdAnly_section2 />
     </div>
