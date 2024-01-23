@@ -19,7 +19,9 @@ import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
 import NotificationList from "./NotificationList";
-import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js"
+import FreeBoardList from "../../community/freeboard/FreeBoardList.js";
+import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
+// import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js"
 
 export const HeaderContext = createContext();
 
@@ -110,7 +112,6 @@ const Header = () => {
           <img src={logo} alt="Logo" />
         </Link>
         <nav id="gnb">
-          {/* <Autocomplete></Autocomplete> */}
           <SearchBox></SearchBox>
         </nav>
         <div className="utWrap">
@@ -144,7 +145,9 @@ const Header = () => {
           <Route path="/findPw" element={<FindPw />} />
           <Route path="/snsInfo" element={<SnsInfo />} />
           <Route path="/freeboard" element={<FreeBoard />} />
-          <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
+          <Route path="/freeboardlist" element={<FreeBoardList />} />
+          <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
+          {/* <Route path="/freeboard/:id" element={<FreeBoardInfo />} /> */}
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
