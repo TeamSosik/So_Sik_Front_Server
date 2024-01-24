@@ -4,6 +4,8 @@ import KcalContext from "./KcalContext.js";
 import { useLocation } from "react-router-dom";
 import PageButton from "./PageButton.js";
 import "./foodSearch.css";
+import notFoodData from "../../../images/foodNoSearch.png";
+import Loading from "./../../common/spinners/Loading";
 
 const FoodSearch = () => {
   // 필드
@@ -75,7 +77,7 @@ const FoodSearch = () => {
   const getDataList = async () => {
     const params = {
       name: yourParameter,
-      page: pageData.page,
+      page: 1,
       size: pageData.size,
     };
     console.log(params);
@@ -112,6 +114,7 @@ const FoodSearch = () => {
   //가짜 데이터
 
   useEffect(() => {
+    console.log(yourParameter);
     getDataList();
   }, [yourParameter]);
 
@@ -134,20 +137,28 @@ const FoodSearch = () => {
   // 음식 상세페이지로 이동한다.
 
   return (
-    <div className="foodSearchBox">
-      {/* contextBox */}
-      <div className="kcalContexListBox">
-        {/* context */}
-        {kcalContextList}
+    <>
+      {loading ? (
+        <Loading />
+      ) : yourParameter !== undefined ? (
+        <div className="foodSearchBox">
+          {/* contextBox */}
+          <div className="kcalContexListBox">
+            {/* context */}
+            {kcalContextList}
 
-        {/* TODO : div 박스를 나눌 지 생각해봐야 합니다. */}
-        {/* ButtonBox */}
-        <PageButton
-          handlePageBtnClick={handlePageBtnClick}
-          pageData={pageData}
-        />
-      </div>
-    </div>
+            {/* TODO : div 박스를 나눌 지 생각해봐야 합니다. */}
+            {/* ButtonBox */}
+            <PageButton
+              handlePageBtnClick={handlePageBtnClick}
+              pageData={pageData}
+            />
+          </div>
+        </div>
+      ) : (
+        <img src={notFoodData} className="foodNoSearch" alt="not_data.png" />
+      )}
+    </>
   );
 };
 
