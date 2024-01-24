@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import ReactQuill, {Quill} from 'react-quill';
-import './freeBoardwrite.css';
-import { Button, Form } from 'react-bootstrap';
+import React, { useState } from "react";
+import ReactQuill, {Quill} from "react-quill";
+import "./freeBoardwrite.css";
+import { Button, Form } from "react-bootstrap";
+import axios from "axios";
 import "react-quill/dist/quill.snow.css";
-import ImageResize from 'quill-image-resize-module-react';
+import ImageResize from "quill-image-resize-module-react";
+import { useNavigate } from "react-router-dom";
 
 const FreeBoardWrite = () => {
-
-  // 필드
 
   const toolbarOptions = [
     
@@ -41,8 +41,8 @@ const FreeBoardWrite = () => {
     "width",
   ];
 
+ 
   Quill.register("modules/imageResize", ImageResize);
-  
   const modules = {
     toolbar: {
       container: toolbarOptions
@@ -54,19 +54,16 @@ const FreeBoardWrite = () => {
   };
 
   const defaultBoard = {
-    title: '',
+    title: "",
   }
 
-  // 상태
   const [board, setBoard] = useState(defaultBoard);
   const [content, setContent] = useState(defaultBoard);
+  const navigate = useNavigate();
 
-  // 메서드
   // title 값이 변할 때 작동합니다.
   const handleBoardChange = (e) => {
-    
     const {name, value} = e.target;
-
     setBoard((current) => {   
       return {
         ...current,
@@ -75,47 +72,49 @@ const FreeBoardWrite = () => {
     });
   };
 
-  // ReactQuill의 content가 변할 때 작동합니다.
   const handleContentChange = (content) => {
-
-    console.log("content : ", content);
-
-    return setContent(() => {
-      return content;
-    });
+    setContent(content);
   };
 
-  // 작성 버튼 클릭 시 작동합니다.
-  const handleCreateBoardClick = () => {
-
-    console.log("등록 시작");
-
+  const handleCreateBoardClick = async () => {
     const data = {
       title: board.title,
       content: content
+    };
+  
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5056/post/v1/create",
+        data,
+        {
+          headers: {
+            authorization: authorization,
+            refreshtoken: refreshToken,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("게시글이 성공적으로 등록되었습니다.")
+        navigate("/freeboard");
+      }
+    } catch (error) {
+      alert("게시글 등록에 실패 하였습니다. 다시 시도해주세요.");
     }
-
-    console.log(data);
-
-    // axios 처리 시작
-
-    // axios 처리 끝
-
-    console.log("등록 끝");
-
-
-  }
-
-  // view
-
+  };
 
   return (
-    <div className='writeBox'>
-      
-      <div className='title'>
+    <div className="writeBox">
+      <div className="title">
       <Form.Group className="mb-3">
-        {/* <Form.Label className="formlabel">제목</Form.Label> */}
-        <Form.Control type="text" name='title' placeholder="제목을 입력해주세요" onChange={handleBoardChange} />
+        <Form.Control
+        type="text"
+        name="title"
+        placeholder="제목을 입력해주세요"
+        onChange={handleBoardChange} />
       </Form.Group>
       </div>
 
@@ -127,17 +126,16 @@ const FreeBoardWrite = () => {
           theme="snow"
           name="content"
           onChange={handleContentChange}
-          placeholder='내용을 입력해주세요.'
+          placeholder="내용을 입력해주세요."
         />
       </div>
 
-      <div className='buttonBox'>
+      <div className="buttonBox">
        <Button
           variant="outline-light"
           className="rounded-pill writebutton"
           type="button"
-          onClick={handleCreateBoardClick}
-        >
+          onClick={handleCreateBoardClick}>
           <strong>작성</strong>
         </Button>
       </div>

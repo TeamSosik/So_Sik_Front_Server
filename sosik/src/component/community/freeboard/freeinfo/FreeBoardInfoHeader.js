@@ -12,7 +12,6 @@ function FreeBoardInfoHeader({ title, memberId, date }) {
   const getData = async () => {
       const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
       const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
-      // console.log({memberId});
 
       try {
         const response = await axios({
@@ -38,7 +37,7 @@ function FreeBoardInfoHeader({ title, memberId, date }) {
   return (
     <Row className="recipeheaderesult">
       <Col></Col>
-      <Col xs={7}>
+      <Col xs={6}>
         <div className="recipeheader">
           <div className="recipeinfotitle">{title}</div>
           <div className="recipeinfonamedate">

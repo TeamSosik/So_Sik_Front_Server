@@ -7,25 +7,65 @@ import axios from "axios";
 import Loading from "../../common/spinners/Loading.js";
 import Calendarview from "../../intake/calendar/Calendarview.js";
 import Inputkcal from "../Inputkcal.js";
-import { useLocation } from "react-router-dom";
+import RecdKcalSectionNutrient from "./RecdKcalSection3-nutrient.js";
 
 export const RecdKcalContext = createContext();
 
 const RecdKcal = () => {
   // 필드
-  
+
   // 상태
   const [mealList, setMealList] = useState([]);
+  const [nutrientRatio, setNutrientRatio] = useState({
+    carbohydrate: 0, //탄수화물
+    protein: 0, //단백질
+    province: 0, //지방
+    dayTargetKcal: 0, //일일목표칼로리
+  });
   const [loading, setLoading] = useState(false);
   const [loadDate, setLoadDate] = useState("");
 
   // 메서드
 
+  const getTodayTargetkcal = async () => {
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+    let today = new Date().toISOString().split("T")[0];
+    console.log(today);
+
+    try {
+      await axios({
+        method: "get",
+        url: "http://localhost:5056/target-calorie/v1/" + today,
+        headers: {
+          authorization: authorization,
+          refreshToken: refreshToken,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        setNutrientRatio((nutrientRatio) => ({
+          ...nutrientRatio,
+          carbohydrate:
+            Math.floor((response.data.result.dayTargetKcal / 10) * 100) / 100,
+          protein:
+            Math.floor(((response.data.result.dayTargetKcal * 3) / 40) * 100) /
+            100,
+          province:
+            Math.floor(((response.data.result.dayTargetKcal * 3) / 90) * 100) /
+            100,
+          dayTargetKcal: response.data.result.dayTargetKcal,
+        }));
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   // 섭취 음식 목록 불러오기
   const getData = async () => {
     try {
-      const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
-      const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+      const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
+      const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
       // const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
       const currentUTC = new Date();
@@ -80,8 +120,8 @@ const RecdKcal = () => {
   // 섭취 음식 목록 불러오기
   const getData2 = async (date) => {
     try {
-      const accesstoken = JSON.parse(localStorage.getItem("accesstoken"));
-      const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
+      const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
+      const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
       const url = `/intake/v1/${date}`;
 
@@ -103,6 +143,8 @@ const RecdKcal = () => {
   // 처음 페이지 들어왔을 때 실행
   useEffect(() => {
     setLoading(true);
+
+    getTodayTargetkcal();
 
     addMealList();
   }, []);
@@ -129,6 +171,7 @@ const RecdKcal = () => {
         addMealList={addMealList}
         props={loadDate}
       />
+      <RecdKcalSectionNutrient mealList={nutrientRatio} />
       <RecdKcalSection3 mealList={mealList} />
     </RecdKcalContext.Provider>
   );
