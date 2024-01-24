@@ -77,7 +77,7 @@ const Header = () => {
     loginview = (
       <>
         <li>
-          <Link to="/freeboardlist" style={{ marginRight: "30px" }}>
+          <Link to="/freeboard" style={{ marginRight: "30px" }}>
             커뮤니티
           </Link>
           <Link to="/mypage" style={{ marginRight: "30px" }}>
@@ -97,7 +97,7 @@ const Header = () => {
   } else {
     loginview = (
       <li>
-        <Link to="/freeboardlist" style={{ marginRight: "30px" }}>
+        <Link to="/freeboard" style={{ marginRight: "30px" }}>
           커뮤니티
         </Link>
         <Link to="/login">로그인</Link>

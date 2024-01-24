@@ -110,7 +110,11 @@ const FreeBoardWrite = () => {
     <div className="writeBox">
       <div className="title">
       <Form.Group className="mb-3">
-        <Form.Control type="text" name="title" placeholder="제목을 입력해주세요" onChange={handleBoardChange} />
+        <Form.Control
+        type="text"
+        name="title"
+        placeholder="제목을 입력해주세요"
+        onChange={handleBoardChange} />
       </Form.Group>
       </div>
 

@@ -14,7 +14,7 @@ const FreeBoardList = () => {
     try {
       const response = await axios({
         method: "get",
-        url: 'http://127.0.0.1:5056/post/v1',
+        url: 'http://127.0.0.1:5056/post/v1/',
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
