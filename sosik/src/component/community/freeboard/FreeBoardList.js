@@ -34,9 +34,9 @@ const FreeBoardList = () => {
 
   return (
     <div className="freeboard-list">
-    {free.map((a) => (
-      <Link to={`/freeboard/${a.id}`} key={a.id} style={{ textDecoration: "none"}}>
-        <FreeBoardCard content={a} />
+    {free.map((data) => (
+      <Link to={`/freeboard/${data.id}`} key={data.id} style={{ textDecoration: "none"}}>
+        <FreeBoardCard content={data} />
       </Link>
     ))}
   </div>

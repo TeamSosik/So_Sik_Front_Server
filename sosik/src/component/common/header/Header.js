@@ -22,6 +22,7 @@ import NotificationList from "./NotificationList";
 import FreeBoardList from "../../community/freeboard/FreeBoardList.js";
 import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js"
+import FreeBoardUpdate from "../../community/freeboard/FreeBoardUpdate.js";
 
 export const HeaderContext = createContext();
 
@@ -147,6 +148,7 @@ const Header = () => {
           <Route path="/freeboardlist" element={<FreeBoardList />} />
           <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
           <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
+          <Route path="/freeboardupdate" element={<FreeBoardUpdate />} />
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
