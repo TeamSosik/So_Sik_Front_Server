@@ -5,30 +5,34 @@ import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./freeboardinfocomment.css";
 
-const FreeBoardInfoComment = ({ commentlist , postId }) => {
+const FreeBoardInfoComment = ({ commentlist, postId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editedComment, setEditedComment] = useState("");
+
   useEffect(() => {
-    setComments(commentlist.map(comment => ({
-      memberId: comment.memberId,
-      createdAt: formatDate(comment.createdAt),
-      content: comment.content,
-      id: comment.id
-    })));
+    setComments(
+      commentlist.map((comment) => ({
+        memberId: comment.memberId,
+        createdAt: formatDate(comment.createdAt),
+        content: comment.content,
+        id: comment.id,
+      }))
+    );
   }, [commentlist]);
-  
+
   const formatDate = (isoDateString) => {
     const createdAtDate = new Date(isoDateString);
     const year = createdAtDate.getFullYear();
-    const month = String(createdAtDate.getMonth() + 1).padStart(2, '0');
-    const day = String(createdAtDate.getDate()).padStart(2, '0');
-    const hour = String(createdAtDate.getHours()).padStart(2, '0');
-    const minute = String(createdAtDate.getMinutes()).padStart(2, '0');
-  
+    const month = String(createdAtDate.getMonth() + 1).padStart(2, "0");
+    const day = String(createdAtDate.getDate()).padStart(2, "0");
+    const hour = String(createdAtDate.getHours()).padStart(2, "0");
+    const minute = String(createdAtDate.getMinutes()).padStart(2, "0");
+
     return `${year}-${month}-${day} ${hour}:${minute}`;
   };
-  
+
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
@@ -39,55 +43,94 @@ const FreeBoardInfoComment = ({ commentlist , postId }) => {
 
   const handleAddComment = () => {
     if (newComment.trim() !== "") {
-      axios.post(
-        'http://127.0.0.1:5056/comment/v1/create',
+      axios
+        .post(
+          "http://127.0.0.1:5056/comment/v1/create",
+          {
+            communityId: postId,
+            content: newComment,
+          },
+          {
+            headers: {
+              Authorization: authorization,
+              RefreshToken: refreshToken,
+            },
+          }
+        )
+        .then((response) => {
+          setComments((prevComments) => [
+            ...prevComments,
+            {
+              memberId: response.data.result.memberId,
+              createdAt: formatDate(response.data.result.createdAt),
+              content: response.data.result.content,
+              id: response.data.result.id,
+            },
+          ]);
+
+          setNewComment("");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  const handleEditComment = (commentId, content) => {
+    setEditingCommentId(commentId);
+    setEditedComment(content);
+  };
+
+  const handleUpdateComment = async (commentId) => {
+    try {
+      const response = await axios.patch(
+        `http://127.0.0.1:5056/comment/v1/${commentId}`,
         {
-          communityId: postId,
-          content: newComment
+          content: editedComment,
         },
         {
           headers: {
             Authorization: authorization,
             RefreshToken: refreshToken,
-            memberId: member.result.member.memberId,
           },
         }
       )
-      .then((response) => {
-        setComments(prevComments => [
-          ...prevComments,
-          {
-            memberId: response.data.result.memberId,
-            createdAt: formatDate(response.data.result.createdAt),
-            content: response.data.result.content,
-            id: response.data.result.id
-          }
-        ]);
-  
-        setNewComment("");
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    }
-  };
-  
-
-  const handleDeleteComment = async (commentId) => {
-    try {
-      await axios.delete(`http://127.0.0.1:5056/comment/v1/${commentId}`, {
-        headers: {
-          Authorization: authorization,
-          RefreshToken: refreshToken,
-          memberId: member.result.member.memberId,
-        },
-      });
-  
+        console.log(response);
       setComments((prevComments) =>
-        prevComments.filter((comment) => comment.id !== commentId)
+        prevComments.map((comment) =>
+          comment.id === commentId
+            ? {
+                ...comment,
+                content: response.data.result,
+              }
+            : comment
+        )
       );
+
+      setEditingCommentId(null);
+      setEditedComment("");
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    const confirmDelete = window.confirm("댓글을 삭제하시겠습니까?");
+    if (confirmDelete) {
+      try {
+        await axios.delete(`http://127.0.0.1:5056/comment/v1/${commentId}`, {
+          headers: {
+            Authorization: authorization,
+            RefreshToken: refreshToken,
+          },
+        });
+
+        setComments((prevComments) =>
+          prevComments.filter((comment) => comment.id !== commentId)
+        );
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -123,7 +166,11 @@ const FreeBoardInfoComment = ({ commentlist , postId }) => {
                   <Button
                     variant="secondary"
                     onClick={handleAddComment}
-                    style={{ margin: "10px", backgroundColor: "#59BD82", border: "none"}}
+                    style={{
+                      margin: "10px",
+                      backgroundColor: "#59BD82",
+                      border: "none",
+                    }}
                   >
                     <strong>보내기</strong>
                   </Button>
@@ -145,24 +192,76 @@ const FreeBoardInfoComment = ({ commentlist , postId }) => {
                     width="35"
                     height="35"
                   />
-                
-                  <span className="commentinfo">{comment.memberId} | {comment.createdAt}</span>
+                  <span className="commentinfo">
+                    {comment.memberId} | {comment.createdAt}
+                  </span>
                   <span className="commentmanager">
-                    {member.result.member.memberId === comment.memberId && (
+                    {member.result.memberId === comment.memberId && (
                       <>
-                        <span ><FontAwesomeIcon icon={faPen} style={{color: "#a5a5a5",}}/></span>  
-            
-                        <span className="commentdelete" onClick={() => handleDeleteComment(comment.id)}>
-                      <FontAwesomeIcon icon={faTrash} style={{ color: "#a5a5a5" }} />
-                    </span>
+                        <span className="commentupdate">
+                          <FontAwesomeIcon
+                            icon={faPen}
+                            style={{
+                              color: "#a5a5a5",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              handleEditComment(comment.id, comment.content)
+                            }
+                          />
+                        </span>
+
+                        <span
+                          className="commentdelete"
+                          onClick={() => handleDeleteComment(comment.id)}
+                        >
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            style={{
+                              color: "#a5a5a5",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </span>
                       </>
                     )}
                   </span>
-                  <br />
+
+                  {editingCommentId === comment.id ? (
+                    <Form.Group style={{ display: "flex",alignItems: "center" }}>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        value={editedComment}
+                        onChange={(e) => setEditedComment(e.target.value)}
+                        style={{
+                          border: "1px solid transparent",
+                          borderRadius: "5px",
+                          flex: 1,
+                        }}
+                      />
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleUpdateComment(comment.id)}
+                        style={{
+                          margin: "10px",
+                          backgroundColor: "#59BD82",
+                          border: "none",
+                          display: "flex",
+                        }}
+                      >
+                        <strong>수정하기</strong>
+                      </Button>
+                    </Form.Group>
+                  ) : (
+                    <div className="commenttext">{comment.content}</div>
+                  )}
+
                   
+                  
+                  <br />
                 </div>
-                <div className="commenttext">{comment.content}</div>
-                <hr/>
+                <hr />
               </ListGroup.Item>
             ))}
           </ListGroup>
