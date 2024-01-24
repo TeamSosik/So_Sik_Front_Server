@@ -21,7 +21,7 @@ import FreeBoard from "../../community/freeboard/FreeBoard.js";
 import NotificationList from "./NotificationList";
 import FreeBoardList from "../../community/freeboard/FreeBoardList.js";
 import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
-import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js"
+import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js";
 import FreeBoardUpdate from "../../community/freeboard/FreeBoardUpdate.js";
 
 export const HeaderContext = createContext();
@@ -77,7 +77,7 @@ const Header = () => {
     loginview = (
       <>
         <li>
-          <Link to="/freeboard" style={{ marginRight: "30px" }}>
+          <Link to="/freeboardlist" style={{ marginRight: "30px" }}>
             커뮤니티
           </Link>
           <Link to="/mypage" style={{ marginRight: "30px" }}>
@@ -97,7 +97,7 @@ const Header = () => {
   } else {
     loginview = (
       <li>
-        <Link to="/freeboard" style={{ marginRight: "30px" }}>
+        <Link to="/freeboardlist" style={{ marginRight: "30px" }}>
           커뮤니티
         </Link>
         <Link to="/login">로그인</Link>

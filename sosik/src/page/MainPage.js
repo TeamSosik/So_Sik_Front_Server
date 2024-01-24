@@ -23,7 +23,7 @@ function Mainpage() {
                         </div>
                     </Link>
 
-                    <Link to="/freeboard">
+                    <Link to="/freeboardlist">
                         <div data-v-4b6b04e7="" className="box_responsible type_green">
                             <span data-v-4b6b04e7="" className="title_responsible" />
                             <img data-v-a968263a="" data-v-4b6b04e7="" src="https://t1.kakaocdn.net/kakaocorp/kakaocorp/service/main/green.gif" className="img_responsible" />
