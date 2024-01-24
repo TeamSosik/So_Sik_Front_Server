@@ -1,7 +1,7 @@
 .foodSearchBox {
   width: 100%;
   height: 1200px;
-  margin-top: 400px;
+  margin-top: 10%;
   text-align: center;
 }
 
@@ -109,4 +109,12 @@
 
 .pageButtonBox > .pageButtonList > input[type="button"]:hover {
   background-color: #fdf3a2;
+}
+
+.foodNoSearch {
+  width: 50%;
+  height: 1000px;
+  margin-left: 25%;
+  padding-bottom: 10%;
+  text-align: center;
 }
