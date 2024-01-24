@@ -146,29 +146,29 @@
     background: #FFF; */
 }
 
-.recd-kcal-section2 .meal-content .meal .meal-delete{
-    float: left;
-    width: 10%;
-    /* margin 말고 크기 변화에 따른 자동 위치 전환이 필요합니다. */
-    margin-top: 10px;
+.recd-kcal-section2 .meal-content .meal .meal-delete {
+  float: left;
+  width: 10%;
+  /* margin 말고 크기 변화에 따른 자동 위치 전환이 필요합니다. */
+  margin-top: 10px;
 }
 
-.recd-kcal-section2 .meal-content .meal .meal-delete .meal-delete-icon{
-    cursor: pointer;
+.recd-kcal-section2 .meal-content .meal .meal-delete .meal-delete-icon {
+  cursor: pointer;
 }
 
-.recd-kcal-section2 .meal-content .meal .nutrient .nutrient-detail, 
+.recd-kcal-section2 .meal-content .meal .nutrient .nutrient-detail,
 .recd-kcal-section2 .meal-content .meal .nutrient .nutrient-gram {
-    /* display: flex; */
-    /* align-items: center; */
-    /* 요소를 수직 가운데 정렬 */
-    /* justify-content: center; */
-    /* 요소를 수평 가운데 정렬 */
+  /* display: flex; */
+  /* align-items: center; */
+  /* 요소를 수직 가운데 정렬 */
+  /* justify-content: center; */
+  /* 요소를 수평 가운데 정렬 */
 
-    display: flex;
-    width: 100%;
-    /* height: 90px; */
-    /* text-align: center;
+  display: flex;
+  width: 100%;
+  /* height: 90px; */
+  /* text-align: center;
     margin-top: 40px;
     margin-bottom: 40px;
     padding: 20px;
@@ -176,69 +176,65 @@
     background: #FFF; */
 }
 
-.nutrient-name, .nutrient-data {
-    width: 100%;
+.nutrient-name,
+.nutrient-data {
+  width: 100%;
 }
 
-
-
 /* ************* recd-kcal-section2 끝 *********** */
-
 
 /* ************* recd-kcal-section3 시작 *********** */
 
 .recd-kcal-section3 {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    flex-shrink: 0;
-    font-family: 'SUITE-Regular';
-    text-align: center;
-    margin: 0 auto;
-    padding-bottom: 200px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-shrink: 0;
+  font-family: "SUITE-Regular";
+  text-align: center;
+  margin: 0 auto;
+  padding-bottom: 100px;
 }
 
 .recd-kcal-section3 .total-intake-content {
-    display: flex;
-    flex-wrap: wrap;
-    /* 요소들이 넘칠 경우 여러 줄로 표시되도록 설정 */
-    justify-content: center;
-    /* 수평 가운데 정렬 */
-    margin: 0 auto;
-    /* 수평 가운데 정렬 */
+  display: flex;
+  flex-wrap: wrap;
+  /* 요소들이 넘칠 경우 여러 줄로 표시되도록 설정 */
+  justify-content: center;
+  /* 수평 가운데 정렬 */
+  margin: 0 auto;
+  /* 수평 가운데 정렬 */
 }
 
 .recd-kcal-section3 .total-intake {
-    align-items: center;
-    /* 요소를 수직 가운데 정렬 */
-    justify-content: center;
-    /* 요소를 수평 가운데 정렬 */
-    text-align: center;
-    width: 240px;
-    margin: 10px;
-    margin-top: 40px;
-    padding: 20px;
-    border-radius: 37px;
-    background: #FFF;
-    box-shadow: 0px 0px 17.2px -5px #59BD82;
+  align-items: center;
+  /* 요소를 수직 가운데 정렬 */
+  justify-content: center;
+  /* 요소를 수평 가운데 정렬 */
+  text-align: center;
+  width: 240px;
+  margin: 10px;
+  margin-top: 40px;
+  padding: 20px;
+  border-radius: 37px;
+  background: #fff;
+  box-shadow: 0px 0px 17.2px -5px #59bd82;
 }
 
 .recd-kcal-section3 .total-intake .total-intake-name1 {
-    font-size: 27px;
-    font-weight: 900;
-    margin-bottom: 0;
+  font-size: 27px;
+  font-weight: 900;
+  margin-bottom: 0;
 }
 
 .recd-kcal-section3 .total-intake .total-intake-name2 {
-    color: #59BD82;
-    font-size: 27px;
-    font-weight: 900;
-    margin-bottom: 0;
+  color: #59bd82;
+  font-size: 27px;
+  font-weight: 900;
+  margin-bottom: 0;
 }
 
-
 /* ************* recd-kcal-section3 끝 *********** */
-
 
 /* ************* recd-kcal-section4 시작 *********** */
 
@@ -247,7 +243,7 @@
   justify-content: center;
   flex-direction: column;
   flex-shrink: 0;
-  font-family: 'SUITE-Regular';
+  font-family: "SUITE-Regular";
   text-align: center;
   margin: 0 auto;
   margin-top: 40px;
@@ -263,7 +259,6 @@
 }
 
 .recd-kcal-section4 .total-intake-title {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -279,7 +274,7 @@
 }
 
 .recd-kcal-section4 .total-intake-title .total-intake-name2 {
-  color: #59BD82;
+  color: #59bd82;
   font-size: 27px;
   font-weight: 900;
 }
@@ -297,21 +292,19 @@
   box-sizing: border-box;
   border-radius: 20px;
   background: #59bd82;
-  box-shadow: 0px 0px 17.2px -5px #59BD82;
+  box-shadow: 0px 0px 17.2px -5px #59bd82;
 }
 
 .recd-kcal-section4 .total-intake .total-intake-name1 {
   color: #f8f6e6;
   font-size: 23px;
   font-weight: 900;
-
 }
 
 .recd-kcal-section4 .total-intake .total-intake-name2 {
-  color: #FFF;
+  color: #fff;
   font-size: 23px;
   font-weight: 900;
 }
-
 
 /* ************* recd-kcal-section4 끝 *********** */
