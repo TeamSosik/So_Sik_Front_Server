@@ -39,8 +39,8 @@ const FreeBoardCard = (props) => {
 
     return (
         <div className='card-container'>
-            <Card>
-                <div className="freeboard-card">
+            <Card className="freeboard-card">
+                <div>
                     <div className="col-sm-6 col-md-3">
                         <div className="freeboard-title">
                             <h4>{props.content.title}</h4>
