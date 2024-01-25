@@ -1,8 +1,3 @@
-.targetKcalposition {
-  margin-left: 30%;
-  margin-top: 20%;
-}
-
 .inputkcalcard {
   text-align: center;
   width: 25rem;
@@ -10,12 +5,7 @@
   padding-left: 40px;
   padding-right: 40px;
   border: none;
-  margin-top: 10%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* position: absolute; */
-  top: -80px;
-  /* left: 250px; */
-  left: 15%;
 }
 
 .inputkcalcardtitle {
@@ -38,7 +28,6 @@
 .kcalbutton {
   font-weight: bold;
   margin-top: 20px;
-  width: 20%;
 }
 
 .kcal {

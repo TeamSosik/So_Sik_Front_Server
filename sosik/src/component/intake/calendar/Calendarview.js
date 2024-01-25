@@ -64,7 +64,7 @@ function Calendarview(props) {
     try {
       const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
       const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
-
+      console.log(today)
       const url = `/intake/v1/${today}`;
       const response = await axios({
 
@@ -87,7 +87,6 @@ function Calendarview(props) {
 
   const addPieChartData = async (formattedDate) => {
     const data = await getData2(formattedDate);
-    
     const nutrientDataList = data.data.result;
     const updatedValues = [0, 0, 0, 0];
     nutrientDataList.forEach((data) => {

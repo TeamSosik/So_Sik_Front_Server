@@ -2,12 +2,15 @@ import React, { createContext, useEffect, useState } from "react";
 import "./recdKcal.css";
 import RecdKcalSection2 from "./RecdKcalSection2.js";
 import RecdKcalSection3 from "./RecdKcalSection3.js";
+import { Row, Col } from 'react-bootstrap';
 import Recdbutton from "./RecdButton.js";
 import axios from "axios";
 import Loading from "../../common/spinners/Loading.js";
 import Calendarview from "../../intake/calendar/Calendarview.js";
 import Inputkcal from "../Inputkcal.js";
 import RecdKcalSectionNutrient from "./RecdKcalSection3-nutrient.js";
+import KcalChart from "../KcalChart.js";
+
 
 export const RecdKcalContext = createContext();
 
@@ -149,7 +152,7 @@ const RecdKcal = () => {
       });
 
       return response;
-    } catch (e) {}
+    } catch (e) { }
   };
 
   // 처음 페이지 들어왔을 때 실행
@@ -174,10 +177,11 @@ const RecdKcal = () => {
   return (
     <RecdKcalContext.Provider value={{ addMealList }}>
       <Recdbutton defaultRadioValue={"1"}></Recdbutton>
-      <div className="position">
-        <Inputkcal props={loadDate} />
-        <Calendarview propFunction={highFunction} />
-      </div>
+        <Row className="kcal-info">
+          <Col><Inputkcal props={loadDate} /></Col>
+          <Col><KcalChart></KcalChart></Col>
+          <Col><Calendarview propFunction={highFunction} /></Col>
+        </Row>
       <RecdKcalSection2
         mealList={mealList}
         addMealList={addMealList}
