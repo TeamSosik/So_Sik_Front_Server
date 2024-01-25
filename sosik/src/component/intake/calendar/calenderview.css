@@ -1,7 +1,6 @@
 @font-face {
   font-family: "SUITE-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
@@ -10,16 +9,9 @@
   font-family: "SUITE-Regular";
 }
 
-.calendarposition {
-  margin-top: 10%;
-  margin-right: 30%;
-}
-
 .react-calendar {
   width: 350px;
   background: white;
-  /* border: 1px solid #a0a096; */
-  line-height: 1.125em;
 }
 
 .react-calendar--doubleView {
@@ -31,7 +23,7 @@
   margin: -0.5em;
 }
 
-.react-calendar--doubleView .react-calendar__viewContainer > * {
+.react-calendar--doubleView .react-calendar__viewContainer>* {
   width: 50%;
   margin: 0.5em;
 }
