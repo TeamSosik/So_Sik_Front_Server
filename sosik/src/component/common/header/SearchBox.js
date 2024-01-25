@@ -3,6 +3,8 @@ import "./searchbox.css";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const SearchBox = () => {  
   const [wholeTextArray,setWholeTextArray] = useState([""])
@@ -19,6 +21,11 @@ const SearchBox = () => {
     navigate("/foodsearch", { state: { yourParameter: clickedItem } }); //리다이렉트
   };
   
+  const handleSearch = () => {
+    console.log(inputValue);
+    navigate("/foodsearch", { state: { yourParameter: inputValue } });
+  };
+
   const handleDocumentClick = e => {
     if (!e.target.closest('.dropdown-container')) {
       setIsHaveInputValue(false);
@@ -106,18 +113,20 @@ const SearchBox = () => {
   useEffect(showDropDownList, [inputValue]);
 
   return (
-    <WholeBox>
+    <WholeBox className="header-search">
       <InputBox isHaveInputValue={isHaveInputValue}>
         <Input
           type="text"
+          name="header-search"
           value={inputValue}
           onChange={changeInputValue}
           onKeyUp={handleDropDownKey}
           onKeyDown={handleKeyDown}
           placeholder="궁금한 음식 정보를 검색해주세요."
         />
-        <DeleteButton onClick={() => setInputValue("")}>&times;</DeleteButton>
+        <button id="header-search-btn" type="button" onClick={handleSearch} ><FontAwesomeIcon icon={faSearch} size="sm" style={{color: "#ffffff"}} /></button>
       </InputBox>
+
       {isHaveInputValue && (
         <DropDownBox>
           {dropDownList.length === 0 && (
@@ -149,15 +158,13 @@ const inactiveBorderRadius = "16px 16px 16px 16px";
 const WholeBox = styled.div`
   padding: 10px;
 `;
+
 const InputBox = styled.div`
   position: absolute;
-  margin-left: -18%;
-  top: 20px;
-  width: 35%;
+  width: 44.39rem;
   display: flex;
   flex-direction: row;
   padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: ${(props) =>
     props.isHaveInputValue ? activeBorderRadius : inactiveBorderRadius};
   z-index: 3;
@@ -173,28 +180,24 @@ const Input = styled.input`
   font-size: 16px;
 `;
 
-const DeleteButton = styled.div`
-  cursor: pointer;
-`;
-
 const DropDownBox = styled.ul`
+  padding-bottom: 10px;
   position: absolute;
-  margin-left: -18%;
-  width: 35%;
-  top: 70px;
+  margin-left: 1rem;
+  width: 35.8rem;
+  top: 40px;
   display: block;
-  padding: 8px 0;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding-top: 30px;
+  background-color: #F5F5F5;
   border-top: none;
   border-radius: 0 0 16px 16px;
-  box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
   list-style-type: none;
-  z-index: 3;
+  z-index: 2;
+  padding-left: 0;
 `;
 
 const DropDownItem = styled.li`
-  padding: 0 16px;
+  padding: 0 23px;
   &:hover{
     cursor: pointer;
   }

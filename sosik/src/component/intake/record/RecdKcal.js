@@ -43,18 +43,30 @@ const RecdKcal = () => {
           "Content-Type": "application/json",
         },
       }).then((response) => {
-        setNutrientRatio((nutrientRatio) => ({
-          ...nutrientRatio,
-          carbohydrate:
-            Math.floor((response.data.result.dayTargetKcal / 10) * 100) / 100,
-          protein:
-            Math.floor(((response.data.result.dayTargetKcal * 3) / 40) * 100) /
-            100,
-          province:
-            Math.floor(((response.data.result.dayTargetKcal * 3) / 90) * 100) /
-            100,
-          dayTargetKcal: response.data.result.dayTargetKcal,
-        }));
+        if (response.data.result.dayTargetKcal == null) {
+          setNutrientRatio((nutrientRatio) => ({
+            ...nutrientRatio,
+            carbohydrate: 0,
+            protein: 0,
+            province: 0,
+            dayTargetKcal: 0,
+          }));
+        } else {
+          setNutrientRatio((nutrientRatio) => ({
+            ...nutrientRatio,
+            carbohydrate:
+              Math.floor((response.data.result.dayTargetKcal / 10) * 100) / 100,
+            protein:
+              Math.floor(
+                ((response.data.result.dayTargetKcal * 3) / 40) * 100
+              ) / 100,
+            province:
+              Math.floor(
+                ((response.data.result.dayTargetKcal * 3) / 90) * 100
+              ) / 100,
+            dayTargetKcal: response.data.result.dayTargetKcal,
+          }));
+        }
       });
     } catch (e) {
       console.log(e);
