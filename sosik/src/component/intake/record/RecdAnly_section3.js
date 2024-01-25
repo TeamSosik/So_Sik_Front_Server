@@ -4,9 +4,14 @@ import React, { useEffect, useState } from "react";
 import Loading from "../../common/spinners/Loading";
 import TodayKcalNotData from "../../../images/today_kcal_not_data.png";
 
-const RecdAnly_section2 = () => {
+const RecdAnly_section3 = () => {
   // 필드
+
+  const [pieChartData, setPieChartData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const nutrientDetails = ["탄수화물", "단백질", "지방"];
+
   const totalIntakeValues = [0, 0, 0];
   const colors = [
     "hsl(177, 70%, 50%)",
@@ -26,85 +31,63 @@ const RecdAnly_section2 = () => {
   });
 
   // 상태
-  const [pieChartData, setPieChartData] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   // 메서드
-  // 섭취 음식 목록 불러오기
-  const getData = async () => {
+
+  const getTodayTargetkcal = async () => {
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+    let today = new Date().toISOString().split("T")[0];
+    console.log(today);
+
     try {
-      const member = JSON.parse(sessionStorage.getItem("member"));
-      const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
-      const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
-
-      const currentUTC = new Date();
-      const koreaTimeOffset = 9 * 60 * 60 * 1000;
-      const koreaTime = new Date(currentUTC.getTime() + koreaTimeOffset);
-      // 오늘 날짜
-      const todayInKorea = koreaTime.toISOString().split("T")[0]; // yyyy-MM-dd 형식
-
-      const url = `/intake/v1/${todayInKorea}`;
-
-      const response = await axios({
+      await axios({
         method: "get",
-        url: url,
-        baseURL: "http://localhost:5056",
+        url: "http://localhost:5056/target-calorie/v1/" + today,
         headers: {
-          Authorization: accesstoken,
-          refreshtoken: refreshtoken,
+          authorization: authorization,
+          refreshToken: refreshToken,
           "Content-Type": "application/json",
         },
+      }).then((response) => {
+        console.log(response);
+        if (response.data.result.dayTargetKcal === null) {
+          console.log(response);
+          setPieChartData([]);
+        } else {
+          totalIntakeValues[0] =
+            Math.floor((response.data.result.dayTargetKcal / 10) * 100) / 100;
+          totalIntakeValues[1] =
+            Math.floor(((response.data.result.dayTargetKcal * 3) / 40) * 100) /
+            100;
+          totalIntakeValues[2] =
+            Math.floor(((response.data.result.dayTargetKcal * 3) / 90) * 100) /
+            100;
+          console.log(response);
+
+          const nutrientList = nutrientDetails.map((data, index) => {
+            return {
+              id: data,
+              label: data,
+              value: totalIntakeValues[index],
+              color: colors[index],
+            };
+          });
+          setPieChartData(nutrientList);
+        }
+
+        setLoading(false);
       });
-
-      setLoading(false);
-
-      return response;
     } catch (e) {
       setLoading(false);
-
       console.log(e);
     }
-  };
-
-  const addPieChartData = async () => {
-    const data = await getData();
-
-    if (!data) {
-      setPieChartData([]);
-      return;
-    }
-
-    const nutrientDataList = data.data.result;
-
-    if (nutrientDataList.length === 0) {
-      setPieChartData([]);
-      return;
-    }
-
-    nutrientDataList.forEach((data) => {
-      totalIntakeValues[0] += data.calculationCarbo;
-      totalIntakeValues[1] += data.calculationProtein;
-      totalIntakeValues[2] += data.calculationFat;
-    });
-
-    // 영양소 목록 만들기
-    const nutrientList = nutrientDetails.map((data, index) => {
-      return {
-        id: data,
-        label: data,
-        value: Math.round(totalIntakeValues[index] * 100) / 100,
-        color: colors[index],
-      };
-    });
-
-    setPieChartData(nutrientList);
   };
 
   // 처음 페이지 들어왔을 때 실행
   useEffect(() => {
     setLoading(true);
-
-    addPieChartData();
+    getTodayTargetkcal();
   }, []);
 
   // view
@@ -199,7 +182,7 @@ const RecdAnly_section2 = () => {
 
   return (
     <div className="recd-anly-section2">
-      <div className="recd-anly-name">일일 영양소 분석</div>
+      <div className="recd-anly-name">일일 권장 영양소 섭취량</div>
       <div className="recd-anly-content">
         {pieChartData.length !== 0 ? (
           chartView
@@ -211,4 +194,4 @@ const RecdAnly_section2 = () => {
   );
 };
 
-export default RecdAnly_section2;
+export default RecdAnly_section3;
