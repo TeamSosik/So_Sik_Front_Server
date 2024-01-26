@@ -5,7 +5,7 @@ const KcalContext = ({ data }) => {
   // 필드
   const navigation = useNavigate();
   // 상태
-
+  console.log(data);
   // 메서드 상세페이지 이동
   const handleFoodCardClick = (foodId) => {
     console.log(foodId);
@@ -22,12 +22,12 @@ const KcalContext = ({ data }) => {
       {/* titleBox */}
 
       {/* contentBox */}
-      <img src={data.url} className="kcalContextContentBox" />
+      <img src={data.image} className="kcalContextContentBox" />
       <div className="kcalContexTitle">
         <span>{data.name}</span>
       </div>
       {/* 칼로리 */}
-      <span className="brand">{data.brand}</span>
+      <span className="brand">{data.manufacturer}</span>
     </div>
   );
 };

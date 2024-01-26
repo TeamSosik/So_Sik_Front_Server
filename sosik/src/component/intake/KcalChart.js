@@ -8,7 +8,10 @@ const KcalChart = ({ mealList, props }) => {
     dayTargetKcal: 0,
   });
   let recode = false;
-  if (clickedTargetKcal.dayTargetKcal === 0) {
+  if (
+    clickedTargetKcal.dayTargetKcal === 0 ||
+    clickedTargetKcal.dayTargetKcal === null
+  ) {
     recode = false;
   } else {
     recode = true;
@@ -17,7 +20,6 @@ const KcalChart = ({ mealList, props }) => {
   const getClickedTargetCalorie = async (props) => {
     const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
-    console.log(props);
 
     try {
       await axios({
@@ -29,7 +31,11 @@ const KcalChart = ({ mealList, props }) => {
           "Content-Type": "application/json",
         },
       }).then((response) => {
-        setClickedTargetKcal(response.data.result);
+        if (response.data.result === null) {
+          setClickedTargetKcal(0);
+        } else {
+          setClickedTargetKcal(response.data.result);
+        }
       });
     } catch (e) {
       console.log(e);
