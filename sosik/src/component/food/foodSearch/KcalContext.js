@@ -8,8 +8,7 @@ const KcalContext = ({ data }) => {
   console.log(data);
   // 메서드 상세페이지 이동
   const handleFoodCardClick = (foodId) => {
-    console.log(foodId);
-    navigation(`/food/${foodId}`);
+    window.open(`/food/${foodId}`, "_blank");
   };
 
   // view

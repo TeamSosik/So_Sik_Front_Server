@@ -32,7 +32,10 @@ const KcalChart = ({ mealList, props }) => {
         },
       }).then((response) => {
         if (response.data.result === null) {
-          setClickedTargetKcal(0);
+          setClickedTargetKcal((calculationKcal) => ({
+            ...calculationKcal,
+            dayTargetKcal: 0,
+          }));
         } else {
           setClickedTargetKcal(response.data.result);
         }
