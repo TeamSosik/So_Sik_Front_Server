@@ -14,7 +14,7 @@ function FreeBoardInfoBody({content}) {
     <div className="recipeinfobody">
       <Row>
         <Col></Col>
-        <Col xs={7}>
+        <Col xs={6}>
           <div className="maincontent">
             {content}
           </div>

@@ -19,7 +19,7 @@ const FreeBoardCard = (props) => {
     try {
       const response = await axios({
         method: "get",
-        url: 'http://127.0.0.1:5056/members/v1/' + nickname2,
+        url: 'http://127.0.0.1:5056/members/v1/nickname/' + nickname2,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
