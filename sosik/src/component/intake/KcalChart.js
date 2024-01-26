@@ -1,18 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import axios from "axios";
 
 const KcalChart = ({ mealList, props }) => {
-  console.log(props);
-  console.log(mealList);
   const totalIntakeValues = [0];
+  const [clickedTargetKcal, setClickedTargetKcal] = useState({
+    dayTargetKcal: 0,
+  });
   let recode = false;
-  if (props.dayTargetKcal === 0) {
+  if (clickedTargetKcal.dayTargetKcal === 0) {
     recode = false;
   } else {
     recode = true;
   }
 
-  const dayTargetKcal = props.dayTargetKcal;
+  const getClickedTargetCalorie = async (props) => {
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+    console.log(props);
+
+    try {
+      await axios({
+        method: "get",
+        url: "http://localhost:5056/target-calorie/v1/" + props,
+        headers: {
+          authorization: authorization,
+          refreshToken: refreshToken,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        setClickedTargetKcal(response.data.result);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   mealList.forEach((data) => {
     totalIntakeValues[0] += data.calculationKcal;
   });
@@ -118,7 +141,10 @@ const KcalChart = ({ mealList, props }) => {
     },
     colors: [
       Math.round(
-        (Math.round(totalIntakeValues[0] * 100) / 100 / dayTargetKcal) * 10000
+        (Math.round(totalIntakeValues[0] * 100) /
+          100 /
+          clickedTargetKcal.dayTargetKcal) *
+          10000
       ) /
         100 >
       100
@@ -144,7 +170,9 @@ const KcalChart = ({ mealList, props }) => {
     series: [
       recode === true
         ? Math.round(
-            (Math.round(totalIntakeValues[0] * 100) / 100 / dayTargetKcal) *
+            (Math.round(totalIntakeValues[0] * 100) /
+              100 /
+              clickedTargetKcal.dayTargetKcal) *
               10000
           ) / 100
         : 0,
@@ -204,6 +232,9 @@ const KcalChart = ({ mealList, props }) => {
       palette: "palette4",
     },
   };
+  useEffect(() => {
+    getClickedTargetCalorie(props);
+  }, [props]);
 
   return (
     <div>
