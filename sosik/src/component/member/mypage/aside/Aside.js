@@ -16,7 +16,7 @@ const Aside = ({ props }) => {
     const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
     try {
       const response = await axios.get(
-        "http://localhost:5056/members/v1/checkRecode",
+        "http://localhost:5056/members/v1/weight-record-check",
         {
           headers: {
             authorization: authorization,
@@ -24,7 +24,7 @@ const Aside = ({ props }) => {
           },
         }
       );
-      
+
       if (response.data) {
         window.alert("오늘은 이미 기록하였습니다!");
         setShowModal(false);
