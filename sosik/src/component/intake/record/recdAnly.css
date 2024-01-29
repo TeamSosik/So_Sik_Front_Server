@@ -57,13 +57,25 @@
   /* 좌우 여백을 자동으로 설정하여 가운데 정렬 */
 }
 
-.recd-anly-section1 #chart .period-select-box {
-  text-align: right;
+.recd-anly-section1 #chart .params-select-box {
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
 }
 
-.recd-anly-section1 #chart .period-select-box select {
+
+.recd-anly-section1 #chart .params-select-box select {
   text-align: center;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px;
   border-radius: 10px;
+}
+
+.recd-anly-section1 #chart .params-select-box .select-title {
+  display: inline-block;
+  padding: 10px;
+}
+
+.recd-anly-section1 #chart .chart-box {
+  clear: both;
 }
