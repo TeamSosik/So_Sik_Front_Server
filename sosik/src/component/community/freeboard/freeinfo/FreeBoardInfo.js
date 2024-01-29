@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button } from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 import FreeBoardInfoHeader from "./FreeBoardInfoHeader";
 import FreeBoardInfoBody from "./FreeBoardInfoBody";
 import FreeBoardInfoComment from "./FreeBoardInfoComment";
-import './freeboardinfo.css'
+import "./freeboardinfo.css";
 
 function FreeBoardInfo() {
   const { id } = useParams();
   const [postInfo, setPostInfo] = useState(null);
   const navigate = useNavigate();
-  const authorization = JSON.parse(window.sessionStorage.getItem('accesstoken'));
-  const refreshToken = JSON.parse(window.sessionStorage.getItem('refreshtoken'));
-
+  const authorization = JSON.parse(
+    window.sessionStorage.getItem("accesstoken")
+  );
+  const refreshToken = JSON.parse(
+    window.sessionStorage.getItem("refreshtoken")
+  );
 
   const getData = async () => {
     try {
@@ -27,6 +30,7 @@ function FreeBoardInfo() {
       }).then((response) => {
         const resultData = response.data.result;
         setPostInfo(resultData);
+        console.log(response.data.result);
       });
     } catch (error) {
       console.log(error);
@@ -46,20 +50,23 @@ function FreeBoardInfo() {
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm('게시글을 삭제하시겠습니까?');
+    const confirmDelete = window.confirm("게시글을 삭제하시겠습니까?");
     if (confirmDelete) {
       try {
-        const response = await axios.delete(`http://127.0.0.1:5056/post/v1/${id}`, {
-          headers: {
-            Authorization: authorization,
-            RefreshToken: refreshToken,
-          },
-        });
+        const response = await axios.delete(
+          `http://127.0.0.1:5056/post/v1/${id}`,
+          {
+            headers: {
+              Authorization: authorization,
+              RefreshToken: refreshToken,
+            },
+          }
+        );
 
         if (response.status === 200) {
-          navigate('/freeboard');
+          navigate("/freeboard");
         } else {
-          alert('게시글 삭제에 실패하였습니다.');
+          alert("게시글 삭제에 실패하였습니다.");
         }
       } catch (error) {
         console.error(error);
@@ -72,7 +79,7 @@ function FreeBoardInfo() {
       {postInfo && (
         <FreeBoardInfoHeader
           title={postInfo.title}
-          memberId={postInfo.memberId}
+          nickname={postInfo.nickname}
           date={postInfo.createdAt}
           hits={postInfo.hits}
         />
@@ -97,7 +104,10 @@ function FreeBoardInfo() {
           <strong>삭제</strong>
         </Button>
       </div>
-      <FreeBoardInfoComment commentlist={postInfo.comments} id={id}></FreeBoardInfoComment>
+      <FreeBoardInfoComment
+        commentlist={postInfo.comments}
+        id={id}
+      ></FreeBoardInfoComment>
     </div>
   );
 }

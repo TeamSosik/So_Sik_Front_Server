@@ -1,67 +1,53 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import Card from 'react-bootstrap/Card';
-import './freeboardcard.css'
+import axios from "axios";
+import Card from "react-bootstrap/Card";
+import "./freeboardcard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faComment } from "@fortawesome/free-regular-svg-icons";
 
 const FreeBoardCard = (props) => {
-    const createdAtDate = new Date(props.content.createdAt);
-    const formattedDate = `${createdAtDate.getFullYear()}-${(createdAtDate.getMonth() + 1).toString().padStart(2, '0')}-${createdAtDate.getDate().toString().padStart(2, '0')} ${createdAtDate.getHours().toString().padStart(2, '0')}:${createdAtDate.getMinutes().toString().padStart(2, '0')}`;
-    
-    const [nickname, setNickname] = useState([]);
+  const createdAtDate = new Date(props.content.createdAt);
+  const formattedDate = `${createdAtDate.getFullYear()}-${(
+    createdAtDate.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}-${createdAtDate
+    .getDate()
+    .toString()
+    .padStart(2, "0")} ${createdAtDate
+    .getHours()
+    .toString()
+    .padStart(2, "0")}:${createdAtDate
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}`;
 
- const getData = async () => {
-    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
-    const memberId = props.content.memberId;
+  return (
+    <div className="card-container">
+      <Card className="freeboard-card">
+        <div>
+          <div className="col-sm-6 col-md-3">
+            <div className="freeboard-title">
+              <h4>{props.content.title}</h4>
+            </div>
+            <span>
+              {props.content.nickname} | {formattedDate}
+            </span>
 
-    try {
-      const response = await axios({
-        method: "get",
-        url: 'http://localhost:5056/members/v1/nickname/' + memberId,
-        headers: {
-          authorization: authorization,
-          refreshToken: refreshToken,
-        },
-      }).then((response) => {
-        const resultData = response.data;
-        setNickname(resultData);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+            <span className="freeboard-view">
+              <FontAwesomeIcon icon={faEye} />
+              {props.content.hits}
+            </span>
+            <span className="freeboard-comment">
+              <FontAwesomeIcon icon={faComment} />
+              {props.content.commentCount}
+            </span>
+          </div>
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-    return (
-        <div className='card-container'>
-            <Card className="freeboard-card">
-                <div>
-                    <div className="col-sm-6 col-md-3">
-                        <div className="freeboard-title">
-                            <h4>{props.content.title}</h4>
-                        </div>
-                        <span>
-                            {nickname} | {formattedDate}
-                        </span>
-
-                        <span className="freeboard-view">
-                            <FontAwesomeIcon icon={faEye} />
-                            {props.content.hits}
-                        </span>
-                        <span className="freeboard-comment">
-                            <FontAwesomeIcon icon={faComment} />
-                            {props.content.commentCount}
-                        </span>
-                    </div>
-                </div>
-            </Card>
         </div>
-    )
-}
+      </Card>
+    </div>
+  );
+};
 
-export default FreeBoardCard
+export default FreeBoardCard;
