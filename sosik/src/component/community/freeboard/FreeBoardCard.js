@@ -14,12 +14,12 @@ const FreeBoardCard = (props) => {
  const getData = async () => {
     const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
-    const nickname2 = props.content.memberId;
+    const memberId = props.content.memberId;
 
     try {
       const response = await axios({
         method: "get",
-        url: 'http://127.0.0.1:5056/members/v1/nickname/' + nickname2,
+        url: 'http://localhost:5056/members/v1/nickname/' + memberId,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,

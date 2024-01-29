@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import "./freeboardinfoheader.css";
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-function FreeBoardInfoHeader({ title, memberId, date }) {
+function FreeBoardInfoHeader({ title, memberId, date, hits }) {
   const createdAtDate = new Date(date);
   const formattedDate = `${createdAtDate.getFullYear()}-${(createdAtDate.getMonth() + 1).toString().padStart(2, '0')}-${createdAtDate.getDate().toString().padStart(2, '0')} ${createdAtDate.getHours().toString().padStart(2, '0')}:${createdAtDate.getMinutes().toString().padStart(2, '0')}`;
 
@@ -16,7 +16,7 @@ function FreeBoardInfoHeader({ title, memberId, date }) {
       try {
         const response = await axios({
           method: "get",
-          url: 'http://127.0.0.1:5056/members/v1/' + memberId,
+          url: 'http://localhost:5056/members/v1/nickname/' + memberId,
           headers: {
             authorization: authorization,
             refreshToken: refreshToken,
@@ -35,14 +35,16 @@ function FreeBoardInfoHeader({ title, memberId, date }) {
     }, []);
 
   return (
-    <Row className="recipeheaderesult">
+    <Row className="freeinfoheaderesult">
       <Col></Col>
       <Col xs={6}>
-        <div className="recipeheader">
-          <div className="recipeinfotitle">{title}</div>
-          <div className="recipeinfonamedate">
-            <span className="recipeinfoname">{nickname}</span> |{" "}
-            <span className="recipeinfodate">{formattedDate}</span>
+        <div className="freeinfoheader">
+          <div className="freeinfotitle">{title}</div>
+          
+          <div className="freeinfonamedate">
+            <span className="freeinfoname">{nickname}</span> |{" "}
+            <span className="freeinfodate">{formattedDate}</span>
+            <div className="freeinfohits">조회수: {hits + 1}</div>
           </div>
           
         </div>

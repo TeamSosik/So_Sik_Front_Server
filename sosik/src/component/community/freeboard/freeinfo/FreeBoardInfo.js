@@ -19,7 +19,7 @@ function FreeBoardInfo() {
     try {
       const response = await axios({
         method: "get",
-        url: 'http://127.0.0.1:5056/post/v1/' + id,
+        url: 'http://localhost:5056/post/v1/' + id,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
@@ -74,6 +74,7 @@ function FreeBoardInfo() {
           title={postInfo.title}
           memberId={postInfo.memberId}
           date={postInfo.createdAt}
+          hits={postInfo.hits}
         />
       )}
 

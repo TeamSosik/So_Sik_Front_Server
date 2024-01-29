@@ -1,21 +1,30 @@
-.recipeinfotitle{
+.freeinfotitle{
     font-size: 25px;
     font-weight: 600;
     margin-top: 10px;
 }
-.recipeheader{
+.freeinfoheader{
     display: flex;
 }
-.recipeinfonamedate{
+.freeinfonamedate{
     display: flex;
     margin-top: auto;
     margin-left: auto;
 }
-.pick{
-    margin-top: 20px;
-    margin-left: 4px;
-}
-.recipeheaderesult{
+
+.freeinfoheaderesult{
     margin-bottom: 40px;
     margin-top: 130px;
+}
+
+.freeinfohits{
+    margin-left: 20px;
+}
+
+.freeinfoname{
+    margin-right: 5px;
+}
+
+.freeinfodate{
+    margin-left: 5px;
 }
