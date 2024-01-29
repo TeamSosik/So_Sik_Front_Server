@@ -78,7 +78,6 @@ function Login() {
       <Row>
         <Col></Col>
         <Col xs={3} className="logincontainer">
-          <h1>회원가입</h1>
           <Form onSubmit={handleLogin}>
             <Form.Group as={Col}>
               <Form.Label className="loginfont">이메일</Form.Label>
