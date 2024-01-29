@@ -8,18 +8,16 @@ import axios from "axios";
 import React, { useState } from "react";
 
 function FindPw() {
- 
   const [formData, setFormData] = useState({
-    email: '',
-
+    email: "",
   });
-  
+
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     // 이전 상태를 복사하고 현재 필드를 업데이트
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -30,12 +28,12 @@ function FindPw() {
     try {
       const jsonData = JSON.stringify(formData);
       const response = await axios
-        .post("http://localhost:5056/members/v1/passwd",jsonData,{
-          headers :{
+        .post("http://localhost:5056/members/v1/passwd", jsonData, {
+          headers: {
             "Content-Type": `application/json`,
           },
         })
-        .then((result) => {  
+        .then((result) => {
           alert("가입된 이메일로 비밀번호를 전송하였습니다!");
           navigate("/mainpage"); //리다이렉트
         });
@@ -44,10 +42,11 @@ function FindPw() {
     }
   };
   return (
-    <Container>
+    <Container className="logincontainer2">
       <Row>
         <Col></Col>
-        <Col xs={3} className="logincontainer">
+        <Col xs={3}>
+          <h1>비밀번호 찾기</h1>
           <Form onSubmit={handleLogin}>
             <Form.Group as={Col}>
               <Form.Label className="loginfont">이메일</Form.Label>
@@ -59,14 +58,12 @@ function FindPw() {
                 onChange={handleInputChange}
                 placeholder="이메일 주소"
               />
-            </Form.Group>  
-            <Form.Group className="mb-3" id="formGridCheckbox">
-              
             </Form.Group>
+            <Form.Group className="mb-3" id="formGridCheckbox"></Form.Group>
             <Button variant="success" type="submit" className="loginbutton">
               <strong>전송</strong>
             </Button>
-             <br />
+            <br />
           </Form>
         </Col>
         <Col></Col>

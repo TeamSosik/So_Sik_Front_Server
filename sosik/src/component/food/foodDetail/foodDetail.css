@@ -1,184 +1,165 @@
 @font-face {
-    font-family: 'SUITE-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
+  font-family: "SUITE-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
 }
 
 .fd-section1 hr,
 .fd-section2 hr {
-    width: 70%;
-    height: 1px;
-    background: #A7A7A7;
-    margin: 5% auto;
-    /* 수평선 위아래 여백 지정 */
+  width: 70%;
+  height: 1px;
+  background: #a7a7a7;
+  margin: 5% auto;
+  /* 수평선 위아래 여백 지정 */
 }
 
 .fd-section1,
 .fd-section2,
 .fd-section3 {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    flex-shrink: 0;
-    font-family: 'SUITE-Regular';
-    text-align: center;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-shrink: 0;
+  font-family: "SUITE-Regular";
+  text-align: center;
+  margin: 0 auto;
 }
 
 .fd-section1 {
-    padding-top: 200px;
-}
-
-.fd-section3 {
-    padding-bottom: 200px;
+  padding-top: 200px;
 }
 
 .fd-section1 .food-name,
 .fd-section3 .related-dishes {
-    font-size: 30px;
-    font-weight: 900;
+  font-size: 30px;
+  font-weight: 900;
+  margin-bottom: 1%;
 }
 
 .fd-section1 .food-content {
-    width: 60%;
-    /* 원하는 폭 설정 */
-    overflow: hidden;
-    /* 영역을 벗어나는 텍스트 숨김 */
-    padding-top: 20px;
-    font-size: 18px;
-    text-align: left;
-    /* 텍스트 왼쪽 정렬 */
-    margin: 0 auto;
-    /* 요소를 가운데 정렬 */
-    color: #A7A7A7;
+  width: 580px;
+  height: 560px;
+  /* 원하는 폭 설정 */
+  overflow: hidden;
+  /* 영역을 벗어나는 텍스트 숨김 */
+  text-align: left;
+  /* 텍스트 왼쪽 정렬 */
+  margin: 0 auto;
+  /* 요소를 가운데 정렬 */
+  color: #a7a7a7;
+  border-radius: 20px;
 }
 
 .fd-section2 .nutrient-info {
-    display: flex;
-    /* Flexbox를 사용하여 요소를 나란히 배치 */
-    align-items: center;
-    /* 요소를 수직 가운데 정렬 */
-    justify-content: center;
-    /* 요소를 수평 가운데 정렬 */
-    text-align: center;
-    font-size: 30px;
-    font-weight: 900;
+  display: flex;
+  /* Flexbox를 사용하여 요소를 나란히 배치 */
+  align-items: center;
+  /* 요소를 수직 가운데 정렬 */
+  justify-content: center;
+  /* 요소를 수평 가운데 정렬 */
+  text-align: center;
+  font-size: 30px;
+  font-weight: 900;
 }
 
 .fd-section2 .nutrient-info-title2 {
-    margin-left: 7px;
-    /* 두 텍스트 사이의 간격 설정 */
-    font-size: 20px;
+  margin-left: 7px;
+  /* 두 텍스트 사이의 간격 설정 */
+  font-size: 20px;
 }
 
 .fd-section2 .nutrient-content,
-.fd-section3 .related-dishes-content {
-    display: flex;
-    flex-wrap: wrap;
-    /* 요소들이 넘칠 경우 여러 줄로 표시되도록 설정 */
-    justify-content: center;
-    /* 수평 가운데 정렬 */
-    width: 50%;
-    padding-top: 30px;
-    margin: 0 auto;
-    /* 수평 가운데 정렬 */
+.fd-section1 .related-dishes-content {
+  display: flex;
+  flex-wrap: wrap;
+  /* 요소들이 넘칠 경우 여러 줄로 표시되도록 설정 */
+  justify-content: center;
+  /* 수평 가운데 정렬 */
+  width: 55%;
+  padding-top: 30px;
+  margin: 0 auto;
+  /* 수평 가운데 정렬 */
 }
 
 .fd-section2 .nutrient-content .nutrient {
-    display: flex;
-    /* Flexbox를 사용하여 요소를 나란히 배치 */
-    align-items: center;
-    /* 요소(글자)를 수직 가운데 정렬 */
-    justify-content: center;
-    /* 요소(글자)를 수평 가운데 정렬 */
-    text-align: center;
-    width: 220px;
-    margin: 10px;
-    /* 요소들 간의 간격 설정 (원하는 값으로 조절) */
-    padding: 0.7rem 2rem;
-    border-radius: 37px;
-    background: #59BD82;
-    box-shadow: 0px 0px 17.2px -5px #9DE18F;
-    color: white;
-    font-size: 18px;
+  display: flex;
+  /* Flexbox를 사용하여 요소를 나란히 배치 */
+  align-items: center;
+  /* 요소(글자)를 수직 가운데 정렬 */
+  justify-content: center;
+  /* 요소(글자)를 수평 가운데 정렬 */
+  text-align: center;
+  width: 220px;
+  margin: 10px;
+  /* 요소들 간의 간격 설정 (원하는 값으로 조절) */
+  padding: 0.7rem 2rem;
+  border-radius: 37px;
+  background: #59bd82;
+  box-shadow: 0px 0px 17.2px -5px #9de18f;
+  color: white;
+  font-size: 18px;
 }
 
 .fd-section2 .nutrient p {
-    margin: 0;
-    /* 기본 마진 제거 */
+  margin: 0;
+  /* 기본 마진 제거 */
 }
 
 .fd-section2 .nutrient-content .nutrient-title2 {
-    margin-left: 10px;
-    /* 두 텍스트 사이의 간격 설정 */
+  margin-left: 10px;
+  /* 두 텍스트 사이의 간격 설정 */
 }
 
 .fd-section2 .calorie-intake {
-    display: flex;
-    /* Flexbox를 사용하여 요소를 나란히 배치 */
-    align-items: center;
-    /* 요소를 수직 가운데 정렬 */
-    justify-content: center;
-    /* 요소를 수평 가운데 정렬 */
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-    width: 50%;
-    margin: 0 auto;
-    /* 수평 가운데 정렬 */
-    margin-top: 40px;
-    padding: 0.7rem 2rem;
-    border-radius: 37px;
-    background: #FFF;
-    box-shadow: 0px 0px 17.2px -5px #59BD82;
+  display: flex;
+  /* Flexbox를 사용하여 요소를 나란히 배치 */
+  align-items: center;
+  /* 요소를 수직 가운데 정렬 */
+  justify-content: center;
+  /* 요소를 수평 가운데 정렬 */
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  width: 50%;
+  margin: 0 auto;
+  /* 수평 가운데 정렬 */
+  margin-top: 40px;
+  margin-bottom: 5%;
+  padding: 0.7rem 2rem;
+  border-radius: 37px;
+  background: #fff;
+  box-shadow: 0px 0px 17.2px -5px #59bd82;
 }
 
 .fd-section2 .calorie-intake .kcal-title2 {
-    color: #59BD82;
-    margin-left: 50px;
-    font-size: 35px;
-    font-weight: 900;
+  color: #59bd82;
+  margin-left: 50px;
+  font-size: 35px;
+  font-weight: 900;
 }
 
 .fd-section2 .calorie-intake .kcal-title3 {
-    color: #A7A7A7;
-    margin-left: 7px;
+  color: #a7a7a7;
+  margin-left: 7px;
 }
 
-.fd-section3 .related-dishes-content .related-dishes-name {
-    display: flex;
-    /* Flexbox를 사용하여 요소를 나란히 배치 */
-    align-items: center;
-    /* 요소(글자)를 수직 가운데 정렬 */
-    justify-content: center;
-    /* 요소(글자)를 수평 가운데 정렬 */
-    text-align: center;
-    width: 220px;
-    margin: 10px;
-    /* 요소들 간의 간격 설정 (원하는 값으로 조절) */
-    padding: 0.7rem 2rem;
-    border-radius: 37px;
-    border: 1px solid #9DE18F;
-    background: #FFF;
-    color: black;
-    font-size: 18px;
-}
-
-.fd-section3 .related-dishes-content .related-dishes-name:hover {
-    display: flex;
-    /* Flexbox를 사용하여 요소를 나란히 배치 */
-    align-items: center;
-    /* 요소(글자)를 수직 가운데 정렬 */
-    justify-content: center;
-    /* 요소(글자)를 수평 가운데 정렬 */
-    text-align: center;
-    width: 220px;
-    margin: 10px;
-    /* 요소들 간의 간격 설정 (원하는 값으로 조절) */
-    padding: 0.7rem 2rem;
-    border-radius: 37px;
-    background: #9DE18F;
-    color: white;
-    font-size: 18px;
+.fd-section1 .related-dishes-content .related-dishes-name {
+  display: flex;
+  /* Flexbox를 사용하여 요소를 나란히 배치 */
+  align-items: center;
+  /* 요소(글자)를 수직 가운데 정렬 */
+  justify-content: center;
+  /* 요소(글자)를 수평 가운데 정렬 */
+  text-align: center;
+  width: 260px;
+  margin: 10px;
+  /* 요소들 간의 간격 설정 (원하는 값으로 조절) */
+  padding: 0.7rem 2rem;
+  border-radius: 37px;
+  border: 1px solid #9de18f;
+  background: #fff;
+  color: #15a775;
+  font-size: 18px;
 }

@@ -114,8 +114,8 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5056/members/v1/checkEmail/" + memberInfo.email
+      const response = await axios.get(
+        "http://localhost:5056/members/v1/validation/" + memberInfo.email
       );
       if (response.data) {
         setIsDuplicate(true);

@@ -11,7 +11,6 @@ import { OverlayTrigger } from "react-bootstrap";
 import RenderTooltip from "./RenderTooltip";
 
 function Inputkcalcard({ props }) {
-
   const [clickedTargetKcal, setClickedTargetKcal] = useState({
     dayTargetKcal: 0,
   });
@@ -65,7 +64,7 @@ function Inputkcalcard({ props }) {
     try {
       await axios({
         method: "get",
-        url: "http://localhost:5056/members/v1/managementData",
+        url: "http://localhost:5056/members/v1/target-weight-data",
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
@@ -135,7 +134,6 @@ function Inputkcalcard({ props }) {
             window.location.reload();
           });
       } catch (error) {}
-      
     } else {
       handleOnModify();
     }

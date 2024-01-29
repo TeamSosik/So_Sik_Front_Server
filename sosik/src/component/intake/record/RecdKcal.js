@@ -18,62 +18,10 @@ const RecdKcal = () => {
 
   // 상태
   const [mealList, setMealList] = useState([]);
-  const [nutrientRatio, setNutrientRatio] = useState({
-    carbohydrate: 0, //탄수화물
-    protein: 0, //단백질
-    province: 0, //지방
-    dayTargetKcal: 0, //일일목표칼로리
-  });
   const [loading, setLoading] = useState(false);
   const [loadDate, setLoadDate] = useState("");
 
   // 메서드
-
-  const getTodayTargetkcal = async () => {
-    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
-    let today = new Date().toISOString().split("T")[0];
-    console.log(today);
-
-    try {
-      await axios({
-        method: "get",
-        url: "http://localhost:5056/target-calorie/v1/" + today,
-        headers: {
-          authorization: authorization,
-          refreshToken: refreshToken,
-          "Content-Type": "application/json",
-        },
-      }).then((response) => {
-        if (response.data.result.dayTargetKcal == null) {
-          setNutrientRatio((nutrientRatio) => ({
-            ...nutrientRatio,
-            carbohydrate: 0,
-            protein: 0,
-            province: 0,
-            dayTargetKcal: 0,
-          }));
-        } else {
-          setNutrientRatio((nutrientRatio) => ({
-            ...nutrientRatio,
-            carbohydrate:
-              Math.floor((response.data.result.dayTargetKcal / 10) * 100) / 100,
-            protein:
-              Math.floor(
-                ((response.data.result.dayTargetKcal * 3) / 40) * 100
-              ) / 100,
-            province:
-              Math.floor(
-                ((response.data.result.dayTargetKcal * 3) / 90) * 100
-              ) / 100,
-            dayTargetKcal: response.data.result.dayTargetKcal,
-          }));
-        }
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   // 섭취 음식 목록 불러오기
   const getData = async () => {
@@ -158,8 +106,6 @@ const RecdKcal = () => {
   useEffect(() => {
     setLoading(true);
 
-    getTodayTargetkcal();
-
     addMealList();
   }, []);
 
@@ -181,7 +127,7 @@ const RecdKcal = () => {
           <Inputkcal props={loadDate} />
         </Col>
         <Col>
-          <KcalChart mealList={mealList} props={nutrientRatio} />
+          <KcalChart mealList={mealList} props={loadDate} />
         </Col>
         <Col>
           <Calendarview propFunction={highFunction} />
@@ -192,7 +138,7 @@ const RecdKcal = () => {
         addMealList={addMealList}
         props={loadDate}
       />
-      <RecdKcalSectionNutrient mealList={nutrientRatio} />
+      <RecdKcalSectionNutrient props={loadDate} />
       <RecdKcalSection3 mealList={mealList} />
     </RecdKcalContext.Provider>
   );

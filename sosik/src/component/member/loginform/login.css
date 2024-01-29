@@ -4,6 +4,7 @@
   width: 100%;
   background-color: #59bd82;
   border: none;
+  margin-top: 3%;
 }
 .loginForm {
   margin-top: 42%;
@@ -46,7 +47,13 @@
 }
 
 .logincontainer {
-  margin-top: 130px;
+  margin-top: 7%;
+  margin-bottom: 7.3%;
+}
+
+.logincontainer2 {
+  margin-top: 8%;
+  margin-bottom: 21%;
 }
 
 .error-message {

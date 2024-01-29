@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Form, ListGroup, Image, Col, Row, Card } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  ListGroup,
+  Image,
+  Col,
+  Row,
+  Card,
+} from "react-bootstrap";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./freeboardinfocomment.css";
@@ -10,11 +18,20 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
   const [newComment, setNewComment] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedComment, setEditedComment] = useState("");
+  console.log(postId);
+  const authorization = JSON.parse(
+    window.sessionStorage.getItem("accesstoken")
+  );
+  const refreshToken = JSON.parse(
+    window.sessionStorage.getItem("refreshtoken")
+  );
+  const member = JSON.parse(window.sessionStorage.getItem("member"));
 
   useEffect(() => {
     setComments(
       commentlist.map((comment) => ({
         memberId: comment.memberId,
+        nickname: comment.nickname,
         createdAt: formatDate(comment.createdAt),
         content: comment.content,
         id: comment.id,
@@ -37,15 +54,12 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
     setNewComment(e.target.value);
   };
 
-  const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
-  const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
-  const member = JSON.parse(window.sessionStorage.getItem("member"));
-
   const handleAddComment = () => {
+    console.log(postId);
     if (newComment.trim() !== "") {
       axios
         .post(
-          "http://127.0.0.1:5056/comment/v1/create",
+          "http://localhost:5056/comment/v1/create",
           {
             communityId: postId,
             content: newComment,
@@ -62,6 +76,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
             ...prevComments,
             {
               memberId: response.data.result.memberId,
+              nickname: response.data.result.nickname,
               createdAt: formatDate(response.data.result.createdAt),
               content: response.data.result.content,
               id: response.data.result.id,
@@ -84,7 +99,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
   const handleUpdateComment = async (commentId) => {
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:5056/comment/v1/${commentId}`,
+        `http://localhost:5056/comment/v1/${commentId}`,
         {
           content: editedComment,
         },
@@ -94,8 +109,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
             RefreshToken: refreshToken,
           },
         }
-      )
-        console.log(response);
+      );
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment.id === commentId
@@ -118,7 +132,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
     const confirmDelete = window.confirm("댓글을 삭제하시겠습니까?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://127.0.0.1:5056/comment/v1/${commentId}`, {
+        await axios.delete(`http://localhost:5056/comment/v1/${commentId}`, {
           headers: {
             Authorization: authorization,
             RefreshToken: refreshToken,
@@ -157,11 +171,18 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
                     rows={1}
                     value={newComment}
                     onChange={handleCommentChange}
+                    placeholder={
+                      !member || !member.result
+                        ? "로그인 후 댓글을 작성할 수 있습니다."
+                        : ""
+                    }
                     style={{
                       border: "1px solid transparent",
                       borderRadius: "5px",
                       flex: 1,
                     }}
+                    // 로그인하지 않은 경우 댓글 입력 비활성화
+                    disabled={!member || !member.result}
                   />
                   <Button
                     variant="secondary"
@@ -171,6 +192,8 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
                       backgroundColor: "#59BD82",
                       border: "none",
                     }}
+                    // 로그인하지 않은 경우 댓글 입력 버튼 비활성화
+                    disabled={!member || !member.result}
                   >
                     <strong>보내기</strong>
                   </Button>
@@ -193,42 +216,46 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
                     height="35"
                   />
                   <span className="commentinfo">
-                    {comment.memberId} | {comment.createdAt}
+                    {comment.nickname} | {comment.createdAt}
                   </span>
                   <span className="commentmanager">
-                    {member.result.memberId === comment.memberId && (
-                      <>
-                        <span className="commentupdate">
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            style={{
-                              color: "#a5a5a5",
-                              cursor: "pointer",
-                            }}
-                            onClick={() =>
-                              handleEditComment(comment.id, comment.content)
-                            }
-                          />
-                        </span>
+                    {member &&
+                      member.result &&
+                      member.result.memberId === comment.memberId && (
+                        <>
+                          <span className="commentupdate">
+                            <FontAwesomeIcon
+                              icon={faPen}
+                              style={{
+                                color: "#a5a5a5",
+                                cursor: "pointer",
+                              }}
+                              onClick={() =>
+                                handleEditComment(comment.id, comment.content)
+                              }
+                            />
+                          </span>
 
-                        <span
-                          className="commentdelete"
-                          onClick={() => handleDeleteComment(comment.id)}
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            style={{
-                              color: "#a5a5a5",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </span>
-                      </>
-                    )}
+                          <span
+                            className="commentdelete"
+                            onClick={() => handleDeleteComment(comment.id)}
+                          >
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              style={{
+                                color: "#a5a5a5",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </span>
+                        </>
+                      )}
                   </span>
 
                   {editingCommentId === comment.id ? (
-                    <Form.Group style={{ display: "flex",alignItems: "center" }}>
+                    <Form.Group
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
                       <Form.Control
                         as="textarea"
                         rows={1}
@@ -257,8 +284,6 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
                     <div className="commenttext">{comment.content}</div>
                   )}
 
-                  
-                  
                   <br />
                 </div>
                 <hr />

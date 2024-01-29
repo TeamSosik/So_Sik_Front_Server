@@ -148,7 +148,7 @@ const Header = () => {
           <Route path="/freeboardlist" element={<FreeBoardList />} />
           <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
           <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
-          <Route path="/freeboardupdate" element={<FreeBoardUpdate />} />
+          <Route path="/freeboardupdate/:id" element={<FreeBoardUpdate />} />
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
