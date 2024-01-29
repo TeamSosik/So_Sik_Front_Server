@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
-import ReactQuill, {Quill} from 'react-quill';
-import './freeboardupdate.css';
-import { Button, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import ReactQuill, { Quill } from "react-quill";
+import "./freeboardupdate.css";
+import { Button, Form } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
-import ImageResize from 'quill-image-resize-module-react';
-import { useNavigate } from 'react-router';
+import ImageResize from "quill-image-resize-module-react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const FreeBoardUpdate = () => {
 
-  // 필드
-
   const toolbarOptions = [
-    
-    [{ header: [1, 2, 3, 4, 5, false] }, { size: ["small", false, "large", "huge"]}],
+
+    [{ header: [1, 2, 3, 4, 5, false] }, { size: ["small", false, "large", "huge"] }],
     ["bold", "italic", "underline", "strike"],
     ["blockquote"],
     [{ list: "ordered" }, { list: "bullet" }],
@@ -43,7 +42,7 @@ const FreeBoardUpdate = () => {
   ];
 
   Quill.register("modules/imageResize", ImageResize);
-  
+
   const modules = {
     toolbar: {
       container: toolbarOptions
@@ -55,23 +54,22 @@ const FreeBoardUpdate = () => {
   };
 
   const defaultBoard = {
-    title: '',
+    title: "",
+  }
+  const defaultContent = {
+    content: "",
   }
 
-  const navigation = useNavigate();
-
-  // 상태
+  const { id } = useParams();
   const [board, setBoard] = useState(defaultBoard);
-  const [content, setContent] = useState('');
-  
+  const [content, setContent] = useState(defaultContent);
+  const navigate = useNavigate();
+  const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
+  const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
 
-  // 메서드
-  // title 값이 변할 때 작동합니다.
   const handleBoardChange = (e) => {
-    
-    const {name, value} = e.target;
-
-    setBoard((current) => {   
+    const { name, value } = e.target;
+    setBoard((current) => {
       return {
         ...current,
         [name]: value
@@ -81,69 +79,99 @@ const FreeBoardUpdate = () => {
 
   // ReactQuill의 content가 변할 때 작동합니다.
   const handleContentChange = (content) => {
-
-    return setContent(() => {
-      return content;
-    });
+    setContent({ content: content });
   };
 
-  // 수정 버튼 클릭 시 작동합니다.
-  const handleUpdateBtnClick = () => {
 
-    console.log("수정 시작");
+  const fetchData = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: 'http://127.0.0.1:5056/post/v1/' + id,
+        headers: {
+          authorization: authorization,
+          refreshToken: refreshToken,
+        },
+      }).then((response) => {
+        const postData = response.data.result;
+        setBoard({
+          title: postData.title,
+        });
+        setContent({
+          content: postData.content,
+        });
+      });
 
-    const data = {
-      title: board.title,
-      content: content
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    console.log(data);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    // axios 처리 시작
-
-    // axios 처리 끝
-
-    console.log("수정 끝");
+  const handleUpdateBtnClick = async () => {
+    const confirmUpdate = window.confirm("게시글을 수정하시겠습니까?");
+    if (confirmUpdate) {
+      try {
+        await axios({
+          method: "patch",
+          url: "http://localhost:5056/post/v1/" + id,
+          data: {
+            title: board.title,
+            content: content.content,
+          },
+          headers: {
+            authorization: authorization,
+            refreshToken: refreshToken,
+            "Content-Type": "application/json",
+          },
+        }).then((response) => {
+          if (response.status === 200) {
+            navigate("/freeboard");
+          } else {
+            alert("게시글 수정에 실패하였습니다.");
+          }
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }
 
-  const handleCancelBtnClick = () => {
-
-    navigation("/freeboard");
-  }
-
-  // view
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
 
 
   return (
-    <div className='updateBox'>
-      
-      <div className='title'>
-      <Form.Group className="mb-3">
-        {/* <Form.Label className="formlabel">제목</Form.Label> */}
-        <Form.Control 
-          type="text" 
-          name='title' 
-          placeholder="제목을 입력해주세요"
-          defaultValue={board.title}
-          onChange={handleBoardChange} 
-        />
-      </Form.Group>
+    <div className="updateBox">
+      <div className="title">
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="text"
+            name="title"
+            defaultValue={board.title}
+            onChange={handleBoardChange}
+          />
+        </Form.Group>
       </div>
 
       <div className="content">
         <ReactQuill
-          style={{height: "600px"}}
+          style={{ height: "600px" }}
           modules={modules}
+          name="content"
           formats={formats}
           theme="snow"
-          value={content}
+          value={content.content}
           onChange={handleContentChange}
-          placeholder='내용을 입력해주세요.'
         />
       </div>
 
-      <div className='buttonBox'>
-       <Button
+      <div className="buttonBox">
+        <Button
           variant="outline-light"
           className="rounded-pill updatebutton"
           type="button"
@@ -155,7 +183,7 @@ const FreeBoardUpdate = () => {
           variant="outline-light"
           className="rounded-pill cancelbutton"
           type="button"
-          onClick={handleCancelBtnClick}
+          onClick={() => handleNavigate("/freeboard/${id}")}
         >
           <strong>취소</strong>
         </Button>
