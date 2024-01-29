@@ -22,7 +22,7 @@ function FreeBoardInfo() {
     try {
       const response = await axios({
         method: "get",
-        url: 'http://localhost:5056/post/v1/' + id,
+        url: "http://localhost:5056/post/v1/" + id,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
@@ -106,7 +106,7 @@ function FreeBoardInfo() {
       </div>
       <FreeBoardInfoComment
         commentlist={postInfo.comments}
-        id={id}
+        postId={id}
       ></FreeBoardInfoComment>
     </div>
   );

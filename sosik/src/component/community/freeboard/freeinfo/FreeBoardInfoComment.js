@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Form, ListGroup, Image, Col, Row, Card } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  ListGroup,
+  Image,
+  Col,
+  Row,
+  Card,
+} from "react-bootstrap";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./freeboardinfocomment.css";
@@ -10,14 +18,20 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
   const [newComment, setNewComment] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedComment, setEditedComment] = useState("");
-  const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
-  const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
+  console.log(postId);
+  const authorization = JSON.parse(
+    window.sessionStorage.getItem("accesstoken")
+  );
+  const refreshToken = JSON.parse(
+    window.sessionStorage.getItem("refreshtoken")
+  );
   const member = JSON.parse(window.sessionStorage.getItem("member"));
 
   useEffect(() => {
     setComments(
       commentlist.map((comment) => ({
         memberId: comment.memberId,
+        nickname: comment.nickname,
         createdAt: formatDate(comment.createdAt),
         content: comment.content,
         id: comment.id,
@@ -41,6 +55,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
   };
 
   const handleAddComment = () => {
+    console.log(postId);
     if (newComment.trim() !== "") {
       axios
         .post(
@@ -61,6 +76,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
             ...prevComments,
             {
               memberId: response.data.result.memberId,
+              nickname: response.data.result.nickname,
               createdAt: formatDate(response.data.result.createdAt),
               content: response.data.result.content,
               id: response.data.result.id,
@@ -155,7 +171,11 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
                     rows={1}
                     value={newComment}
                     onChange={handleCommentChange}
-                    placeholder={!member || !member.result ? "로그인 후 댓글을 작성할 수 있습니다." : ""}
+                    placeholder={
+                      !member || !member.result
+                        ? "로그인 후 댓글을 작성할 수 있습니다."
+                        : ""
+                    }
                     style={{
                       border: "1px solid transparent",
                       borderRadius: "5px",
@@ -196,42 +216,46 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
                     height="35"
                   />
                   <span className="commentinfo">
-                    {comment.memberId} | {comment.createdAt}
+                    {comment.nickname} | {comment.createdAt}
                   </span>
                   <span className="commentmanager">
-                    {member && member.result && member.result.memberId === comment.memberId && (
-                      <>
-                        <span className="commentupdate">
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            style={{
-                              color: "#a5a5a5",
-                              cursor: "pointer",
-                            }}
-                            onClick={() =>
-                              handleEditComment(comment.id, comment.content)
-                            }
-                          />
-                        </span>
+                    {member &&
+                      member.result &&
+                      member.result.memberId === comment.memberId && (
+                        <>
+                          <span className="commentupdate">
+                            <FontAwesomeIcon
+                              icon={faPen}
+                              style={{
+                                color: "#a5a5a5",
+                                cursor: "pointer",
+                              }}
+                              onClick={() =>
+                                handleEditComment(comment.id, comment.content)
+                              }
+                            />
+                          </span>
 
-                        <span
-                          className="commentdelete"
-                          onClick={() => handleDeleteComment(comment.id)}
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            style={{
-                              color: "#a5a5a5",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </span>
-                      </>
-                    )}
+                          <span
+                            className="commentdelete"
+                            onClick={() => handleDeleteComment(comment.id)}
+                          >
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              style={{
+                                color: "#a5a5a5",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </span>
+                        </>
+                      )}
                   </span>
 
                   {editingCommentId === comment.id ? (
-                    <Form.Group style={{ display: "flex", alignItems: "center" }}>
+                    <Form.Group
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
                       <Form.Control
                         as="textarea"
                         rows={1}
