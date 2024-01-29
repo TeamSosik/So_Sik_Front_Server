@@ -43,6 +43,7 @@ const FreeBoardCard = (props) => {
               {props.content.commentCount}
             </span>
           </div>
+
         </div>
       </Card>
     </div>

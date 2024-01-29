@@ -32,20 +32,29 @@ const Footer = () => {
         <div className="ft_left">
           <ul className="ft_link">
             <li>
-              <a href="https://member.sempio.com/legal/terms-and-condition">
-                이용약관
+              <a href="https://github.com/ComNewbie" target="_blank">
+                ComNewbie
               </a>
             </li>
             <li>
-              <a href="https://member.sempio.com/legal/privacy-policy">
-                개인정보처리방침
+              <a href="https://github.com/Kimminwoo02" target="_blank">
+                Minutaurus
               </a>
             </li>
             <li>
-              <a href="/userguide">이용 가이드</a>
+              <a href="https://github.com/coderwin" target="_blank">
+                Coderwin
+              </a>
             </li>
             <li>
-              <a href="/aboutus">ABOUT US</a>
+              <a href="https://github.com/odadang" target="_blank">
+                Odadang
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/HyunJi-coding" target="_blank">
+                HyunJi-coding
+              </a>
             </li>
           </ul>
           <ul className="ft_info">
