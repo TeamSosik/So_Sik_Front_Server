@@ -141,7 +141,7 @@ const FreeBoardUpdate = () => {
   }
 
   const handleNavigate = (path) => {
-    navigate(path);
+    navigate(`/freeboard/${id}`);
   };
 
 
@@ -183,7 +183,7 @@ const FreeBoardUpdate = () => {
           variant="outline-light"
           className="rounded-pill cancelbutton"
           type="button"
-          onClick={() => handleNavigate("/freeboard/${id}")}
+          onClick={() => handleNavigate()}
         >
           <strong>취소</strong>
         </Button>
