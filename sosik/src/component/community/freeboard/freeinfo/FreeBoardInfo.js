@@ -8,15 +8,14 @@ import FreeBoardInfoComment from "./FreeBoardInfoComment";
 import "./freeboardinfo.css";
 
 function FreeBoardInfo() {
+
   const { id } = useParams();
   const [postInfo, setPostInfo] = useState(null);
   const navigate = useNavigate();
-  const authorization = JSON.parse(
-    window.sessionStorage.getItem("accesstoken")
-  );
-  const refreshToken = JSON.parse(
-    window.sessionStorage.getItem("refreshtoken")
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(!!window.sessionStorage.getItem("accesstoken"));
+
+  const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
+  const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
 
   const getData = async () => {
     try {
@@ -86,24 +85,26 @@ function FreeBoardInfo() {
       )}
 
       <FreeBoardInfoBody content={postInfo.content}></FreeBoardInfoBody>
-      <div className="buttonBox">
-        <Button
-          variant="outline-light"
-          className="rounded-pill updatebutton"
-          type="button"
-          onClick={() => handleUpdate(id)}
-        >
-          <strong>수정</strong>
-        </Button>
-        <Button
-          variant="outline-light"
-          className="rounded-pill cancelbutton"
-          type="button"
-          onClick={handleDelete}
-        >
-          <strong>삭제</strong>
-        </Button>
-      </div>
+      {isLoggedIn && (
+        <div className="buttonBox">
+          <Button
+            variant="outline-light"
+            className="rounded-pill updatebutton"
+            type="button"
+            onClick={() => handleUpdate(id)}
+          >
+            <strong>수정</strong>
+          </Button>
+          <Button
+            variant="outline-light"
+            className="rounded-pill cancelbutton"
+            type="button"
+            onClick={handleDelete}
+          >
+            <strong>삭제</strong>
+          </Button>
+        </div>
+      )}
       <FreeBoardInfoComment
         commentlist={postInfo.comments}
         postId={id}
