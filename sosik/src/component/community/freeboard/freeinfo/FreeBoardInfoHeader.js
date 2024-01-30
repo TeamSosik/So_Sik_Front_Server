@@ -3,6 +3,7 @@ import Col from "react-bootstrap/Col";
 import "./freeboardinfoheader.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Image } from "react-bootstrap";
 
 function FreeBoardInfoHeader({ title, props, nickname, date, hits }) {
   const createdAtDate = new Date(date);
@@ -30,10 +31,11 @@ function FreeBoardInfoHeader({ title, props, nickname, date, hits }) {
 
           <div className="freeinfonamedate">
             <span>
-              <img
+              <Image
                 src={`http://localhost:5056/members/v1/images/${props}`}
-                alt="프로필이미지"
-                style={{ width: "40px", height: "40px", paddingBottom: "5px" }}
+                alt="프로필 이미지"
+                roundedCircle
+                style={{ width: "30px", height: "30px", marginRight: "5px"}}
               />
             </span>
             <span className="freeinfoname">{nickname}</span> |{" "}
