@@ -8,10 +8,13 @@ const RecdAnly_section1 = () => {
   // 필드
 
   const defaultParams = {
+    rankType: "food",
     period: 30// 조회 기간
   }
 
   const periodList = [7, 15, 30];
+  const rankTypeList = ["food", "kcal"];
+  const rankTypeNameList = ["빈도수", "칼로리"];
 
   // 상태
   const [data, setData] = useState([]);
@@ -78,18 +81,18 @@ const RecdAnly_section1 = () => {
     });
   }
 
-  const handlePeriodChange = (e) => {
-    const {value} = e.target;
+  const handleParamsChange = (e) => {
+    const {name, value} = e.target;
 
     setParams((current) => {
       return {
         ...current,
-        period: value
+        [name]: value
       }
     });
     const newParams = {
       ...params,
-      period: value
+      [name]: value
     }
 
     addData(newParams);
@@ -286,6 +289,15 @@ const RecdAnly_section1 = () => {
       <option value={data}>{data}{unit}</option>
   })
 
+  const selectRankTypeListView = rankTypeList.map((data, index) => {
+    const defaultRankType = params.rankType;
+
+    return data === defaultRankType ? 
+      <option value={data} selected>{rankTypeNameList[index]}</option>
+      :
+      <option value={data}>{rankTypeNameList[index]}</option>
+  })
+
   // 초기화 시작
   useEffect(() => {
 
@@ -306,17 +318,31 @@ const RecdAnly_section1 = () => {
       </div>
       <div className="recd-anly-content">
         <div id="chart">
-          <div className='period-select-box'>
-            <select onChange={handlePeriodChange}>
-              {selectPeriodListView}
-            </select>
+          <div className='params-select-box'>
+
+            <div className="rankType-select-box">
+              <div className="select-title">종류 : </div>
+              <select name="rankType" onChange={handleParamsChange}>
+                {selectRankTypeListView}
+              </select>
+            </div>
+
+            <div className="period-select-box">
+              <div className="select-title">기간 : </div>
+              <select name="period" onChange={handleParamsChange}>
+                {selectPeriodListView}
+              </select>
+            </div>
+
           </div>
-          <ReactApexChart
-            options={barChartOptions}
-            series={barChartData}
-            type="bar"
-            height={300}
-          />
+          <div className='chart-box'>
+            <ReactApexChart
+              options={barChartOptions}
+              series={barChartData}
+              type="bar"
+              height={300}
+            />
+          </div>
         </div>
       </div>
       <hr />
