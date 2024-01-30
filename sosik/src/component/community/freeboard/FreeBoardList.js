@@ -53,7 +53,6 @@ const FreeBoardList = () => {
         params: params
       }).then((response) => {
         const resultData = response.data.result.content;
-        console.log(resultData);
         setData(prevData => [...prevData, ...resultData]);
         setLoading(false);
         if(response.data.result.last)

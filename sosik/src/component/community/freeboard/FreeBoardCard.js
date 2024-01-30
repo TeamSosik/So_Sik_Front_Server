@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import "./freeboardcard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faComment } from "@fortawesome/free-regular-svg-icons";
+import { Image } from "react-bootstrap";
 
 const FreeBoardCard = (props) => {
   const createdAtDate = new Date(props.content.createdAt);
@@ -31,7 +32,14 @@ const FreeBoardCard = (props) => {
               <h4>{props.content.title}</h4>
             </div>
             <span>
-              {props.content.nickname} | {formattedDate}
+              <Image
+                src={`http://localhost:5056/members/v1/images/${props.content.memberId}`}
+                alt="프로필 이미지"
+                roundedCircle
+                width="35"
+                height="35"
+              />{" "}
+              | {props.content.nickname} | {formattedDate}
             </span>
 
             <span className="freeboard-view">
@@ -43,7 +51,6 @@ const FreeBoardCard = (props) => {
               {props.content.commentCount}
             </span>
           </div>
-
         </div>
       </Card>
     </div>

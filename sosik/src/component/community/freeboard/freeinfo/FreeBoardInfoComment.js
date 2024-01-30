@@ -18,7 +18,6 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
   const [newComment, setNewComment] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedComment, setEditedComment] = useState("");
-  console.log(postId);
   const authorization = JSON.parse(
     window.sessionStorage.getItem("accesstoken")
   );
@@ -55,7 +54,6 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
   };
 
   const handleAddComment = () => {
-    console.log(postId);
     if (newComment.trim() !== "") {
       axios
         .post(
@@ -157,15 +155,25 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
             <Form>
               <Form.Group>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <Image
-                    src="https://placehold.it/500x500"
-                    alt="프로필 이미지"
-                    roundedCircle
-                    style={{ margin: "10px" }}
-                    width="35"
-                    height="35"
-                  />
-
+                  {!member || !member.result ? (
+                    <Image
+                      src="https://placehold.it/500x500"
+                      alt="프로필 이미지"
+                      roundedCircle
+                      style={{ marginLeft: "5px", marginRight: "5px" }}
+                      width="35"
+                      height="35"
+                    />
+                  ) : (
+                    <Image
+                      src={`http://localhost:5056/members/v1/images/${member.result.memberId}`}
+                      alt="프로필 이미지"
+                      roundedCircle
+                      style={{ margin: "10px" }}
+                      width="35"
+                      height="35"
+                    />
+                  )}
                   <Form.Control
                     as="textarea"
                     rows={1}
@@ -208,7 +216,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
               <ListGroup.Item key={index} className="commentlist">
                 <div>
                   <Image
-                    src="https://placehold.it/500x500"
+                    src={`http://localhost:5056/members/v1/images/${comment.memberId}`}
                     alt="프로필 이미지"
                     roundedCircle
                     style={{ marginRight: "10px" }}
