@@ -30,7 +30,6 @@ function FreeBoardInfo() {
       }).then((response) => {
         const resultData = response.data.result;
         setPostInfo(resultData);
-        console.log(response.data.result);
       });
     } catch (error) {
       console.log(error);
@@ -79,6 +78,7 @@ function FreeBoardInfo() {
       {postInfo && (
         <FreeBoardInfoHeader
           title={postInfo.title}
+          props={postInfo.memberId}
           nickname={postInfo.nickname}
           date={postInfo.createdAt}
           hits={postInfo.hits}

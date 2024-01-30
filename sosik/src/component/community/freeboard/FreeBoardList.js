@@ -54,7 +54,6 @@ const FreeBoardList = ({ searchKeyword }) => {
         params: params
       }).then((response) => {
         const resultData = response.data.result.content;
-
         // 검색 결과가 있는 경우
         if (params.page === 0) {
           setData(resultData);
@@ -62,7 +61,6 @@ const FreeBoardList = ({ searchKeyword }) => {
         // 검색 결과가 없는 경우
           setData(prevData => [...prevData, ...resultData]);
         }
-
         setLoading(false);
         if (response.data.result.last)
           setHasMore(false);
