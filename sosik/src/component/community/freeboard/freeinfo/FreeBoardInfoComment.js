@@ -57,7 +57,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
     if (newComment.trim() !== "") {
       axios
         .post(
-          "http://localhost:5056/comment/v1/create",
+          "http://localhost:5056/comment/v1",
           {
             communityId: postId,
             content: newComment,
@@ -70,14 +70,17 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
           }
         )
         .then((response) => {
+          console.log(response);
           setComments((prevComments) => [
             ...prevComments,
             {
+              id: response.data.result.id,
               memberId: response.data.result.memberId,
               nickname: response.data.result.nickname,
+              profileImage:response.data.result.profileImage,
               createdAt: formatDate(response.data.result.createdAt),
               content: response.data.result.content,
-              id: response.data.result.id,
+              
             },
           ]);
 
