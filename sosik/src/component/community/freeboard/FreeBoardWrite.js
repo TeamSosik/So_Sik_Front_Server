@@ -87,7 +87,7 @@ const FreeBoardWrite = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5056/post/v1/create",
+        "http://localhost:5056/post/v1",
         data,
         {
           headers: {
