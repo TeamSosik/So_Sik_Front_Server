@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./foodDetail.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../common/spinners/Loading.js";
+import Error404 from "../../common/error/Error404.js";
 
 const Fd_section1 = ({ data }) => {
   console.log(data);
@@ -73,10 +74,12 @@ const FoodDetail = () => {
     createdAt: "",
     modifiedAt: "",
   };
+  const navigation = useNavigate();
 
   // 상태
   const [data, setData] = useState(defaultData);
   const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   // 메서드
   // 데이터 조회하기
@@ -102,7 +105,11 @@ const FoodDetail = () => {
   const showData = async () => {
     const data = await getData();
 
-    setData(data.data.result);
+    if(data) {
+      setData(data.data.result);
+      return;
+    }
+    setNotFound(true);
   };
 
   // view
@@ -117,6 +124,10 @@ const FoodDetail = () => {
   if (loading) {
     <Loading />;
   }
+
+  if(notFound) {
+    return (<Error404 />);
+  } 
 
   return (
     <div>
