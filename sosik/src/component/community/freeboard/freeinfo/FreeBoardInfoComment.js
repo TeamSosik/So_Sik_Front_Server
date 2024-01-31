@@ -57,7 +57,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
     if (newComment.trim() !== "") {
       axios
         .post(
-          "http://localhost:5056/comment/v1/create",
+          "http://localhost:5056/comment/v1",
           {
             communityId: postId,
             content: newComment,
