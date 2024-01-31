@@ -12,7 +12,8 @@ function FreeBoardInfo() {
   const { id } = useParams();
   const [postInfo, setPostInfo] = useState(null);
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(!!window.sessionStorage.getItem("accesstoken"));
+  const isLoggedIn = !!window.sessionStorage.getItem("accesstoken");
+  const loggedInUserId = JSON.parse(window.sessionStorage.getItem("member")).result.memberId;
 
   const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
   const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
@@ -21,15 +22,13 @@ function FreeBoardInfo() {
     try {
       const response = await axios({
         method: "get",
-        url: "http://localhost:5056/post/v1/" + id,
+        url: `http://localhost:5056/post/v1/${id}`,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
         },
-      }).then((response) => {
-        const resultData = response.data.result;
-        setPostInfo(resultData);
       });
+      setPostInfo(response.data.result);
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +42,7 @@ function FreeBoardInfo() {
     return <div>Loading...</div>;
   }
 
-  const handleUpdate = (id) => {
+  const handleUpdate = () => {
     navigate(`/freeboardupdate/${id}`);
   };
 
@@ -51,14 +50,14 @@ function FreeBoardInfo() {
     const confirmDelete = window.confirm("게시글을 삭제하시겠습니까?");
     if (confirmDelete) {
       try {
-        const response = await axios.delete(
-          `http://127.0.0.1:5056/post/v1/${id}`,
-          {
-            headers: {
-              Authorization: authorization,
-              RefreshToken: refreshToken,
-            },
-          }
+        const response = await axios({
+          method: "delete",
+          url: `http://127.0.0.1:5056/post/v1/${id}`,
+          headers: {
+            Authorization: authorization,
+            RefreshToken: refreshToken,
+          },
+        }
         );
 
         if (response.status === 200) {
@@ -85,13 +84,13 @@ function FreeBoardInfo() {
       )}
 
       <FreeBoardInfoBody content={postInfo.content}></FreeBoardInfoBody>
-      {isLoggedIn && (
+      {isLoggedIn && loggedInUserId === postInfo.memberId && (
         <div className="buttonBox">
           <Button
             variant="outline-light"
             className="rounded-pill updatebutton"
             type="button"
-            onClick={() => handleUpdate(id)}
+            onClick={handleUpdate}
           >
             <strong>수정</strong>
           </Button>
