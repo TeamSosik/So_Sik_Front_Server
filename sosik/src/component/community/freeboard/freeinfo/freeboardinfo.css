@@ -1,3 +1,53 @@
 .buttonBox {
+    margin-top: 200px;
+    margin-bottom: 100px;
     text-align: center;
-}
+  }
+
+  .buttonBox .listbutton {
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+    height: 50px;
+    width: 200px;
+    background-color: #fff;
+    color: #59BD82;
+    border: solid 1px #59BD82;
+  
+    &:hover {
+      color: #fff;
+      background-color: #59BD82;
+    }
+  }
+
+  .buttonBox .updatebutton {
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+    height: 50px;
+    width: 200px;
+    background-color: #fff;
+    color: #9DE18F;
+    border: solid 1px #9DE18F;
+  
+    &:hover {
+      color: #fff;
+      background-color: #9DE18F;
+    }
+  }
+
+  .buttonBox .deletebutton {
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+    height: 50px;
+    width: 200px;
+    background-color: #fff;
+    color: rgb(255, 92, 92);
+    border: solid 1px rgb(255, 92, 92);
+  
+    &:hover {
+      color: #fff;
+      background-color: rgb(255, 92, 92);
+    }
+  }

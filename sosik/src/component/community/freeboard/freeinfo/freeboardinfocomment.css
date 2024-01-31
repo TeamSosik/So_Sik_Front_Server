@@ -2,8 +2,7 @@
     border: none !important;
   }
   .commenttotal{
-    padding-top: 100px;
-    margin-bottom: 100px;
+    margin-bottom: 200px;
   }
   .commenttext{
     padding-left: 43px;
@@ -11,9 +10,9 @@
   }
 
   .commentcount{
-    margin-left: 10px;
-    margin-top: 60px;
+    margin-top: 80px;
     margin-bottom: 20px;
+    margin-left: 10px;
     font-size: 20px;
     font-weight: bolder;
     color: #59BD82;

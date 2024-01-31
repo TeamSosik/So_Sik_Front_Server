@@ -107,6 +107,8 @@ const SearchBox = () => {
     if (event.key === "Enter") {
       console.log(inputValue);
       navigate("/foodsearch", { state: { yourParameter: inputValue } }); //리다이렉트
+      setIsHaveInputValue(false);
+
     }
   };
 
