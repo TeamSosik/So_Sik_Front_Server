@@ -6,18 +6,26 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
 import { HeaderContext } from "../../common/header/Header";
 function Login() {
+  
   const REST_API_KEY_FOR_KAKAO = "83838cea18a7862894ce003e923d2fd7";
   const REDIRECT_URI_FOR_KAKAO = "http://localhost:3000/redirection";
   const linkForKakao = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY_FOR_KAKAO}&redirect_uri=${REDIRECT_URI_FOR_KAKAO}&response_type=code`;
+  
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+
   const [error, setError] = useState("");
+  const [isMemoryEmailCheck, setIsMemoryEmailCheck] = useState(() => {
+
+    return window.localStorage.getItem("email") ? true : false;
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
@@ -27,6 +35,7 @@ function Login() {
   };
   const navigate = useNavigate();
   const { setlogout } = useContext(HeaderContext); // heaer context
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -45,6 +54,9 @@ function Login() {
             JSON.stringify(refreshtoken)
           );
           window.sessionStorage.setItem("member", JSON.stringify(member));
+          // 이메일 저장하기
+          saveMemoryEmail();
+
           alert("정상적으로 로그인 처리 되었습니다.");
 
           const customHeader = {
@@ -73,6 +85,43 @@ function Login() {
       setError("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
   };
+
+  const saveMemoryEmail = () => {
+    if(isMemoryEmailCheck) {
+      window.localStorage.setItem("email", credentials.email);
+    } else {
+      window.localStorage.removeItem("email");
+    }
+  }
+
+  // 기억아이디 불러오기
+  const getMemoryEmail = () => {
+
+    const email = window.localStorage.getItem("email");
+    if(email) {
+      setCredentials((current) => {
+        const newCurrent = {
+          ...current,
+          email: email
+        }
+        return newCurrent;
+      });
+    }
+  }
+
+  const handleMemoryEmailCheckBoxClick = () => {
+    if(!isMemoryEmailCheck) {
+      setIsMemoryEmailCheck(true);
+      return;
+    }
+    setIsMemoryEmailCheck(false);
+  }
+
+  useEffect(() => {
+
+    getMemoryEmail();
+  }, []);
+
   return (
     <Container className="logincontainer">
       <Row>
@@ -106,6 +155,8 @@ function Login() {
               <Form.Check
                 type="checkbox"
                 className="loginfont"
+                onClick={handleMemoryEmailCheckBoxClick}
+                defaultChecked={isMemoryEmailCheck}
                 label="이메일 기억하기"
               />
             </Form.Group>
