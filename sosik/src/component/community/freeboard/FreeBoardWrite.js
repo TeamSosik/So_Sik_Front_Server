@@ -81,7 +81,7 @@ const FreeBoardWrite = () => {
       title: board.title,
       content: content
     };
-  
+
     const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 

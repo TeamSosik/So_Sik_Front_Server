@@ -23,16 +23,11 @@
 }
 
 .searchbutton{
-  background-color: #F8F6E6;
-  color: #ccc;
-  border: #ccc;
+  background-color: #59BD82;
+  color: #fff;
+  border: #fff;
   &:hover {
-    color: #ccc;
-    background-color: #F8F6E6; 
+    color: #fff;
+    background-color: #59BD82; 
   }
-}
-
-.search{
-  margin-top:30px;
-  margin-bottom:15px;
 }
