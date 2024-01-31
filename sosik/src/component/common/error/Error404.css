@@ -1,0 +1,21 @@
+.error-container {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+
+.center-image {
+  width: 1000px;
+}
+
+.mainpagebutton {
+  background-color: #9DE18F;
+  color: #ffffff;
+  border: #ffffff;
+  &:hover {
+    color: #ffffff;
+    background-color: #9DE18F; 
+  }
+}
