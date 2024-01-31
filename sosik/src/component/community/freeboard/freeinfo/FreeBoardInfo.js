@@ -13,7 +13,7 @@ function FreeBoardInfo() {
   const [postInfo, setPostInfo] = useState(null);
   const navigate = useNavigate();
   const isLoggedIn = !!window.sessionStorage.getItem("accesstoken");
-  const loggedInUserId = JSON.parse(window.sessionStorage.getItem("member")).result.memberId;
+  const loggedInUserId = JSON.parse(window.sessionStorage.getItem("member"))?.result?.memberId;
 
   const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
   const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
@@ -44,6 +44,10 @@ function FreeBoardInfo() {
 
   const handleUpdate = () => {
     navigate(`/freeboardupdate/${id}`);
+  };
+
+  const handleList = () => {
+    navigate(`/freeboard`);
   };
 
   const handleDelete = async () => {
@@ -84,26 +88,39 @@ function FreeBoardInfo() {
       )}
 
       <FreeBoardInfoBody content={postInfo.content}></FreeBoardInfoBody>
-      {isLoggedIn && loggedInUserId === postInfo.memberId && (
-        <div className="buttonBox">
-          <Button
-            variant="outline-light"
-            className="rounded-pill updatebutton"
-            type="button"
-            onClick={handleUpdate}
-          >
-            <strong>수정</strong>
-          </Button>
-          <Button
-            variant="outline-light"
-            className="rounded-pill cancelbutton"
-            type="button"
-            onClick={handleDelete}
-          >
-            <strong>삭제</strong>
-          </Button>
-        </div>
-      )}
+      <div className="buttonBox">
+        <Button
+          variant="outline-light"
+          className="rounded-pill listbutton"
+          type="button"
+          onClick={handleList}
+        >
+          <strong>목록</strong>
+        </Button>
+
+        {isLoggedIn && loggedInUserId === postInfo.memberId && (
+          <>
+            <Button
+              variant="outline-light"
+              className="rounded-pill updatebutton"
+              type="button"
+              onClick={handleUpdate}
+            >
+              <strong>수정</strong>
+            </Button>
+
+            <Button
+              variant="outline-light"
+              className="rounded-pill deletebutton"
+              type="button"
+              onClick={handleDelete}
+            >
+              <strong>삭제</strong>
+            </Button>
+          </>
+        )}
+      </div>
+
       <FreeBoardInfoComment
         commentlist={postInfo.comments}
         postId={id}
