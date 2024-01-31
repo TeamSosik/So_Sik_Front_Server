@@ -19,10 +19,10 @@ import MyPage from "../../member/mypage/Mypage";
 import SearchBox from "../header/SearchBox.js";
 import FreeBoard from "../../community/freeboard/FreeBoard.js";
 import NotificationList from "./NotificationList";
-import FreeBoardList from "../../community/freeboard/FreeBoardList.js";
 import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js";
 import FreeBoardUpdate from "../../community/freeboard/FreeBoardUpdate.js";
+import Error404 from "../error/Error404.js"
 
 export const HeaderContext = createContext();
 
@@ -145,10 +145,10 @@ const Header = () => {
           <Route path="/findPw" element={<FindPw />} />
           <Route path="/snsInfo" element={<SnsInfo />} />
           <Route path="/freeboard" element={<FreeBoard />} />
-          <Route path="/freeboardlist" element={<FreeBoardList />} />
           <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
           <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
           <Route path="/freeboardupdate/:id" element={<FreeBoardUpdate />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
