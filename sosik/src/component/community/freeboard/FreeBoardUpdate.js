@@ -152,6 +152,7 @@ const FreeBoardUpdate = () => {
           <Form.Control
             type="text"
             name="title"
+            style={{ marginTop: "200px" }}
             defaultValue={board.title}
             onChange={handleBoardChange}
           />

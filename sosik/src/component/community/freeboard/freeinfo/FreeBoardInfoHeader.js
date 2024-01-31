@@ -1,8 +1,7 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./freeboardinfoheader.css";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Image } from "react-bootstrap";
 
 function FreeBoardInfoHeader({ title, props, nickname, date, hits }) {
@@ -12,15 +11,15 @@ function FreeBoardInfoHeader({ title, props, nickname, date, hits }) {
   )
     .toString()
     .padStart(2, "0")}-${createdAtDate
-    .getDate()
-    .toString()
-    .padStart(2, "0")} ${createdAtDate
-    .getHours()
-    .toString()
-    .padStart(2, "0")}:${createdAtDate
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")}`;
+      .getDate()
+      .toString()
+      .padStart(2, "0")} ${createdAtDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${createdAtDate
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}`;
 
   return (
     <Row className="freeinfoheaderesult">
@@ -35,7 +34,7 @@ function FreeBoardInfoHeader({ title, props, nickname, date, hits }) {
                 src={`http://localhost:5056/members/v1/images/${props}`}
                 alt="프로필 이미지"
                 roundedCircle
-                style={{ width: "30px", height: "30px", marginRight: "5px"}}
+                style={{ width: "30px", height: "30px", marginRight: "5px" }}
               />
             </span>
             <span className="freeinfoname">{nickname}</span> |{" "}
