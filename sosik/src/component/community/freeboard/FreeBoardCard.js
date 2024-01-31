@@ -13,15 +13,15 @@ const FreeBoardCard = (props) => {
   )
     .toString()
     .padStart(2, "0")}-${createdAtDate
-    .getDate()
-    .toString()
-    .padStart(2, "0")} ${createdAtDate
-    .getHours()
-    .toString()
-    .padStart(2, "0")}:${createdAtDate
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")}`;
+      .getDate()
+      .toString()
+      .padStart(2, "0")} ${createdAtDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${createdAtDate
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}`;
 
   return (
     <div className="card-container">
@@ -39,7 +39,7 @@ const FreeBoardCard = (props) => {
                 width="35"
                 height="35"
               />{" "}
-              | {props.content.nickname} | {formattedDate}
+              {props.content.nickname} | {formattedDate}
             </span>
 
             <span className="freeboard-view">
