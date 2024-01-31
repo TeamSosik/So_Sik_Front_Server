@@ -15,7 +15,7 @@ const FoodModal = ({ modalBtn }) => {
 
   const defaultPageData = {
     page: 1, // 현재 페이지 번호
-    size: 10, // 한 페이지당 게시글 수
+    size: 8, // 한 페이지당 게시글 수
     showPages: 5, // 화면에 보일 페이지 개수
     totalNum: 0, // 전체 게시글 수
   };
@@ -49,7 +49,7 @@ const FoodModal = ({ modalBtn }) => {
     event.preventDefault();
     // 입력된 값을 사용하거나 다른 작업 수행
     // 데이터가 없으면 검색을 멈춘다.
-    if(!inputValue) {
+    if (!inputValue) {
       return;
     }
 
@@ -113,7 +113,6 @@ const FoodModal = ({ modalBtn }) => {
 
   // 데이터 불러오기
   const getDataList = async () => {
-
     const params = {
       name: inputValue,
       page: 1,
@@ -138,6 +137,13 @@ const FoodModal = ({ modalBtn }) => {
 
       return response;
     } catch (e) {}
+  };
+
+  const headerCellStyle = {
+    borderBottom: "1px solid rgba(0, 0, 0, 0.2)",
+    paddingBottom: "15px",
+    paddingTop: "30px",
+    boxSizing: "border-box",
   };
 
   // 페이지 버튼 클릭
@@ -211,12 +217,21 @@ const FoodModal = ({ modalBtn }) => {
           }}
         >
           <div className={"modal-content"}>
-            <p>음식 검색</p>
+            <button
+              className={"modal-close-btn"}
+              onClick={() => setModalOpen(false)}
+            >
+              X
+            </button>
+            <p style={{ fontWeight: "bolder", color: "#59bd82" }}>음식 검색</p>
 
             <span style={{ fontSize: "14px" }}>
               * 모든 음식은 100g/ 100ml 기준입니다.
             </span>
-            <InputGroup className="mb-3">
+            <InputGroup
+              className="mb-3"
+              style={{ marginLeft: "8%", width: "85%" }}
+            >
               <Form.Control
                 placeholder="음식을 검색해주세요"
                 onChange={handleInputChange}
@@ -231,44 +246,33 @@ const FoodModal = ({ modalBtn }) => {
               </Button>
             </InputGroup>
 
-            <button
-              className={"modal-close-btn"}
-              onClick={() => setModalOpen(false)}
-            >
-              모달 닫기
-            </button>
-
             {loading ? (
               <Loading />
             ) : dataList.length !== 0 ? (
               <>
                 <table>
                   <thead>
-                    <tr style={{ marginLeft: "50px" }}>
-                      <th style={{ width: "25%", textAlign: "center" }}>
-                        {" "}
-                        음식
-                      </th>
-                      <th style={{ width: "10%", textAlign: "center" }}>
-                        {" "}
-                        탄수화물
-                      </th>
-                      <th style={{ width: "10%", textAlign: "center" }}>
-                        {" "}
-                        단백질
-                      </th>
-                      <th style={{ width: "10%", textAlign: "center" }}>
-                        {" "}
-                        지방
-                      </th>
-                      <th style={{ width: "25%", textAlign: "center" }}>
-                        {" "}
-                        칼로리
-                      </th>
-                      <th style={{ width: "10%", textAlign: "center" }}>
-                        {" "}
+                    <tr
+                      style={{
+                        paddingTop: "5px",
+                        borderBottom: "1px solid rgba(0, 0, 0, 0.2)",
+                      }}
+                    >
+                      <th style={headerCellStyle}> 음식</th>
+                      <th style={headerCellStyle}> 제조사</th>
+                      <th style={headerCellStyle}> 탄수화물</th>
+                      <th style={headerCellStyle}> 단백질</th>
+                      <th style={headerCellStyle}> 지방</th>
+                      <th style={headerCellStyle}> 칼로리</th>
+                      <th
+                        style={
+                          (headerCellStyle,
+                          { marginLeft: "10%", textAlign: "right" })
+                        }
+                      >
                         g/ml
                       </th>
+                      <th style={headerCellStyle}></th>
                     </tr>
                   </thead>
 

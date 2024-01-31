@@ -1,10 +1,15 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { RecdKcalSection2Context } from "../record/RecdKcalSection2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { RecdKcalContext } from "../record/RecdKcal";
+import {
+  faCirclePlus,
+  faMagnifyingGlass,
+  faUtensils,
+} from "@fortawesome/free-solid-svg-icons";
+import { BeatLoader } from "react-spinners";
 
 const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
   // 필드
@@ -44,7 +49,7 @@ const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
     if (isNaN(foodAmount.foodAmount)) {
       alert("숫자를 입력해주세요");
     }
-
+    const brand = data.manufacturer;
     const calculationCarbo = (data.carbo * foodAmount.foodAmount) / 100;
     const calculationProtein = (data.protein * foodAmount.foodAmount) / 100;
     const calculationFat = (data.fat * foodAmount.foodAmount) / 100;
@@ -55,6 +60,7 @@ const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
 
     const intakeData = {
       foodId: data.foodId,
+      brand: data.manufacturer,
       calculationCarbo: calculationCarbo,
       calculationProtein: calculationProtein,
       calculationFat: calculationFat,
@@ -109,7 +115,17 @@ const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
 
   return (
     <tbody>
-      <td style={{ width: "25%", textAlign: "center" }}>
+      <td
+        style={{
+          paddingTop: "20px",
+          width: "12%",
+          textAlign: "center",
+          fontWeight: "bolder",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
         <div
           className="foodName"
           id={data.foodId}
@@ -118,11 +134,62 @@ const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
           {data.name}
         </div>
       </td>
-      <td style={{ width: "25%", textAlign: "center" }}>{data.carbo}</td>
-      <td style={{ width: "10%", textAlign: "center" }}>{data.protein}</td>
-      <td style={{ width: "10%", textAlign: "center" }}>{data.fat}</td>
-      <td style={{ width: "10%", textAlign: "center" }}>{data.kcal}</td>
-      <td style={{ width: "10%", textAlign: "center" }}>
+      <td
+        style={{
+          width: "15%",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {data.manufacturer}
+      </td>
+      <td
+        style={{
+          width: "8%",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {data.carbo}
+      </td>
+      <td
+        style={{
+          width: "6%",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {data.protein}
+      </td>
+      <td
+        style={{
+          width: "6%",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {data.fat}
+      </td>
+      <td
+        style={{
+          width: "6%",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {data.kcal}
+      </td>
+      <td style={{ marginLeft: "7%", width: "6%", textAlign: "right" }}>
         <input
           type="text"
           name="foodAmount"
@@ -131,10 +198,12 @@ const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
           style={{ width: "50px" }}
         />
       </td>
-      <td style={{ width: "10%", textAlign: "center" }}>
+      <td style={{ width: "6%", textAlign: "center" }}>
         <FontAwesomeIcon
+          icon={faCirclePlus}
+          style={{ color: "#59bd82" }}
+          size="lg"
           className="registrationBtn"
-          icon={faPlus}
           onClick={handleIntakeRegistrationBtnClick}
         />
       </td>

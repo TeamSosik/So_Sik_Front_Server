@@ -1,6 +1,7 @@
 .btn-wrapper {
   display: flex;
   justify-content: center;
+  border-radius: 15px;
 }
 
 .modal-open-button,
@@ -25,16 +26,20 @@
 .modal-content {
   background-color: #ffffff;
   width: 60%;
-  height: 95%;
-  padding: 15px;
+  height: 92%;
+  padding: 25px;
   z-index: 1000;
   overflow: hidden;
 }
+
 .modal-content button {
-  font-size: 16px;
+  font-size: 18px;
 }
 .modal-content table {
-  font-size: 16px;
+  margin-bottom: 50px;
+  margin-left: 8%;
+  width: 84%;
+  font-size: 18px;
 }
 
 .modal-search {
@@ -49,7 +54,7 @@
 .pageButtonBox {
   width: 100%;
   height: 10%;
-
+  margin-left: 6%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,10 +86,13 @@
 
 .pageButtonBox > .pageButtonList > button:hover {
   background-color: #59bd82;
+  border-radius: 15px;
 }
 
 .pageButtonBox > .pageButtonList > button.nowPageBtn {
+  border-radius: 15px;
   background-color: #59bd82;
+  color: #ffffff;
 }
 
 /* 음식 이름 */
