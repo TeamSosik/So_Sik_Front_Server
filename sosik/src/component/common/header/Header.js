@@ -65,7 +65,6 @@ const Header = () => {
       window.sessionStorage.removeItem("member");
 
       setlogout(true);
-      alert("로그아웃 되었습니다.");
     } catch (error) {
       console.error("로그아웃 오류:", error);
     }
