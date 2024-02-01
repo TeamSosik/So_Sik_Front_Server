@@ -422,7 +422,7 @@ function Signup() {
 
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>프로필 이미지</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} />
+              <Form.Control type="file" accept="image/png, image/jpeg, image/gif" onChange={handleImageChange} />
             </Form.Group>
             <div className="text-center">
               <Button variant="success" type="submit">
