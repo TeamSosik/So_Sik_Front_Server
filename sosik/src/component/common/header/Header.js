@@ -1,7 +1,7 @@
 import React, { useEffect, useState, createContext } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
-import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link, BrowserRouter, Routes, Route, Router, Navigate } from "react-router-dom";
 import Feed from "../../feed/Feed.js";
 import Mainpage from "../../../page/MainPage.js";
 import Login from "../../member/loginform/Login.js";
@@ -23,17 +23,24 @@ import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js";
 import FreeBoardUpdate from "../../community/freeboard/FreeBoardUpdate.js";
 import Error404 from "../error/Error404.js"
+import PrivateRoute from "../auth/PrivateRoute.js";
 
 export const HeaderContext = createContext();
 
 const Header = () => {
+  
   const [logout, setlogout] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  console.log(isAuthenticated);
+
   useEffect(() => {
     const access = window.sessionStorage.getItem("accesstoken");
     if (access === null) {
       setlogout(true);
+      setIsAuthenticated(false);
     } else {
       setlogout(false);
+      setIsAuthenticated(true);
     }
   }, [logout]);
 
@@ -65,11 +72,16 @@ const Header = () => {
       window.sessionStorage.removeItem("member");
 
       setlogout(true);
+      // setIsAuthenticated(false);
       alert("로그아웃 되었습니다.");
     } catch (error) {
       console.error("로그아웃 오류:", error);
     }
   };
+
+  const changeIsAuthenticated = (value) => {
+    setIsAuthenticated(value);
+  }
 
   let loginview = "";
 
@@ -129,25 +141,27 @@ const Header = () => {
         </div>
       </header>
 
-      <HeaderContext.Provider value={{ setlogout }}>
+      <HeaderContext.Provider value={{ setlogout, changeIsAuthenticated, isAuthenticated }}>
         <Routes>
           <Route path="/feed" element={<Feed />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mainpage" element={<Mainpage props={logout} />} />
+
           <Route path="/foodsearch" element={<FoodSearch />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/recdkcal" element={<RecdKcal />} />
-          <Route path="/recdanly" element={<RecdAnly />} />
-          <Route path="/updateinfo" element={<UpdateInfo />} />
+          <Route path="/mypage" element={isAuthenticated ? <MyPage /> : <Login />} />
+          <Route path="/recdkcal" element={isAuthenticated ? <RecdKcal /> : <Login />} />
+          <Route path="/recdanly" element={isAuthenticated ? <RecdAnly /> : <Login />} />
+          <Route path="/updateinfo" element={isAuthenticated ? <UpdateInfo /> : <Login />} />
           <Route path="/food/:id" element={<FoodDetail />} />
           <Route path="/redirection" element={<RedirectionKakao />} />
-          <Route path="/findPw" element={<FindPw />} />
+          <Route path="/findPw" element={isAuthenticated ? <FindPw /> : <Login />} />
           <Route path="/snsInfo" element={<SnsInfo />} />
+
           <Route path="/freeboard" element={<FreeBoard />} />
-          <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
+          <Route path="/freeboardwrite" element={isAuthenticated ? <FreeBoardWrite /> : <Login />} />
           <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
-          <Route path="/freeboardupdate/:id" element={<FreeBoardUpdate />} />
+          <Route path="/freeboardupdate/:id" element={isAuthenticated ? <FreeBoardUpdate /> : <Login />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </HeaderContext.Provider>

@@ -9,6 +9,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
 import { HeaderContext } from "../../common/header/Header";
+
 function Login() {
   
   const REST_API_KEY_FOR_KAKAO = "83838cea18a7862894ce003e923d2fd7";
@@ -34,7 +35,7 @@ function Login() {
     window.location.href = linkForKakao;
   };
   const navigate = useNavigate();
-  const { setlogout } = useContext(HeaderContext); // heaer context
+  const { setlogout, changeIsAuthenticated } = useContext(HeaderContext); // heaer context
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -78,6 +79,8 @@ function Login() {
             });
 
           setlogout(false);
+          // changeIsAuthenticated(true);
+
           navigate("/mainpage"); //리다이렉트
         });
     } catch (error) {
