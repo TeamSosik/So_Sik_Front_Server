@@ -45,7 +45,7 @@ function Login() {
           const accesstoken = result.data.result.accessToken;
           const refreshtoken = result.data.result.refreshToken;
           const member = result.data;
-          
+
           window.sessionStorage.setItem("accesstoken", JSON.stringify(accesstoken));
           window.sessionStorage.setItem("refreshtoken", JSON.stringify(refreshtoken));
           window.sessionStorage.setItem("member", JSON.stringify(member));
@@ -121,12 +121,11 @@ function Login() {
     <Container className="logincontainer">
       <Row>
         <Col></Col>
-        <Col xs={3} className="logincontainer">
+        <Col xs={4} className="logincontainer">
           <Form onSubmit={handleLogin}>
             <Form.Group as={Col}>
-              <Form.Label className="loginfont">이메일</Form.Label>
               <Form.Control
-                className="inputdiv"
+                className="email"
                 type="text"
                 name="email"
                 value={credentials.email}
@@ -135,9 +134,8 @@ function Login() {
               />
             </Form.Group>
             <Form.Group as={Col}>
-              <Form.Label className="loginfont">비밀번호</Form.Label>
               <Form.Control
-                className="inputdiv"
+                className="password"
                 type="password"
                 name="password"
                 value={credentials.password}
@@ -162,17 +160,12 @@ function Login() {
               <Link to="/signup">회원가입</Link> |{" "}
               <Link to="/findPw">비밀번호찾기</Link>
             </p>
-            <hr></hr>
+            <h2 class="hr-block__title">소셜미디어 계정으로 로그인</h2>
+            {/* <hr></hr> */}
             <div className="logindiv1">
-              <a>
-                <Image
-                  src="img/kakao_login.png"
-                  className="snsloginbutton"
-                  onClick={loginHandlerForKakao}
-                />
+              <a className="btn btn--kakao-talk" onClick={loginHandlerForKakao}>
+                카카오 계정으로 로그인
               </a>
-              <br />
-              <br />
             </div>
           </Form>
         </Col>
