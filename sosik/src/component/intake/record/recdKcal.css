@@ -128,6 +128,16 @@
     background: #FFF; */
 }
 
+.recd-kcal-section2 .meal-content .meal .meal-name .food-title  {
+  /* TODO : margin 말고 처리가 필요할 거 같습니다. */
+  margin-top: 3px;
+  font-weight: 700;
+}
+
+.recd-kcal-section2 .meal-content .meal .meal-name .food-amount  {
+  font-size: 14px;
+}
+
 .recd-kcal-section2 .meal-content .meal .nutrient {
   /* display: flex; */
   /* align-items: center; */

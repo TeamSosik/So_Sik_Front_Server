@@ -134,16 +134,16 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
 
   const mealListView = mealList.map((data, index) => {
 
-    const unit = "g";
-    const nutrientStandardView = `(섭취량 / ${data.foodAmount}${unit})`;
+    const unit = "g(ml)";
+    const nutrientStandardView = `섭취량 : ${data.foodAmount} ${unit}`;
 
     return (
       <div key={index} className="meal">
         {/* ***** 영양소 이름 시작 *****  */}
 
         <div className="meal-name">
-          <div>{data.name}</div>
-          <p>{nutrientStandardView}</p>
+          <div className="food-title">{data.name}</div>
+          <div className="food-amount">{nutrientStandardView}</div>
         </div>
 
         {/* ***** 영양소 이름 끝 *****  */}
