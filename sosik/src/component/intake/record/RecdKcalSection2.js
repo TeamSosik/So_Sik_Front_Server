@@ -140,10 +140,10 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
     return (
       <div key={index} className="meal">
         {/* ***** 영양소 이름 시작 *****  */}
+        <div className="meal-info">
+          <div className="meal-name">{data.name}</div>
+          <p className="meal-intake">{nutrientStandardView}</p>
 
-        <div className="meal-name">
-          <div className="food-title">{data.name}</div>
-          <div className="food-amount">{nutrientStandardView}</div>
         </div>
 
         {/* ***** 영양소 이름 끝 *****  */}

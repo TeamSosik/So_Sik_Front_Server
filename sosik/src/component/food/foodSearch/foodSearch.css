@@ -1,7 +1,6 @@
 @font-face {
   font-family: "SUITE-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
@@ -31,10 +30,10 @@
   flex-flow: row wrap;
   margin: auto;
   margin-top: 200px;
-  margin-bottom: 200px;
+  margin-bottom: 3.5rem;
 }
 
-.kcalContexListBox > .kcalContex {
+.kcalContexListBox>.kcalContex {
   width: 350px;
   height: 260px;
   border-radius: 10px;
@@ -55,9 +54,11 @@
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-25px);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -67,7 +68,7 @@
   animation: moveAnimation 2s;
 }
 
-.kcalContexListBox > .kcalContex > .kcalContexTitle {
+.kcalContexListBox>.kcalContex>.kcalContexTitle {
   width: 80%;
   height: 20%;
   font-size: 25px;
@@ -78,7 +79,7 @@
   align-items: center;
 }
 
-.kcalContexListBox > .kcalContex > .kcalContextContentBox {
+.kcalContexListBox>.kcalContex>.kcalContextContentBox {
   width: 60%;
   height: 50%;
   border-radius: 10px;
@@ -90,6 +91,7 @@
   align-items: center;
   flex-direction: column;
 }
+
 .brand {
   color: #15a775;
 }
@@ -100,10 +102,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-bottom: 200px;
 }
 
-.pageButtonBox > .pageButtonList {
+.pageButtonBox>.pageButtonList {
   width: 33%;
   height: 50%;
   display: flex;
@@ -111,7 +113,7 @@
   align-items: center;
 }
 
-.pageButtonBox > .pageButtonList > input[type="button"] {
+.pageButtonBox>.pageButtonList>input[type="button"] {
   width: 2rem;
   height: 2rem;
   background-color: #f8f6e6;
@@ -123,7 +125,7 @@
   cursor: pointer;
 }
 
-.pageButtonBox > .pageButtonList > input[type="button"]:hover {
+.pageButtonBox>.pageButtonList>input[type="button"]:hover {
   background-color: #fdf3a2;
 }
 
