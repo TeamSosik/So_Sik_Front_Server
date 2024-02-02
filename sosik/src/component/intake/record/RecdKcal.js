@@ -130,7 +130,7 @@ const RecdKcal = () => {
           <KcalChart mealList={mealList} props={loadDate} />
         </Col>
         <Col>
-          <Calendarview propFunction={highFunction} />
+          <Calendarview propFunction={highFunction} mealList={mealList}/>
         </Col>
       </Row>
       <RecdKcalSection2

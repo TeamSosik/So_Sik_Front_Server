@@ -6,15 +6,11 @@ import "./calenderview.css";
 
 function Calendarview(props) {
   const [clickedDate, setClickedDate] = useState(null);
-  const [totalIntakeValues, setTotalIntakeValues] = useState([0, 0, 0, 0]);
 
   const handleDayClick = async (value, event) => {
     const formattedDate = moment(value).format("YYYY-MM-DD");
     setClickedDate(clickedDate === formattedDate ? null : formattedDate);
     props.propFunction(formattedDate);
-    const response = await getData2(formattedDate);
-    addPieChartData(formattedDate);
-
   };
 
   const [breakfastdot, setbreakfastDot] = useState([]);
@@ -59,51 +55,14 @@ function Calendarview(props) {
     }
   };
 
-  // 하루 총 칼로리가져오기
-  const getData2 = async (today) => {
-    try {
-      const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
-      const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
-      console.log(today)
-      const url = `/intake/v1/${today}`;
-      const response = await axios({
-
-        method: "get",
-        url: url,
-        baseURL: "http://localhost:5056",
-        headers: {
-          Authorization: accesstoken,
-          refreshtoken: refreshtoken,
-          "Content-Type": "application/json"
-        },
-
-      });
-      return response;
-    } catch(e) {
-      console.log(e);
-    }
-    
-  }
-
-  const addPieChartData = async (formattedDate) => {
-    const data = await getData2(formattedDate);
-    const nutrientDataList = data.data.result;
-    const updatedValues = [0, 0, 0, 0];
-    nutrientDataList.forEach((data) => {
-      updatedValues[0] += data.calculationCarbo;
-      updatedValues[1] += data.calculationProtein;
-      updatedValues[2] += data.calculationFat;
-      updatedValues[3] += data.calculationKcal;
-    });
-
-    setTotalIntakeValues(updatedValues);
-  };
-
+  useEffect(() => {
+    handleDayClick(new Date());
+  },[]);
+  
   useEffect(() => {
     getData();
-    getData2();
-    handleDayClick(new Date());
-  }, []);
+    
+  }, [props.mealList]);
 
   const mark = breakfastdot;
   const mark2 = lunchdot;
@@ -113,7 +72,7 @@ function Calendarview(props) {
   return (
     <div className="calendarposition">
       <Calendar
-        formatDay={(locale, date) => moment(date).format("DD")}
+        formatDay={(locale, date) => moment(date).format("D")}
         showNeighboringMonth={false}
         value={clickedDate ? moment(clickedDate).toDate() : new Date()}
         className="mx-auto w-full text-sm border-b"
@@ -151,9 +110,7 @@ function Calendarview(props) {
                   </div>
                 )}
               </div>
-              {clickedDate === formattedDate && totalIntakeValues[3] !== 0 && (
-                <div>{totalIntakeValues[3]}kcal</div>
-              )}
+              
             </div>
           );
         }}
