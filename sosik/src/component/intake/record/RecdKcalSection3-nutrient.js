@@ -36,15 +36,13 @@ const RecdKcalSection3_nutrient = ({ props }) => {
           setNutrientRatio((nutrientRatio) => ({
             ...nutrientRatio,
             carbohydrate:
-              Math.floor((response.data.result.dayTargetKcal / 10) * 100) / 100,
+              Math.floor((response.data.result.dayTargetKcal / 8) * 100) / 100,
             protein:
               Math.floor(
                 ((response.data.result.dayTargetKcal * 3) / 40) * 100
               ) / 100,
             province:
-              Math.floor(
-                ((response.data.result.dayTargetKcal * 3) / 90) * 100
-              ) / 100,
+              Math.floor((response.data.result.dayTargetKcal / 45) * 100) / 100,
             dayTargetKcal: response.data.result.dayTargetKcal,
           }));
         }

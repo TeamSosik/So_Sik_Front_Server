@@ -92,7 +92,10 @@ const RecdAnly_section2 = () => {
       return {
         id: data,
         label: data,
-        value: Math.round(totalIntakeValues[index] * 100) / 100,
+        value:
+          index === 2
+            ? (Math.round(totalIntakeValues[index] * 100) / 100) * 9
+            : (Math.round(totalIntakeValues[index] * 100) / 100) * 4,
         color: colors[index],
       };
     });
