@@ -53,7 +53,7 @@ const FoodSearch = () => {
       });
 
       return response;
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handlePageBtnClick = async (e) => {
@@ -108,7 +108,7 @@ const FoodSearch = () => {
       setLoading(false);
       setDataList(response.data.result);
       return response;
-    } catch (e) {}
+    } catch (e) { }
   };
 
   //가짜 데이터
@@ -149,11 +149,11 @@ const FoodSearch = () => {
 
             {/* TODO : div 박스를 나눌 지 생각해봐야 합니다. */}
             {/* ButtonBox */}
-            <PageButton
-              handlePageBtnClick={handlePageBtnClick}
-              pageData={pageData}
-            />
           </div>
+          <PageButton
+            handlePageBtnClick={handlePageBtnClick}
+            pageData={pageData}
+          />
         </div>
       ) : (
         <img src={notFoodData} className="foodNoSearch" alt="not_data.png" />

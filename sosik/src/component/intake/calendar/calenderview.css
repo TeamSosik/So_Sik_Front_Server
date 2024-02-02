@@ -79,6 +79,10 @@
   padding: 0.5em;
 }
 
+.react-calendar__tile {
+  height: 50px;
+}
+
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
   display: flex;
   align-items: center;
@@ -144,11 +148,13 @@
 .react-calendar__tile--active {
   background: #9de18f;
   color: white;
+  border-radius: 50%;
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
   background: #9de18f;
+  border-radius: 50%;
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {

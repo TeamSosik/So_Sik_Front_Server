@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RecdKcalSection3 = ({mealList}) => {
+const RecdKcalSection3 = ({ mealList }) => {
 
   // 필드
   const nutrientDetails = ["탄수화물", "단백질", "지방", "kcal"];

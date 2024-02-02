@@ -24,6 +24,7 @@ function Signup() {
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [passwordLength, setPasswordLength] = useState(null);
   const [isDuplicate, setIsDuplicate] = useState(null);
+  const [isValidEmail, setIsValidEmail] = useState(null);
 
   const [memberInfo, setMemberInfo] = useState({
     email: "",
@@ -101,17 +102,47 @@ function Signup() {
         birthday: formattedDate,
       }));
     }
+
+    if (name === "email") {
+      const emailRegex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+      const isValidEmailFormat = emailRegex.test(value);
+      setIsValidEmail(isValidEmailFormat);
+
+      if (!isValidEmailFormat) {
+        setIsDuplicate(null);
+      }
+    }
+
   };
+
+  const allowedFileTypes = ["image/jpg","image/jpeg", "image/png", "image/gif"];
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setMemberInfo((prevInfo) => ({
-      ...prevInfo,
-      profileImage: file,
-    }));
+  
+    if (file && allowedFileTypes.includes(file.type)) {
+      setMemberInfo((prevInfo) => ({
+        ...prevInfo,
+        profileImage: file,
+      }));
+
+    } else {
+      e.target.value = null;
+    }
   };
+
   const handleCheckDuplicated = async (e) => {
     e.preventDefault();
+
+    if (!isValidEmail) {
+      return;
+    }
+
+    if (!isValidEmail) {
+      setIsDuplicate(false);
+      return;
+    }
+
 
     try {
       const response = await axios.get(
@@ -192,14 +223,20 @@ function Signup() {
               </Button>
             </InputGroup>
             <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>
-              {isDuplicate !== null && (
-                <p style={{ color: isDuplicate ? "red" : "blue" }}>
+              {isValidEmail !== null && !isValidEmail && (
+                <div style={{ color: "red" }}>이메일 형식이 올바르지 않습니다.</div>
+              )}
+            
+            
+              {isDuplicate !== null && isValidEmail && (
+                <div style={{ color: isDuplicate ? "red" : "blue" }}>
                   {isDuplicate
                     ? "이 아이디는 사용중인 아이디입니다."
                     : "이 아이디는 사용가능한 아이디 입니다."}
-                </p>
+                </div>
               )}
-            </InputGroup>
+              </InputGroup>
+           
             <InputGroup className="mb-3">
               <Form.Label column sm="3">
                 비밀번호
@@ -422,7 +459,7 @@ function Signup() {
 
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>프로필 이미지</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} />
+              <Form.Control type="file" accept="image/png, image/jpeg, image/gif" onChange={handleImageChange} />
             </Form.Group>
             <div className="text-center">
               <Button variant="success" type="submit">

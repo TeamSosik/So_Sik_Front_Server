@@ -35,15 +35,17 @@
 .modal-content button {
   font-size: 18px;
 }
+
 .modal-content table {
-  margin-bottom: 50px;
   margin-left: 8%;
+  margin-bottom: 3rem;
   width: 84%;
   font-size: 18px;
 }
 
 .modal-search {
   text-align: center;
+  margin-bottom: 0.4rem !important;
 }
 
 .registrationBtn {
