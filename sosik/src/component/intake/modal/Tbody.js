@@ -46,9 +46,18 @@ const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
 
   // 섭취 음식 등록
   const handleIntakeRegistrationBtnClick = async (e) => {
+    
     if (isNaN(foodAmount.foodAmount)) {
       alert("숫자를 입력해주세요");
+      return;
     }
+
+    if(foodAmount.foodAmount <= 0) {
+      const message = "섭취량을 입력해주세요";
+      alert(message);
+      return;
+    }
+
     const brand = data.manufacturer;
     const calculationCarbo = (data.carbo * foodAmount.foodAmount) / 100;
     const calculationProtein = (data.protein * foodAmount.foodAmount) / 100;
@@ -110,7 +119,10 @@ const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
 
   // 처음 시작
   useEffect(() => {
+
     init();
+
+    return init();
   }, [data]);
 
   return (
