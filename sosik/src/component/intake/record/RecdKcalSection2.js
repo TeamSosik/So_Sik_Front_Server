@@ -85,8 +85,6 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
 
   // view
 
-  const nutrientStandardView = "(1인분 / 100g기준)";
-
   const nutrientDetailsView = nutrientDetails.map((data, index) => {
     return <div className="nutrient-name">{data}</div>;
   });
@@ -135,6 +133,9 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
   );
 
   const mealListView = mealList.map((data, index) => {
+
+    const unit = "g";
+    const nutrientStandardView = `(섭취량 / ${data.foodAmount}${unit})`;
 
     return (
       <div key={index} className="meal">
