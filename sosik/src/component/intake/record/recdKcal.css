@@ -82,10 +82,12 @@
 }
 
 .recd-kcal-section2 .meal-title,
+.recd-kcal-section3 .recommended-intake-title,
 .recd-kcal-section3 .total-intake-title {
   font-size: 30px;
   font-weight: 900;
-  margin-bottom: 20px;
+  margin-top: 1rem;
+  margin-bottom: 1.7rem;
 }
 
 .recd-kcal-section2 .meal-content {
@@ -101,56 +103,40 @@
 
 .recd-kcal-section2 .meal-content .meal {
   width: 1200px;
-  height: 90px;
   text-align: center;
-  margin-top: 40px;
-  padding: 20px;
+  margin-top: 20px;
+  padding: 16px;
   border-radius: 37px;
   background: #fff;
 }
 
-.recd-kcal-section2 .meal-content .meal .meal-name {
-  /* display: flex; */
-  /* align-items: center; */
-  /* 요소를 수직 가운데 정렬 */
-  /* justify-content: center; */
-  /* 요소를 수평 가운데 정렬 */
+.recd-kcal-section2 .meal-content .meal-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 0.1rem;
+}
 
+.recd-kcal-section2 .meal-content .meal-intake {
+  color: #59bd82;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.recd-kcal-section2 .meal-content .meal .meal-info {
   float: left;
   width: 30%;
-  /* height: 90px; */
-
-  /* text-align: center; */
-  /* margin-top: 40px;
-    margin-bottom: 40px;
-    padding: 20px;
-    border-radius: 37px;
-    background: #FFF; */
 }
 
 .recd-kcal-section2 .meal-content .meal .nutrient {
-  /* display: flex; */
-  /* align-items: center; */
-  /* 요소를 수직 가운데 정렬 */
-  /* justify-content: center; */
-  /* 요소를 수평 가운데 정렬 */
-
   float: left;
   width: 60%;
-  /* height: 90px; */
-  /* text-align: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    padding: 20px;
-    border-radius: 37px;
-    background: #FFF; */
 }
 
 .recd-kcal-section2 .meal-content .meal .meal-delete {
   float: left;
   width: 10%;
-  /* margin 말고 크기 변화에 따른 자동 위치 전환이 필요합니다. */
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 
 .recd-kcal-section2 .meal-content .meal .meal-delete .meal-delete-icon {
@@ -159,25 +145,21 @@
 
 .recd-kcal-section2 .meal-content .meal .nutrient .nutrient-detail,
 .recd-kcal-section2 .meal-content .meal .nutrient .nutrient-gram {
-  /* display: flex; */
-  /* align-items: center; */
-  /* 요소를 수직 가운데 정렬 */
-  /* justify-content: center; */
-  /* 요소를 수평 가운데 정렬 */
-
   display: flex;
   width: 100%;
-  /* height: 90px; */
-  /* text-align: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    padding: 20px;
-    border-radius: 37px;
-    background: #FFF; */
 }
 
-.nutrient-name,
+.nutrient-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 0.1rem;
+  width: 100%;
+}
+
 .nutrient-data {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #59bd82;
   width: 100%;
 }
 
@@ -189,44 +171,48 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  flex-shrink: 0;
   font-family: "SUITE-Regular";
   text-align: center;
   margin: 0 auto;
-  padding-bottom: 100px;
+}
+
+.recd-kcal-section3 .recommended-intake-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 5rem;
 }
 
 .recd-kcal-section3 .total-intake-content {
   display: flex;
   flex-wrap: wrap;
-  /* 요소들이 넘칠 경우 여러 줄로 표시되도록 설정 */
   justify-content: center;
-  /* 수평 가운데 정렬 */
   margin: 0 auto;
-  /* 수평 가운데 정렬 */
+  margin-bottom: 200px;
 }
 
+.recd-kcal-section3 .recommended-intake,
 .recd-kcal-section3 .total-intake {
   align-items: center;
-  /* 요소를 수직 가운데 정렬 */
   justify-content: center;
-  /* 요소를 수평 가운데 정렬 */
   text-align: center;
   width: 240px;
   margin: 10px;
-  margin-top: 40px;
   padding: 20px;
   border-radius: 37px;
   background: #fff;
   box-shadow: 0px 0px 17.2px -5px #59bd82;
 }
 
+.recd-kcal-section3 .recommended-intake-name1,
 .recd-kcal-section3 .total-intake .total-intake-name1 {
   font-size: 27px;
   font-weight: 900;
   margin-bottom: 0;
 }
 
+.recd-kcal-section3 .recommended-intake-name2,
 .recd-kcal-section3 .total-intake .total-intake-name2 {
   color: #59bd82;
   font-size: 27px;
@@ -247,7 +233,7 @@
   text-align: center;
   margin: 0 auto;
   margin-top: 80px;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .recd-kcal-section4 .total-intake-content {
@@ -284,16 +270,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* 요소를 수직 가운데 정렬 */
   justify-content: center;
-
   width: 160px;
   padding: 5px;
   margin-right: 15px;
   box-sizing: border-box;
   border-radius: 20px;
   background: #59bd82;
-  box-shadow: 0px 0px 17.2px -5px #59bd82;
 }
 
 .recd-kcal-section4 .total-intake .total-intake-name1 {
