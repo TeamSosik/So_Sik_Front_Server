@@ -23,7 +23,7 @@ import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js";
 import FreeBoardUpdate from "../../community/freeboard/FreeBoardUpdate.js";
 import Error404 from "../error/Error404.js"
-import PrivateRoute from "../auth/PrivateRoute.js";
+import RequireAuth from "../auth/RequireAuth.js";
 
 export const HeaderContext = createContext();
 
@@ -31,7 +31,6 @@ const Header = () => {
   
   const [logout, setlogout] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  console.log(isAuthenticated);
 
   useEffect(() => {
     const access = window.sessionStorage.getItem("accesstoken");
@@ -143,26 +142,32 @@ const Header = () => {
 
       <HeaderContext.Provider value={{ setlogout, changeIsAuthenticated, isAuthenticated }}>
         <Routes>
-          <Route path="/feed" element={<Feed />} />
-          <Route path="/login" element={<Login />} />
+
           <Route path="/mainpage" element={<Mainpage props={logout} />} />
+          
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/findPw" element={<FindPw />} />
+          <Route path="/updateinfo" element={<RequireAuth><UpdateInfo /></RequireAuth>} />
+          <Route path="/snsInfo" element={<SnsInfo />} />
+          <Route path="/redirection" element={<RedirectionKakao />} />
+
+          <Route path="/mypage" element={<RequireAuth><MyPage /></RequireAuth>} />
+          <Route path="/recdkcal" element={<RequireAuth><RecdKcal /></RequireAuth>} />
+          <Route path="/recdanly" element={<RequireAuth><RecdAnly /></RequireAuth>} />
 
           <Route path="/foodsearch" element={<FoodSearch />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/mypage" element={isAuthenticated ? <MyPage /> : <Login />} />
-          <Route path="/recdkcal" element={isAuthenticated ? <RecdKcal /> : <Login />} />
-          <Route path="/recdanly" element={isAuthenticated ? <RecdAnly /> : <Login />} />
-          <Route path="/updateinfo" element={isAuthenticated ? <UpdateInfo /> : <Login />} />
           <Route path="/food/:id" element={<FoodDetail />} />
-          <Route path="/redirection" element={<RedirectionKakao />} />
-          <Route path="/findPw" element={isAuthenticated ? <FindPw /> : <Login />} />
-          <Route path="/snsInfo" element={<SnsInfo />} />
 
           <Route path="/freeboard" element={<FreeBoard />} />
-          <Route path="/freeboardwrite" element={isAuthenticated ? <FreeBoardWrite /> : <Login />} />
           <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
-          <Route path="/freeboardupdate/:id" element={isAuthenticated ? <FreeBoardUpdate /> : <Login />} />
+          <Route path="/freeboardwrite" element={<RequireAuth><FreeBoardWrite /></RequireAuth>} />
+          <Route path="/freeboardupdate/:id" element={<RequireAuth><FreeBoardUpdate /></RequireAuth>} />
+          
+          <Route path="/feed" element={<Feed />} />
+
           <Route path="*" element={<Error404 />} />
+
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>

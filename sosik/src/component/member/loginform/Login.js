@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
@@ -20,6 +20,7 @@ function Login() {
     email: "",
     password: "",
   });
+  const location = useLocation();
 
   const [error, setError] = useState("");
   const [isMemoryEmailCheck, setIsMemoryEmailCheck] = useState(() => {
@@ -35,7 +36,7 @@ function Login() {
     window.location.href = linkForKakao;
   };
   const navigate = useNavigate();
-  const { setlogout, changeIsAuthenticated } = useContext(HeaderContext); // heaer context
+  const { setlogout } = useContext(HeaderContext); // heaer context
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -72,16 +73,23 @@ function Login() {
             })
             .then(function (res) {
               window.sessionStorage.setItem("member", JSON.stringify(res.data));
+              
+              // 위치 이동
+              if(location.state) {
+                const {pathname} = location.state.data;
+                console.log("hihihi");
+                console.log(pathname);
+                navigate(pathname);
+                return;
+              }
+
               navigate("/mainpage"); //리다이렉트
             })
             .catch(function (error) {
               console.error("", error); // 오류 처리
             });
-
+          
           setlogout(false);
-          // changeIsAuthenticated(true);
-
-          navigate("/mainpage"); //리다이렉트
         });
     } catch (error) {
       console.error("로그인 실패:", error);
