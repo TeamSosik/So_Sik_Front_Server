@@ -95,7 +95,7 @@ const Header = () => {
             마이페이지
           </Link>
           <Link
-            to="/mainpage"
+            to="/"
             style={{ marginRight: "30px" }}
             onClick={handleLogout}
           >
@@ -119,7 +119,7 @@ const Header = () => {
   return (
     <BrowserRouter>
       <header id="header" className="nav-down">
-        <Link to="/mainpage" className="logo">
+        <Link to="/" className="logo">
           <img src={logo} alt="Logo" />
         </Link>
         <nav id="gnb">
@@ -143,7 +143,7 @@ const Header = () => {
       <HeaderContext.Provider value={{ setlogout, changeIsAuthenticated, isAuthenticated }}>
         <Routes>
 
-          <Route path="/mainpage" element={<Mainpage props={logout} />} />
+          <Route path="/" element={<Mainpage props={logout} />} />
           
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

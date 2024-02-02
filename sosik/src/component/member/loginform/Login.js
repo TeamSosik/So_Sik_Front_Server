@@ -83,7 +83,7 @@ function Login() {
                 return;
               }
 
-              navigate("/mainpage"); //리다이렉트
+              navigate("/"); //리다이렉트
             })
             .catch(function (error) {
               console.error("", error); // 오류 처리

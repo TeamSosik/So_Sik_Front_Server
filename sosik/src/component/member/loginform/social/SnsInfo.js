@@ -118,7 +118,7 @@ function SnsInfo() {
     })
     .then(function (res) {
       window.sessionStorage.setItem("member",JSON.stringify(res.data));
-      navigate("/mainpage"); //리다이렉트
+      navigate("/"); //리다이렉트
       
     })
     .catch (function(error) {
