@@ -1,36 +1,31 @@
 .loginbutton {
   margin-bottom: 10px;
-  text-align: center;
   width: 100%;
-  background-color: #59bd82;
-  border: none;
+  height: 2.8rem;
+  background-color: #59bd82 !important;
+  border: none !important;
   margin-top: 3%;
 }
+
 .loginForm {
   margin-top: 42%;
   margin-bottom: 12%;
 }
+
 .snsloginbutton {
   height: 35px;
-  margin-bottom: 10px;
-  /* margin-left: 5px; */
-  margin-top: 10px;
-  margin-right: 5px;
+  margin: auto;
 }
 
 .logindiv1 {
   display: block;
   margin: auto;
-  width: 150px;
-}
-
-.loginfont {
-  font-size: 13px;
 }
 
 .loginfont2 {
-  font-size: 13px;
   text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .logininputdiv {
@@ -40,6 +35,7 @@
 .loginfont2 a {
   color: black;
   text-decoration: none;
+  margin-top: 1rem;
 }
 
 .loginfont2 a:hover {
@@ -47,8 +43,15 @@
 }
 
 .logincontainer {
-  margin-top: 7%;
-  margin-bottom: 7.3%;
+  margin-top: 200px;
+  margin-bottom: 80px;
+}
+
+.email,
+.password {
+  margin-bottom: 0.5rem;
+  width: 100%;
+  height: 2.8rem;
 }
 
 .logincontainer2 {
@@ -60,4 +63,79 @@
   font-size: 12px;
   color: rgb(255, 52, 52);
   margin: 5px;
+}
+
+.hr-block {
+  margin-top: 2.4rem;
+}
+
+.hr-block__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #737373;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.hr-block__title::before,
+.hr-block__title::after {
+  content: "";
+  display: block;
+  width: 40%;
+  height: 1px;
+  border-bottom: 1px solid #ccc;
+}
+
+.hr-block__title::before {
+  margin-right: 2rem;
+}
+
+.hr-block__title::after {
+  margin-left: 2rem;
+}
+
+.hr-block__title+.btn {
+  margin-top: 2rem;
+}
+
+.btn--kakao-talk::before {
+  content: "";
+  font-size: 12px;
+  width: 2em;
+  height: 2em;
+  margin-right: .75em;
+  background-repeat: no-repeat;
+  background-image: url(../../../images/kakao-talk.svg);
+  background-size: 100%;
+}
+
+.btn--kakao-talk.btn {
+  background-color: #fee500 !important;
+  color: #424242 !important;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 2.8rem;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  vertical-align: middle;
+  transition: all 0.2s ease-out;
+  white-space: nowrap;
+}
+
+.no-touchevents .btn--kakao-talk:hover,
+.no-touchevents .btn--kakao-talk:focus {
+  color: #0a0a0a !important;
+  background-color: #fee500 !important;
 }

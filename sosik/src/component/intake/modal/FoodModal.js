@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import "./foodModal.css";
-
 import { Button, Form, InputGroup, Pagination } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -136,7 +135,7 @@ const FoodModal = ({ modalBtn }) => {
       setLoading(false);
 
       return response;
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const headerCellStyle = {
@@ -195,7 +194,7 @@ const FoodModal = ({ modalBtn }) => {
       });
 
       return response;
-    } catch (e) {}
+    } catch (e) { }
   };
 
   return (
@@ -223,13 +222,13 @@ const FoodModal = ({ modalBtn }) => {
             >
               X
             </button>
-            <p style={{ fontWeight: "bolder", color: "#59bd82" }}>음식 검색</p>
+            <p style={{ fontWeight: "bolder", color: "#59bd82", marginBottom: "0" }}>음식 검색</p>
 
-            <span style={{ fontSize: "14px" }}>
+            <span style={{ fontSize: "14px", marginBottom: "2rem" }}>
               * 모든 음식은 100g/ 100ml 기준입니다.
             </span>
             <InputGroup
-              className="mb-3"
+              className="mb-3 modal-search"
               style={{ marginLeft: "8%", width: "85%" }}
             >
               <Form.Control
@@ -267,7 +266,7 @@ const FoodModal = ({ modalBtn }) => {
                       <th
                         style={
                           (headerCellStyle,
-                          { marginLeft: "10%", textAlign: "right" })
+                            { marginLeft: "10%", textAlign: "right" })
                         }
                       >
                         g/ml

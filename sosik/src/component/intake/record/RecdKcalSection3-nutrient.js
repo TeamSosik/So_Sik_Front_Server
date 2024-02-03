@@ -36,15 +36,13 @@ const RecdKcalSection3_nutrient = ({ props }) => {
           setNutrientRatio((nutrientRatio) => ({
             ...nutrientRatio,
             carbohydrate:
-              Math.floor((response.data.result.dayTargetKcal / 10) * 100) / 100,
+              Math.floor((response.data.result.dayTargetKcal / 8) * 100) / 100,
             protein:
               Math.floor(
                 ((response.data.result.dayTargetKcal * 3) / 40) * 100
               ) / 100,
             province:
-              Math.floor(
-                ((response.data.result.dayTargetKcal * 3) / 90) * 100
-              ) / 100,
+              Math.floor((response.data.result.dayTargetKcal / 45) * 100) / 100,
             dayTargetKcal: response.data.result.dayTargetKcal,
           }));
         }
@@ -66,9 +64,9 @@ const RecdKcalSection3_nutrient = ({ props }) => {
 
   const totalIntakeView = nutrientDetails.map((data, index) => {
     return (
-      <div key={index} className="total-intake">
-        <p className="total-intake-name1">{data}</p>
-        <p className="total-intake-name2">{nutrientRatio[index]}</p>
+      <div key={index} className="recommended-intake">
+        <p className="recommended-intake-name1">{data}</p>
+        <p className="recommended-intake-name2">{nutrientRatio[index]}</p>
       </div>
     );
   });
@@ -76,24 +74,24 @@ const RecdKcalSection3_nutrient = ({ props }) => {
   return (
     <div>
       <div className="recd-kcal-section3">
-        <div className="total-intake-title">{totalIntakeTitleView}</div>
+        <div className="recommended-intake-title">{totalIntakeTitleView}</div>
 
-        <div className="total-intake-content">
-          <div className="total-intake">
-            <p className="total-intake-name1">{nutrientDetails[0]}</p>
-            <p className="total-intake-name2">{nutrientRatio.carbohydrate}</p>
+        <div className="recommended-intake-content">
+          <div className="recommended-intake">
+            <p className="recommended-intake-name1">{nutrientDetails[0]}</p>
+            <p className="recommended-intake-name2">{nutrientRatio.carbohydrate}</p>
           </div>
-          <div className="total-intake">
-            <p className="total-intake-name1">{nutrientDetails[1]}</p>
-            <p className="total-intake-name2">{nutrientRatio.protein}</p>
+          <div className="recommended-intake">
+            <p className="recommended-intake-name1">{nutrientDetails[1]}</p>
+            <p className="recommended-intake-name2">{nutrientRatio.protein}</p>
           </div>
-          <div className="total-intake">
-            <p className="total-intake-name1">{nutrientDetails[2]}</p>
-            <p className="total-intake-name2">{nutrientRatio.province}</p>
+          <div className="recommended-intake">
+            <p className="recommended-intake-name1">{nutrientDetails[2]}</p>
+            <p className="recommended-intake-name2">{nutrientRatio.province}</p>
           </div>
-          <div className="total-intake">
-            <p className="total-intake-name1">{nutrientDetails[3]}</p>
-            <p className="total-intake-name2">{nutrientRatio.dayTargetKcal}</p>
+          <div className="recommended-intake">
+            <p className="recommended-intake-name1">{nutrientDetails[3]}</p>
+            <p className="recommended-intake-name2">{nutrientRatio.dayTargetKcal}</p>
           </div>
         </div>
       </div>
