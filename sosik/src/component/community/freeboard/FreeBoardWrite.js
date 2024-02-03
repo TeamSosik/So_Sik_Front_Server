@@ -106,6 +106,20 @@ const FreeBoardWrite = () => {
     }
   };
 
+  // view
+  
+  const IntakeBtnBoxView = (
+
+    <div className='intake-btn-box'>
+      <div className='intake-btn'>
+        섭취음식
+      </div>
+      <div className='intake-btn'>
+        불러오기
+      </div>
+    </div>
+  );
+
   return (
     <div className="writeBox">
       <div className="title">
@@ -139,6 +153,8 @@ const FreeBoardWrite = () => {
           <strong>작성</strong>
         </Button>
       </div>
+
+      {IntakeBtnBoxView}      
     </div>
   );
 };
