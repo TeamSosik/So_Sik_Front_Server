@@ -27,3 +27,29 @@
     border-color: transparent; 
   }
 }
+
+.intake-btn-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #59BD82;
+  position: fixed;
+  top: 30%;
+  right: 13%;
+}
+
+.intake-btn-box:hover {
+  box-shadow: 0px 0px 10px 5px #0000004D;
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+.intake-btn-box .intake-btn {
+  color: #fff;
+  font-size: 14px;
+}
