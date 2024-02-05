@@ -158,9 +158,9 @@ function Signup() {
         ...prevInfo,
         profileImage: file,
       }));
-      formFileImageBoxRef.current.classList.toggle("view-show");
-      fileLabel.current.classList.toggle("view-show");
-      formFileBoxRef.current.classList.toggle("form-file-box");
+      formFileImageBoxRef.current.classList.remove("view-show");
+      fileLabel.current.classList.add("view-show");
+      formFileBoxRef.current.classList.add("form-file-box");
 
     } else {
 
@@ -172,7 +172,11 @@ function Signup() {
 
       alert(`${textFileTypes} 파일만 사용 가능합니다.`);
       e.target.value = null;
-      
+      setMemberInfo((prevInfo) => ({
+        ...prevInfo,
+        profileImage: "",
+      }));
+
       formFileImageBoxRef.current.classList.toggle("view-show");
       fileLabel.current.classList.toggle("view-show");
       formFileBoxRef.current.classList.toggle("form-file-box");
@@ -247,8 +251,6 @@ function Signup() {
   const days = GenerateOptions(1, 31);
 
   useEffect(() => {
-    // 파일 image box 처음 설정
-    console.log(formFileImageBoxRef.current);
     formFileImageBoxRef.current.classList.toggle('view-show');
   }, []);
 
