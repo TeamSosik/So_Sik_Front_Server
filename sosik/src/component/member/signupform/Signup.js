@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./signup.css"
 import {
   Form,
   Row,
@@ -20,11 +21,23 @@ import ValidationForm from "./ValidationForm";
 import TdeeCalFunction from "./TdeeCalFunction";
 
 function Signup() {
+  
   const navigate = useNavigate();
+  const defaultValidNumber = {
+    isCurrentWeight: null,
+    isTargetWeight: null,
+    isHeight: null
+  }
+
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [passwordLength, setPasswordLength] = useState(null);
   const [isDuplicate, setIsDuplicate] = useState(null);
   const [isValidEmail, setIsValidEmail] = useState(null);
+  const [isValidNumber, setIsValidNumber] = useState(defaultValidNumber);
+  const fileRef = useRef();
+  const formFileImageBoxRef = useRef();
+  const fileLabel = useRef();
+  const formFileBoxRef = useRef();
 
   const [memberInfo, setMemberInfo] = useState({
     email: "",
@@ -112,27 +125,63 @@ function Signup() {
         setIsDuplicate(null);
       }
     }
-
   };
+
+  const handleImportantNumberBlur = (e) => {
+
+    const {value} = e.target;
+    console.log("hahahah");
+    console.log(value);
+
+    if(isNaN(value)) {
+      alert("숫자만 입력가능합니다.");;
+    } 
+  }
 
   const allowedFileTypes = ["image/jpg","image/jpeg", "image/png", "image/gif"];
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    console.log(file);
   
     if (file && allowedFileTypes.includes(file.type)) {
+
+      // 이미지 확인
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        console.log(fileRef.current);
+        fileRef.current.src = e.target.result;
+      }
+      fileReader.readAsDataURL(file);
+      
       setMemberInfo((prevInfo) => ({
         ...prevInfo,
         profileImage: file,
       }));
+      formFileImageBoxRef.current.classList.toggle("view-show");
+      fileLabel.current.classList.toggle("view-show");
+      formFileBoxRef.current.classList.toggle("form-file-box");
 
     } else {
+
+      const fileTypes = allowedFileTypes.map((fileType) => {
+        const a = fileType.split("/")[1];
+        return a;
+      });
+      const textFileTypes = fileTypes.join(", ");
+
+      alert(`${textFileTypes} 파일만 사용 가능합니다.`);
       e.target.value = null;
+      
+      formFileImageBoxRef.current.classList.toggle("view-show");
+      fileLabel.current.classList.toggle("view-show");
+      formFileBoxRef.current.classList.toggle("form-file-box");
     }
   };
 
   const handleCheckDuplicated = async (e) => {
     e.preventDefault();
+
 
     if (!isValidEmail) {
       return;
@@ -145,6 +194,7 @@ function Signup() {
 
 
     try {
+      
       const response = await axios.get(
         "http://localhost:5056/members/v1/validation/" + memberInfo.email
       );
@@ -196,6 +246,12 @@ function Signup() {
   const months = GenerateOptions(1, 12);
   const days = GenerateOptions(1, 31);
 
+  useEffect(() => {
+    // 파일 image box 처음 설정
+    console.log(formFileImageBoxRef.current);
+    formFileImageBoxRef.current.classList.toggle('view-show');
+  }, []);
+
   return (
     <Container style={{ marginTop: "150px", marginBottom: "100px" }}>
       <Row>
@@ -235,7 +291,7 @@ function Signup() {
                     : "이 아이디는 사용가능한 아이디 입니다."}
                 </div>
               )}
-              </InputGroup>
+            </InputGroup>
            
             <InputGroup className="mb-3">
               <Form.Label column sm="3">
@@ -292,7 +348,7 @@ function Signup() {
               />
             </InputGroup>
 
-            <div key={`inline-${"radio"}`} className="mb-3">
+            <div key={`inline-${"radio"}-a`} className="mb-3">
               <Form.Label column sm="3">
                 성별
               </Form.Label>
@@ -360,6 +416,13 @@ function Signup() {
               />
               <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
             </InputGroup>
+            <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>       
+              <div
+                style={{ color: "red", paddingTop: "5px"}}
+              >
+                {isNaN(memberInfo.currentWeight) ? "숫자를 입력해주세요" : ""}
+              </div>
+            </InputGroup>
 
             <InputGroup className="mb-3">
               <Form.Label column sm="3">
@@ -372,6 +435,13 @@ function Signup() {
               />
               <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
             </InputGroup>
+            <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>       
+              <div
+                style={{ color: "red", paddingTop: "5px"}}
+              >
+                {isNaN(memberInfo.targetWeight) ? "숫자를 입력해주세요" : ""}
+              </div>
+            </InputGroup>
 
             <InputGroup className="mb-3">
               <Form.Label column sm="3">
@@ -383,6 +453,13 @@ function Signup() {
                 onChange={handleInputChange}
               />
               <InputGroup.Text id="basic-addon2">cm</InputGroup.Text>
+            </InputGroup>
+            <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>       
+              <div
+                style={{ color: "red", paddingTop: "5px"}}
+              >
+                {isNaN(memberInfo.height) ? "숫자를 입력해주세요" : ""}
+              </div>
             </InputGroup>
 
             <div key={`inline-${"radio"}`} className="mb-3">
@@ -457,15 +534,27 @@ function Signup() {
               />
             </InputGroup>
 
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>프로필 이미지</Form.Label>
-              <Form.Control type="file" accept="image/png, image/jpeg, image/gif" onChange={handleImageChange} />
+            <Form.Group controlId="formFile" className="mb-3 file-box">
+
+              <div ref={formFileImageBoxRef} className="form-file-image-box">
+                <img ref={fileRef} />
+              </div>
+
+              <div ref={formFileBoxRef}>
+                <Form.Label ref={fileLabel}>프로필 이미지</Form.Label>
+                <Form.Control type="file" accept="image/jpg, image/png, image/jpeg, image/gif" onChange={handleImageChange} />
+              </div>
+
             </Form.Group>
-            <div className="text-center">
-              <Button variant="success" type="submit">
-                가입하기
-              </Button>
-            </div>
+
+            <Form.Group >
+              <div className="text-center submit-box">
+                <Button variant="success" type="submit">
+                  가입하기
+                </Button>
+              </div>
+            </Form.Group>
+
           </Form>
         </Col>
         <Col> </Col>

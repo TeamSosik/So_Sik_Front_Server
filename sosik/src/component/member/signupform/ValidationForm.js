@@ -51,6 +51,21 @@ const ValidationForm = (memberInfo, isDuplicate) => {
     return false;
   }
 
+  if(isNaN(currentWeight)) {
+    alert("현재체중은 숫자만 입력 가능합니다.");
+    return false;
+  }
+
+  if(isNaN(targetWeight)) {
+    alert("목표체중은 숫자만 입력 가능합니다.");
+    return false;
+  }
+
+  if(isNaN(height)) {
+    alert("신장은 숫자만 입력 가능합니다.");
+    return false;
+  }
+
   return true;
 };
 export default ValidationForm;
