@@ -10,13 +10,16 @@ import "./freeBoardwrite.css";
 const FreeBoardWrite = () => {
 
   const toolbarOptions = [
-    [{ header: [1, 2, 3, 4, 5, false] }, { size: ["small", false, "large", "huge"] }],
+    [
+      { header: [1, 2, 3, 4, 5, false] },
+      { size: ["small", false, "large", "huge"] },
+    ],
     ["bold", "italic", "underline", "strike"],
     ["blockquote"],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ color: [] }, { background: [] }],
     [{ align: [] }, { indent: "-1" }, { indent: "+1" }],
-    ["link", "image", "video"],
+    ["link", "image", "video"]
   ];
 
   const formats = [
@@ -36,8 +39,7 @@ const FreeBoardWrite = () => {
     "color",
     "link",
     "image",
-    "video",
-    "width",
+    "video"
   ];
 
   Quill.register("modules/imageResize", ImageResize);
@@ -56,6 +58,9 @@ const FreeBoardWrite = () => {
   const [contentError, setContentError] = useState(false);
   const navigate = useNavigate();
 
+  const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+  const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+
   const handleBoardChange = (e) => {
     const { name, value } = e.target;
     setBoard((prevBoard) => ({
@@ -65,6 +70,7 @@ const FreeBoardWrite = () => {
   };
 
   const handleContentChange = (content) => {
+    console.log(content)
     setBoard((prevBoard) => ({
       ...prevBoard,
       content: content
@@ -72,6 +78,7 @@ const FreeBoardWrite = () => {
   };
 
   const handleCreateBoardClick = async () => {
+
     if (board.title.trim() === "") {
       setTitleError(true);
       return;
@@ -85,9 +92,6 @@ const FreeBoardWrite = () => {
     } else {
       setContentError(false);
     }
-
-    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
-    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
     try {
       const response = await axios.post(
@@ -112,9 +116,104 @@ const FreeBoardWrite = () => {
       alert("게시글 등록에 실패 하였습니다. 다시 시도해주세요.");
     }
   };
+  
+
+  const handleIntakeFoodClick = async () => {
+    try {
+      const today = getFormattedDate();
+      const response = await axios.get(
+        "http://localhost:5056/intake/v1/" + today,
+        {
+          headers: {
+            authorization: authorization,
+            refreshToken: refreshToken,
+          },
+        }
+      );
+
+      const serverData = response.data.result;
+      console.log(response.data.result);
+
+      let isMorningRendered = false;
+      let isLunchRendered = false;
+      let isDinnerRendered = false;
+      let isSnacksRendered = false;
+      let totalKcal = 0;
+
+      serverData.sort((a, b) => {
+        const order = ['BREAKFAST', 'LUNCH', 'DINNER', 'SNACKS'];
+        return order.indexOf(a.category) - order.indexOf(b.category);
+      });
+
+      if (Array.isArray(serverData)) {
+        const tableRows = serverData.map((item, index) => {
+          let categoryTag = '';
+
+          switch (item.category) {
+            case 'BREAKFAST':
+              if (!isMorningRendered) {
+                isMorningRendered = true;
+                categoryTag = '<br/><div><strong ><아침></strong></div>';
+              }
+              break;
+            case 'LUNCH':
+              if (!isLunchRendered) {
+                isLunchRendered = true;
+                categoryTag = '<br/><div><strong><점심></strong></div>';
+              }
+              break;
+            case 'DINNER':
+              if (!isDinnerRendered) {
+                isDinnerRendered = true;
+                categoryTag = '<br/><div><strong><저녁></strong></div>';
+              }
+              break;
+            case 'SNACKS':
+              if (!isSnacksRendered) {
+                isSnacksRendered = true;
+                categoryTag = '<br/><div><strong><간식></strong></div>';
+              }
+              break;
+            default:
+              return null;
+          }
+          totalKcal += item.calculationKcal;
+          const last = index !== serverData.length - 1 ? '' : `<br/><div style="text-align: left;"><h2>[총 칼로리] ${totalKcal}Kcal</h></div>`;
+
+          return (
+            `
+            ${categoryTag}
+            <li key=${item.id}>
+              <strong>${item.name}</strong> -
+              <span>${item.foodAmount}g(ml)</span> /
+              <span>${item.calculationKcal}Kcal</span>
+            </li>${last}`
+          );
+        });
+
+        const todayMenu = '<div style="text-align: left;"><h2>[오늘의 식단]</h2></div>';
+
+        setBoard((prevBoard) => ({
+          ...prevBoard,
+          content: todayMenu + tableRows.join('') + prevBoard.content
+        }));
+        console.log(board.content);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getFormattedDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   const IntakeBtnBoxView = (
-    <div className='intake-btn-box'>
+    <div className='intake-btn-box' onClick={handleIntakeFoodClick}>
       <div className='intake-btn'>
         섭취음식
       </div>
@@ -178,7 +277,6 @@ const FreeBoardWrite = () => {
           <strong>취소</strong>
         </Button>
       </div>
-
       {IntakeBtnBoxView}
     </div>
   );
