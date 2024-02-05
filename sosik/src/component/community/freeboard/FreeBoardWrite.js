@@ -1,24 +1,23 @@
 import React, { useState } from "react";
-import ReactQuill, {Quill} from "react-quill";
-import "./freeBoardwrite.css";
+import ReactQuill, { Quill } from "react-quill";
+import ImageResize from "quill-image-resize-module-react";
+import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import "react-quill/dist/quill.snow.css";
-import ImageResize from "quill-image-resize-module-react";
-import { useNavigate } from "react-router-dom";
+import "./freeBoardwrite.css";
 
 const FreeBoardWrite = () => {
 
   const toolbarOptions = [
-    
-    [{ header: [1, 2, 3, 4, 5, false] }, { size: ["small", false, "large", "huge"]}],
+    [{ header: [1, 2, 3, 4, 5, false] }, { size: ["small", false, "large", "huge"] }],
     ["bold", "italic", "underline", "strike"],
     ["blockquote"],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ color: [] }, { background: [] }],
     [{ align: [] }, { indent: "-1" }, { indent: "+1" }],
     ["link", "image", "video"],
-  ]
+  ];
 
   const formats = [
     "header",
@@ -41,7 +40,6 @@ const FreeBoardWrite = () => {
     "width",
   ];
 
- 
   Quill.register("modules/imageResize", ImageResize);
   const modules = {
     toolbar: {
@@ -49,38 +47,44 @@ const FreeBoardWrite = () => {
     },
     imageResize: {
       parchment: Quill.import("parchment"),
-      modules: ["Resize", "DisplaySize", "Toolbar"],
-    },
+      modules: ["Resize", "DisplaySize", "Toolbar"]
+    }
   };
 
-  const defaultBoard = {
-    title: "",
-  }
-
-  const [board, setBoard] = useState(defaultBoard);
-  const [content, setContent] = useState(defaultBoard);
+  const [board, setBoard] = useState({ title: "", content: "" });
+  const [titleError, setTitleError] = useState(false);
+  const [contentError, setContentError] = useState(false);
   const navigate = useNavigate();
 
-  // title 값이 변할 때 작동합니다.
   const handleBoardChange = (e) => {
-    const {name, value} = e.target;
-    setBoard((current) => {   
-      return {
-        ...current,
-        [name]: value
-      }
-    });
+    const { name, value } = e.target;
+    setBoard((prevBoard) => ({
+      ...prevBoard,
+      [name]: value
+    }));
   };
 
   const handleContentChange = (content) => {
-    setContent(content);
+    setBoard((prevBoard) => ({
+      ...prevBoard,
+      content: content
+    }));
   };
 
   const handleCreateBoardClick = async () => {
-    const data = {
-      title: board.title,
-      content: content
-    };
+    if (board.title.trim() === "") {
+      setTitleError(true);
+      return;
+    } else {
+      setTitleError(false);
+    }
+
+    if (board.content.trim() === "") {
+      setContentError(true);
+      return;
+    } else {
+      setContentError(false);
+    }
 
     const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
@@ -88,17 +92,20 @@ const FreeBoardWrite = () => {
     try {
       const response = await axios.post(
         "http://localhost:5056/post/v1",
-        data,
+        {
+          title: board.title,
+          content: board.content
+        },
         {
           headers: {
             authorization: authorization,
             refreshtoken: refreshToken,
+            "Content-Type": "application/json",
           },
-        }
-      );
+        });
 
       if (response.status === 200) {
-        alert("게시글이 성공적으로 등록되었습니다.")
+        alert("게시글이 성공적으로 등록되었습니다.");
         navigate("/freeboard");
       }
     } catch (error) {
@@ -106,10 +113,7 @@ const FreeBoardWrite = () => {
     }
   };
 
-  // view
-  
   const IntakeBtnBoxView = (
-
     <div className='intake-btn-box'>
       <div className='intake-btn'>
         섭취음식
@@ -120,41 +124,62 @@ const FreeBoardWrite = () => {
     </div>
   );
 
+  const handleNavigate = () => {
+    navigate("/freeboard");
+  };
+
   return (
     <div className="writeBox">
       <div className="title">
-      <Form.Group className="mb-3">
-        <Form.Control
-        type="text"
-        name="title"
-        placeholder="제목을 입력해주세요"
-        onChange={handleBoardChange} />
-      </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="text"
+            name="title"
+            placeholder="제목을 입력해주세요"
+            value={board.title}
+            onChange={handleBoardChange}
+          />
+          {titleError && (
+            <p className="error-message">제목 입력은 필수입니다.</p>
+          )}
+        </Form.Group>
       </div>
 
       <div className="content">
         <ReactQuill
-          style={{height: "600px"}}
+          style={{ height: "600px" }}
           modules={modules}
           formats={formats}
           theme="snow"
-          name="content"
+          value={board.content}
           onChange={handleContentChange}
           placeholder="내용을 입력해주세요."
         />
+        {contentError && (
+          <p className="error-message">내용 입력은 필수입니다.</p>
+        )}
       </div>
 
       <div className="buttonBox">
-       <Button
+        <Button
           variant="outline-light"
           className="rounded-pill writebutton"
           type="button"
-          onClick={handleCreateBoardClick}>
+          onClick={handleCreateBoardClick}
+        >
           <strong>작성</strong>
+        </Button>
+        <Button
+          variant="outline-light"
+          className="rounded-pill cancelbutton"
+          type="button"
+          onClick={handleNavigate}
+        >
+          <strong>취소</strong>
         </Button>
       </div>
 
-      {IntakeBtnBoxView}      
+      {IntakeBtnBoxView}
     </div>
   );
 };
