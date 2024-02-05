@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -13,28 +13,85 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import "../../updatemyinfo/UpdateInfo.css";
-import RenderTooltip from "../../signupform/RenderTooltip";
-import TdeeCalFunction from "../../signupform/TdeeCalFunction";
+import "./UpdateInfo.css";
+import RenderTooltip from "./RenderTooltip";
+import TdeeCalFunction from "./TdeeCalFunction";
+import ValidationForm from "./ValidationForm";
 
-import SelectOptions from "../../signupform/SelectOptions";
-import GenerateOptions from "../../signupform/GenerateOptions";
-
-function SnsInfo() {
-  const navigate = useNavigate();
-  const member = JSON.parse(window.sessionStorage.getItem("member"));
-
-
-  const [memberInfo, setMemberInfo] = useState({
-    currentWeight: 0,
-    targetWeight: 0,
-    height: 0,
-    activityLevel: "",
-    birthday: "",
+function UpdateInfo() {
+  const [users, setUsers] = useState({
+    memberId: "",
+    email: "",
+    name: "",
     gender: "",
+    height: "",
+    role: "",
+    activityLevel: "",
+    nickname: "",
+    profileImage: "",
+    birthday: "",
+    tdeeCalculation: "",
+    weightList: [""],
+  });
+  const getMemberDetail = async () => {
+    const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
+    const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+
+    try {
+      await axios({
+        method: "get",
+        url: "http://localhost:5056/members/v1/detail",
+        headers: {
+          authorization: authorization,
+          refreshToken: refreshToken,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        setUsers(response.data.result);
+        const { weightList, height } = response.data.result;
+        const data = response.data.result;
+        const { currentWeight, targetWeight } =
+          weightList[weightList.length - 1];
+        setMemberInfo({
+          currentWeight: currentWeight,
+          targetWeight: targetWeight,
+          height: height,
+        });
+        // a = {
+        //   ...a,
+        //   currentWeight:
+        //     data.weightList[data.weightList.length - 1].currentWeight,
+        //   targetWeight:
+        //     data.weightList[data.weightList.length - 1].targetWeight,
+        // };
+
+        // setMemberInfo(a);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getMemberDetail();
+  }, []);
+  const navigate = useNavigate();
+  const member = JSON.parse(window.sessionStorage.getItem("member")).result;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+  };
+  const [memberInfo, setMemberInfo] = useState({
+    currentWeight: "",
+    targetWeight: "",
+    height: "",
+    activityLevel: "",
+    gender:"",
     tdeeCalculation: 0,
     profileImage: "", // 사용자가 프로필 이미지를 선택하지 않았을 때를 나타내기 위해서 null로 설정
   });
+  console.log(memberInfo);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setMemberInfo((prevInfo) => ({
@@ -43,87 +100,48 @@ function SnsInfo() {
     }));
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "year" || name === "month" || name === "day") {
-
-      setMemberInfo((prevInfo) => ({
-        ...prevInfo,
-        birthday: {
-          ...prevInfo.birthday,
-          year: prevInfo.birthday.year || "",
-          month: prevInfo.birthday.month || "",
-          day: prevInfo.birthday.day || "",
-          [name]: value,
-        },
-      }));
-    } else {
-      setMemberInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
-    }
-
-    const { year, month, day } = memberInfo.birthday;
-    if (year && month && day) {
-      const formattedDate = `${year}-${month}-${day}`;
-      setMemberInfo((prevInfo) => ({
-        ...prevInfo,
-        birthday: formattedDate,
-      }));
-    }
-  };
-  const years = GenerateOptions(2020, 1900);
-  const months = GenerateOptions(1, 12);
-  const days = GenerateOptions(1, 31);
-
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     memberInfo.tdeeCalculation = TdeeCalFunction(memberInfo, member);
 
     //유효성 검사
+    if (!ValidationForm(memberInfo)) {
+      return;
+    }
     const formData = new FormData();
-    
+
     formData.append("profileImage", memberInfo.profileImage);
 
     const json = JSON.stringify(memberInfo);
     const blob = new Blob([json], {
       type: "application/json",
     });
-    
-    formData.append("enrollMemberOauth", blob);
-    const headers = {
-      "memberId2" : member.memberId,
-      "Content-Type": "multipart/form-data",   
-    };
-    
+    formData.append("updateMember", blob);
 
     try {
-      axios.patch('http://localhost:5056/oauth/v1', formData, { headers })
-      .then(function (res) {
-        window.sessionStorage.setItem("member",JSON.stringify(res.data));
-        alert("정상 등록되었습니다.")
-      })
+      const accesstoken = JSON.parse(
+        window.sessionStorage.getItem("accesstoken")
+      );
+      const refreshtoken = JSON.parse(
+        window.sessionStorage.getItem("refreshtoken")
+      );
+
+      await axios({
+        method: "patch", // 통신 방식
+        headers: {
+          authorization: accesstoken,
+          refreshToken: refreshtoken,
+          "Content-Type": "multipart/form-data",
+        },
+        url: "/members/v1",
+        baseURL: "http://localhost:5056", // 서버
+        data: formData,
+      }).then(function (response) {
+        navigate("/mypage"); //리다이렉트
+      });
     } catch (error) {
-      console.error("가입에 실패하였습니다. 잠시 후 다시 시도해주세요", error); // 오류 처리
+      console.error("회원정보수정 실패:", error); // 오류 처리
     }
-
-
-    const customHeader = {
-      authorization: window.sessionStorage.getItem("accesstoken"),
-      refreshToken: window.sessionStorage.getItem("refreshtoken"),
-      memberId: member.memberId
-    };
-
-    axios.get("http://localhost:5056/members/v1/detail", {
-      headers: customHeader,
-    })
-    .then(function (res) {
-      window.sessionStorage.setItem("member",JSON.stringify(res.data));
-      navigate("/"); //리다이렉트
-      
-    })
-    .catch (function(error) {
-      console.error("", error); // 오류 처리
-    });
   };
 
   return (
@@ -139,8 +157,10 @@ function SnsInfo() {
               <Form.Control
                 aria-describedby="basic-addon2"
                 name="currentWeight"
+                defaultValue={memberInfo.currentWeight}
                 onChange={handleInputChange}
               />
+
               <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
             </InputGroup>
 
@@ -151,6 +171,7 @@ function SnsInfo() {
               <Form.Control
                 aria-describedby="basic-addon2"
                 name="targetWeight"
+                defaultValue={memberInfo.targetWeight}
                 onChange={handleInputChange}
               />
               <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
@@ -163,6 +184,7 @@ function SnsInfo() {
               <Form.Control
                 aria-describedby="basic-addon2"
                 name="height"
+                defaultValue={memberInfo.height}
                 onChange={handleInputChange}
               />
               <InputGroup.Text id="basic-addon2">cm</InputGroup.Text>
@@ -191,39 +213,6 @@ function SnsInfo() {
                 onChange={handleInputChange}
               />
             </div>
-
-            <Row className="mb-3">
-              <Form.Label column sm="3">
-                생년월일
-              </Form.Label>
-
-              <Form.Group as={Col} controlId="formGridYear">
-                <SelectOptions
-                  defaultValue="연도"
-                  values={years}
-                  name="year"
-                  handleInputChange={handleInputChange}
-                />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridMonth">
-                <SelectOptions
-                  defaultValue="월"
-                  values={months}
-                  name="month"
-                  handleInputChange={handleInputChange}
-                />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridDay">
-                <SelectOptions
-                  defaultValue="일"
-                  values={days}
-                  name="day"
-                  handleInputChange={handleInputChange}
-                />
-              </Form.Group>
-            </Row>
 
             <div key={`inline-${"radio"}`} className="mb-3">
               <Form.Label column sm="3">
@@ -289,7 +278,7 @@ function SnsInfo() {
             </Form.Group>
             <div className="text-center">
               <Button variant="success" type="submit">
-                가입하기
+                수정하기
               </Button>
             </div>
           </Form>
@@ -300,4 +289,4 @@ function SnsInfo() {
   );
 }
 
-export default SnsInfo;
+export default UpdateInfo;

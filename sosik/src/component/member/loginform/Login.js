@@ -4,11 +4,12 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
 import { HeaderContext } from "../../common/header/Header";
+
 function Login() {
 
   const REST_API_KEY_FOR_KAKAO = "83838cea18a7862894ce003e923d2fd7";
@@ -19,6 +20,7 @@ function Login() {
     email: "",
     password: "",
   });
+  const location = useLocation();
 
   const [error, setError] = useState("");
   const [isMemoryEmailCheck, setIsMemoryEmailCheck] = useState(() => {
@@ -66,14 +68,23 @@ function Login() {
             })
             .then(function (res) {
               window.sessionStorage.setItem("member", JSON.stringify(res.data));
-              navigate("/mainpage"); //리다이렉트
+              
+              // 위치 이동
+              if(location.state) {
+                const {pathname} = location.state.data;
+                console.log("hihihi");
+                console.log(pathname);
+                navigate(pathname);
+                return;
+              }
+
+              navigate("/"); //리다이렉트
             })
             .catch(function (error) {
               console.error("", error); // 오류 처리
             });
-
+          
           setlogout(false);
-          navigate("/mainpage"); //리다이렉트
         });
     } catch (error) {
       console.error("로그인 실패:", error);

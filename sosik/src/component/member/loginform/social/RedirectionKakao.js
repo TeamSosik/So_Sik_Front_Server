@@ -53,7 +53,7 @@ const RedirectionKakao = (props) => {
           .then(function (res) {
             alert("환영합니다!")
             window.sessionStorage.setItem("member",JSON.stringify(res.data));
-            navigate("/mainpage"); //리다이렉트
+            navigate("/"); //리다이렉트
           })
           
           .catch (function(error) {

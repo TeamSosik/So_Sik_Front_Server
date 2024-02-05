@@ -1,3 +1,11 @@
+h2 {
+  text-align: left;
+}
+
+p {
+  margin-bottom: 0;
+}
+
 .writeBox {
   width: 60%;
   margin: 150px auto 0 auto;
@@ -10,20 +18,52 @@
 }
 
 .writeBox .buttonBox {
+  margin-top: 120px;
   text-align: center;
 }
 
-.writebutton{
-  margin-top: 90px;
+.writebutton {
   text-align: center;
   height: 50px;
   width: 200px;
   color: #59BD82;
-    background-color: transparent;
-    border-color: #59BD82;
+  background-color: transparent;
+  border-color: #59BD82;
+
   &:hover {
     color: white;
     background-color: #59BD82;
-    border-color: transparent; 
+    border-color: transparent;
   }
+}
+
+.intake-btn-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #59BD82;
+  position: fixed;
+  top: 30%;
+  right: 13%;
+}
+
+.intake-btn-box:hover {
+  box-shadow: 0px 0px 10px 5px #f5f5f5;
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+.intake-btn-box .intake-btn {
+  color: #fff;
+  font-size: 14px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
 }
