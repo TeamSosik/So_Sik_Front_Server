@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./mypage.css";
 import Aside from "./aside/Aside";
@@ -6,6 +7,8 @@ import Graph from "./content/Graph";
 import axios from "axios";
 
 const MyPage = () => {
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState({
     memberId: "",
     email: "",
@@ -23,6 +26,7 @@ const MyPage = () => {
   const getMemberDetail = async () => {
     const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
+    const member = JSON.parse(sessionStorage.getItem("member"));
 
     try {
       await axios({
@@ -34,7 +38,14 @@ const MyPage = () => {
           "Content-Type": "application/json",
         },
       }).then((response) => {
-        setUsers(response.data.result);
+        if (response.data.result.tdeeCalculation === null) {
+          alert("가입을 마무리 해주세요!")
+          navigate("/updatesnsinfo");
+        } else {
+          setUsers(response.data.result);
+        }
+        
+          
       });
     } catch (e) {
       console.log(e);
