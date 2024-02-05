@@ -10,21 +10,22 @@
 }
 
 .writeBox .buttonBox {
+  margin-top: 120px;
   text-align: center;
 }
 
-.writebutton{
-  margin-top: 90px;
+.writebutton {
   text-align: center;
   height: 50px;
   width: 200px;
   color: #59BD82;
-    background-color: transparent;
-    border-color: #59BD82;
+  background-color: transparent;
+  border-color: #59BD82;
+
   &:hover {
     color: white;
     background-color: #59BD82;
-    border-color: transparent; 
+    border-color: transparent;
   }
 }
 
@@ -33,7 +34,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -44,7 +44,7 @@
 }
 
 .intake-btn-box:hover {
-  box-shadow: 0px 0px 10px 5px #0000004D;
+  box-shadow: 0px 0px 10px 5px #f5f5f5;
   transform: translateY(-3px);
   cursor: pointer;
 }
@@ -52,4 +52,10 @@
 .intake-btn-box .intake-btn {
   color: #fff;
   font-size: 14px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
 }
