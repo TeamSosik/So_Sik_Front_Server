@@ -3,3 +3,27 @@
   margin-bottom: 10%;
 }
 
+.form-file-image-box {
+
+  float: left;
+  width: 20%;
+}
+
+.form-file-box {
+  float: right;
+  width: 75%;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+}
+
+.file-box {
+  width: 100%;
+  clear: both;
+}
+
+.view-show {
+  display: none;
+}
+
