@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState, createContext, useRef, useReducer } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
 import { Link, BrowserRouter, Routes, Route, Router, Navigate } from "react-router-dom";
@@ -24,22 +24,20 @@ import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js";
 import FreeBoardUpdate from "../../community/freeboard/FreeBoardUpdate.js";
 import Error404 from "../error/Error404.js"
 import RequireAuth from "../auth/RequireAuth.js";
+import UpdatesnsInfo from "../../member/updatemyinfo/UpdatesnsInfo.js"
 
 export const HeaderContext = createContext();
 
 const Header = () => {
   
   const [logout, setlogout] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const access = window.sessionStorage.getItem("accesstoken");
     if (access === null) {
       setlogout(true);
-      setIsAuthenticated(false);
     } else {
       setlogout(false);
-      setIsAuthenticated(true);
     }
   }, [logout]);
 
@@ -78,9 +76,6 @@ const Header = () => {
     }
   };
 
-  const changeIsAuthenticated = (value) => {
-    setIsAuthenticated(value);
-  }
 
   let loginview = "";
 
@@ -140,7 +135,7 @@ const Header = () => {
         </div>
       </header>
 
-      <HeaderContext.Provider value={{ setlogout, changeIsAuthenticated, isAuthenticated }}>
+      <HeaderContext.Provider value={{ setlogout }}>
         <Routes>
 
           <Route path="/" element={<Mainpage props={logout} />} />
@@ -165,6 +160,8 @@ const Header = () => {
           <Route path="/freeboardupdate/:id" element={<RequireAuth><FreeBoardUpdate /></RequireAuth>} />
           
           <Route path="/feed" element={<Feed />} />
+          <Route path="/updatesnsinfo" element={<UpdatesnsInfo/>}/>
+
 
           <Route path="*" element={<Error404 />} />
 
