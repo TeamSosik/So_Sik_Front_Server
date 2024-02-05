@@ -7,11 +7,12 @@ import Footer from "./component/common/footer/Footer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <>
+  <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
     <Header></Header>
-
+    <div style={{ flex: 1 }}>
+    </div>
     <Footer></Footer>
-  </>
+  </div>
 );
 
 reportWebVitals();
