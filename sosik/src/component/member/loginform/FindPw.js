@@ -35,7 +35,7 @@ function FindPw() {
         })
         .then((result) => {
           alert("가입된 이메일로 비밀번호를 전송하였습니다!");
-          navigate("/mainpage"); //리다이렉트
+          navigate("/"); //리다이렉트
         });
     } catch (error) {
       console.error("알수없는 오류가 발생했습니다.:", error);

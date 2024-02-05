@@ -9,7 +9,7 @@ const Error404 = () => {
     <div className="error-container">
       <img src={notfound} alt="404 Not Found" className="center-image" />
      
-      <Link to="/mainpage">
+      <Link to="/">
         <Button
           variant="outline-light"
           className="rounded-pill mainpagebutton"

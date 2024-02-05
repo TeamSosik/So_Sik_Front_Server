@@ -185,7 +185,7 @@ function Signup() {
         data: formData,
       }).then(function (response) {
         alert("가입을 환영합니다!");
-        navigate("/mainpage"); //리다이렉트
+        navigate("/"); //리다이렉트
       });
     } catch (error) {
       console.error("회원가입 실패:", error); // 오류 처리

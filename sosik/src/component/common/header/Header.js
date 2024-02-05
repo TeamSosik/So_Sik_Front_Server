@@ -1,7 +1,7 @@
 import React, { useEffect, useState, createContext } from "react";
 import logo from "../../../images/logo.png";
 import "./header.css";
-import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link, BrowserRouter, Routes, Route, Router, Navigate } from "react-router-dom";
 import Feed from "../../feed/Feed.js";
 import Mainpage from "../../../page/MainPage.js";
 import Login from "../../member/loginform/Login.js";
@@ -23,17 +23,23 @@ import FreeBoardWrite from "../../community/freeboard/FreeBoardWrite.js";
 import FreeBoardInfo from "../../community/freeboard/freeinfo/FreeBoardInfo.js";
 import FreeBoardUpdate from "../../community/freeboard/FreeBoardUpdate.js";
 import Error404 from "../error/Error404.js"
+import RequireAuth from "../auth/RequireAuth.js";
 
 export const HeaderContext = createContext();
 
 const Header = () => {
+  
   const [logout, setlogout] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   useEffect(() => {
     const access = window.sessionStorage.getItem("accesstoken");
     if (access === null) {
       setlogout(true);
+      setIsAuthenticated(false);
     } else {
       setlogout(false);
+      setIsAuthenticated(true);
     }
   }, [logout]);
 
@@ -65,10 +71,16 @@ const Header = () => {
       window.sessionStorage.removeItem("member");
 
       setlogout(true);
+      alert("로그아웃 되었습니다.");
+
     } catch (error) {
       console.error("로그아웃 오류:", error);
     }
   };
+
+  const changeIsAuthenticated = (value) => {
+    setIsAuthenticated(value);
+  }
 
   let loginview = "";
 
@@ -83,7 +95,7 @@ const Header = () => {
             마이페이지
           </Link>
           <Link
-            to="/mainpage"
+            to="/"
             style={{ marginRight: "30px" }}
             onClick={handleLogout}
           >
@@ -107,7 +119,7 @@ const Header = () => {
   return (
     <BrowserRouter>
       <header id="header" className="nav-down">
-        <Link to="/mainpage" className="logo">
+        <Link to="/" className="logo">
           <img src={logo} alt="Logo" />
         </Link>
         <nav id="gnb">
@@ -128,26 +140,34 @@ const Header = () => {
         </div>
       </header>
 
-      <HeaderContext.Provider value={{ setlogout }}>
+      <HeaderContext.Provider value={{ setlogout, changeIsAuthenticated, isAuthenticated }}>
         <Routes>
-          <Route path="/feed" element={<Feed />} />
+
+          <Route path="/" element={<Mainpage props={logout} />} />
+          
           <Route path="/login" element={<Login />} />
-          <Route path="/mainpage" element={<Mainpage props={logout} />} />
-          <Route path="/foodsearch" element={<FoodSearch />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/recdkcal" element={<RecdKcal />} />
-          <Route path="/recdanly" element={<RecdAnly />} />
-          <Route path="/updateinfo" element={<UpdateInfo />} />
-          <Route path="/food/:id" element={<FoodDetail />} />
-          <Route path="/redirection" element={<RedirectionKakao />} />
           <Route path="/findPw" element={<FindPw />} />
+          <Route path="/updateinfo" element={<RequireAuth><UpdateInfo /></RequireAuth>} />
           <Route path="/snsInfo" element={<SnsInfo />} />
+          <Route path="/redirection" element={<RedirectionKakao />} />
+
+          <Route path="/mypage" element={<RequireAuth><MyPage /></RequireAuth>} />
+          <Route path="/recdkcal" element={<RequireAuth><RecdKcal /></RequireAuth>} />
+          <Route path="/recdanly" element={<RequireAuth><RecdAnly /></RequireAuth>} />
+
+          <Route path="/foodsearch" element={<FoodSearch />} />
+          <Route path="/food/:id" element={<FoodDetail />} />
+
           <Route path="/freeboard" element={<FreeBoard />} />
-          <Route path="/freeboardwrite" element={<FreeBoardWrite />} />
           <Route path="/freeboard/:id" element={<FreeBoardInfo />} />
-          <Route path="/freeboardupdate/:id" element={<FreeBoardUpdate />} />
+          <Route path="/freeboardwrite" element={<RequireAuth><FreeBoardWrite /></RequireAuth>} />
+          <Route path="/freeboardupdate/:id" element={<RequireAuth><FreeBoardUpdate /></RequireAuth>} />
+          
+          <Route path="/feed" element={<Feed />} />
+
           <Route path="*" element={<Error404 />} />
+
         </Routes>
       </HeaderContext.Provider>
     </BrowserRouter>
