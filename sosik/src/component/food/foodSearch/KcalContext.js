@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import noimage from "../../../images/noimage.png"
 
 const KcalContext = ({ data }) => {
   // 필드
@@ -12,8 +13,11 @@ const KcalContext = ({ data }) => {
   };
 
   // view
+  
 
   return (
+    
+
     <div
       className="kcalContex"
       onClick={() => handleFoodCardClick(data.foodId)}
@@ -21,7 +25,12 @@ const KcalContext = ({ data }) => {
       {/* titleBox */}
 
       {/* contentBox */}
-      <img src={data.image} className="kcalContextContentBox" />
+      <img
+        src={data.image || noimage} 
+        className="kcalContextContentBox"
+        
+      />
+      
       <div className="kcalContexTitle">
         <span>{data.name}</span>
       </div>
