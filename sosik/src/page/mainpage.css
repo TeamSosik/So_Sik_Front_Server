@@ -22,12 +22,10 @@
     margin-left: 20px;
     border-radius: 24px;
     transition: transform 0.5s ease;
-    /* 기본적인 애니메이션 설정 */
 }
 
 .cont_main .inner_responsible .box_responsible[data-v-4b6b04e7]:hover {
     transform: translateY(-30px);
-    /* 원하는 만큼의 이동 거리 지정 */
     cursor: pointer;
 }
 
@@ -64,8 +62,6 @@
     color: #fff
 }
 
-
-
 .cont_main .inner_responsible .name_responsible[data-v-4b6b04e7] {
     display: inline-block;
     width: 272px;
@@ -79,29 +75,29 @@
     letter-spacing: -.5px
 }
 
-.cont_main .inner_responsible .img_responsible[data-v-4b6b04e7] {
+.cont_main .inner_responsible .img_foodsearch[data-v-4b6b04e7] {
     position: absolute;
-    top: 120px;
+    top: 3rem;
     left: 50%;
+    width: 26rem;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%)
 }
 
-.cont_main .inner_responsible .img_responsible[data-v-4b6b04e7]:not(.type_esg) {
-    width: 322px
-}
-
-.cont_main .inner_responsible .img_responsible.type_esg[data-v-4b6b04e7] {
-    width: 100%
+.cont_main .inner_responsible .img_community[data-v-4b6b04e7] {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    width: 31.5rem;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%)
 }
 
 .cont_main .inner_responsible .text_responsible[data-v-4b6b04e7] {
     position: absolute;
     bottom: 40px;
     left: 50%;
-    /* 가운데 정렬을 위해 50%로 설정 */
     transform: translateX(-50%);
-    /* 가운데 정렬을 위해 음수의 50%만큼 이동 */
     font-size: 40px;
     line-height: 1.46;
     letter-spacing: -.6px;
