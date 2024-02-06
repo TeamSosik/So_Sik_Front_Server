@@ -55,7 +55,7 @@ const Aside = ({ props }) => {
             }
             alt=""
           />
-          <h2>{props.nickname} 님</h2>
+          <h2 className="nickname">{props.nickname} 님</h2>
         </div>
         <div className="update-btn">
           <button
