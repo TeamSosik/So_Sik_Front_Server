@@ -14,16 +14,11 @@ import KcalChart from "../KcalChart.js";
 export const RecdKcalContext = createContext();
 
 const RecdKcal = () => {
-  // 필드
 
-  // 상태
   const [mealList, setMealList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadDate, setLoadDate] = useState("");
 
-  // 메서드
-
-  // 섭취 음식 목록 불러오기
   const getData = async () => {
     try {
       const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
