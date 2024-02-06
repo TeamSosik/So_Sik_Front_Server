@@ -34,7 +34,7 @@
 .additionMeal {
   display: flex;
   justify-content: center;
-  width: 1200px;
+  width: 90%;
   height: 90px;
   margin: 20px auto 0 auto;
   padding: 20px;
@@ -76,6 +76,8 @@
   font-family: "SUITE-Regular";
   text-align: center;
   margin: 0 auto;
+  width: 80%;
+  border-radius: 2rem;
   padding: 40px;
   margin-top: 100px;
   margin-bottom: 100px;
@@ -102,7 +104,7 @@
 }
 
 .recd-kcal-section2 .meal-content .meal {
-  width: 1200px;
+  width: 90%;
   text-align: center;
   margin-top: 20px;
   padding: 16px;

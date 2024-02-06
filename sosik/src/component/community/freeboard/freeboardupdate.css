@@ -1,8 +1,7 @@
 .updateBox {
   width: 60%;
-  /* margin-top: 100px; */
-
   margin: 150px auto 0 auto;
+  margin-top: 200px;
 }
 
 .updateBox .title input[name='title'] {
@@ -38,4 +37,10 @@
   width: 200px;
   background-color: #F8F6E6;
   color: #000;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
 }

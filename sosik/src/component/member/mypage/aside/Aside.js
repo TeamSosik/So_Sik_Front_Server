@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./aside.css";
 import WeightModal from "../../../intake/modal/WeightModal";
 import axios from "axios";
+import DefaultImage from "../../../../images/default-image.png";
 
 const Aside = ({ props }) => {
   const navigate = useNavigate();
@@ -38,15 +39,23 @@ const Aside = ({ props }) => {
     navigate(path);
   };
 
+  console.log(props.profileImage);
+  console.log(props.profileImage.indexOf("cat.jpg"));
+
   return (
     <>
       <div className="left-section">
         <div className="profile-info">
           <img
-            src={`http://localhost:5056/members/v1/images/${props.memberId}`}
+            src={
+              props.profileImage && props.profileImage.indexOf("cat.jpg") !== -1 ? 
+              DefaultImage
+              :
+              `http://localhost:5056/members/v1/images/${props.memberId}`
+            }
             alt=""
           />
-          <h2>{props.nickname} 님</h2>
+          <h2 className="nickname">{props.nickname} 님</h2>
         </div>
         <div className="update-btn">
           <button

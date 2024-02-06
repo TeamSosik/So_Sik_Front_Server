@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import ReactQuill, { Quill } from "react-quill";
-import "./freeboardupdate.css";
 import { Button, Form } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+import "./freeboardupdate.css";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "quill-image-resize-module-react";
-import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
+Quill.register("modules/imageResize", ImageResize);
 
 const FreeBoardUpdate = () => {
 
   const toolbarOptions = [
-
     [{ header: [1, 2, 3, 4, 5, false] }, { size: ["small", false, "large", "huge"] }],
     ["bold", "italic", "underline", "strike"],
     ["blockquote"],
@@ -38,10 +39,7 @@ const FreeBoardUpdate = () => {
     "link",
     "image",
     "video",
-    "width",
   ];
-
-  Quill.register("modules/imageResize", ImageResize);
 
   const modules = {
     toolbar: {
@@ -56,6 +54,7 @@ const FreeBoardUpdate = () => {
   const defaultBoard = {
     title: "",
   }
+
   const defaultContent = {
     content: "",
   }
@@ -63,11 +62,15 @@ const FreeBoardUpdate = () => {
   const { id } = useParams();
   const [board, setBoard] = useState(defaultBoard);
   const [content, setContent] = useState(defaultContent);
+  const [titleError, setTitleError] = useState(false);
+  const [contentError, setContentError] = useState(false);
   const navigate = useNavigate();
+
   const authorization = JSON.parse(window.sessionStorage.getItem("accesstoken"));
   const refreshToken = JSON.parse(window.sessionStorage.getItem("refreshtoken"));
 
   const handleBoardChange = (e) => {
+
     const { name, value } = e.target;
     setBoard((current) => {
       return {
@@ -77,9 +80,12 @@ const FreeBoardUpdate = () => {
     });
   };
 
-  // ReactQuill의 content가 변할 때 작동합니다.
   const handleContentChange = (content) => {
-    setContent({ content: content });
+    if (content.trim() === "<p><br></p>") {
+      setContent({ content: "" });
+    } else {
+      setContent({ content: content });
+    }
   };
 
 
@@ -112,38 +118,53 @@ const FreeBoardUpdate = () => {
   }, []);
 
   const handleUpdateBtnClick = async () => {
-    const confirmUpdate = window.confirm("게시글을 수정하시겠습니까?");
-    if (confirmUpdate) {
-      try {
-        await axios({
-          method: "patch",
-          url: "http://localhost:5056/post/v1/" + id,
-          data: {
-            title: board.title,
-            content: content.content,
-          },
-          headers: {
-            authorization: authorization,
-            refreshToken: refreshToken,
-            "Content-Type": "application/json",
-          },
-        }).then((response) => {
-          if (response.status === 200) {
-            navigate("/freeboard");
-          } else {
-            alert("게시글 수정에 실패하였습니다.");
-          }
-        })
-      } catch (error) {
-        console.error(error);
-      }
+    console.log("시작")
+    if (board.title.trim() === "") {
+      console.log("-----------------1")
+      setTitleError(true);
+      return;
+    } else {
+      console.log("-----------------2")
+      setTitleError(false);
+    }
+
+    if (content.content.trim() === "") {
+      console.log("-----------------3")
+      setContentError(true);
+      return;
+    } else {
+      console.log(content.content.length)
+      console.log("-----------------4")
+      setContentError(false);
+    }
+
+    try {
+      await axios({
+        method: "patch",
+        url: "http://localhost:5056/post/v1/" + id,
+        data: {
+          title: board.title,
+          content: content.content,
+        },
+        headers: {
+          authorization: authorization,
+          refreshToken: refreshToken,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        if (response.status === 200) {
+          alert("게시글이 성공적으로 수정되었습니다.")
+          navigate("/freeboard");
+        }
+      })
+    } catch (error) {
+      alert("게시글 수정에 실패 하였습니다. 다시 시도해주세요.");
     }
   }
 
   const handleNavigate = (path) => {
     navigate(`/freeboard/${id}`);
   };
-
 
   return (
     <div className="updateBox">
@@ -152,10 +173,12 @@ const FreeBoardUpdate = () => {
           <Form.Control
             type="text"
             name="title"
-            style={{ marginTop: "200px" }}
-            defaultValue={board.title}
-            onChange={handleBoardChange}
+            value={board.title}
+            onInput={handleBoardChange}
           />
+          {titleError && (
+            <p className="error-message">제목 입력은 필수입니다.</p>
+          )}
         </Form.Group>
       </div>
 
@@ -169,6 +192,9 @@ const FreeBoardUpdate = () => {
           value={content.content}
           onChange={handleContentChange}
         />
+        {contentError && (
+          <p className="error-message">내용 입력은 필수입니다.</p>
+        )}
       </div>
 
       <div className="buttonBox">

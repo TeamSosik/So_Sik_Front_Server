@@ -7,8 +7,9 @@ import axios from "axios";
 import "react-quill/dist/quill.snow.css";
 import "./freeBoardwrite.css";
 
-const FreeBoardWrite = () => {
+Quill.register("modules/imageResize", ImageResize);
 
+const FreeBoardWrite = () => {
   const toolbarOptions = [
     [
       { header: [1, 2, 3, 4, 5, false] },
@@ -19,7 +20,7 @@ const FreeBoardWrite = () => {
     [{ list: "ordered" }, { list: "bullet" }],
     [{ color: [] }, { background: [] }],
     [{ align: [] }, { indent: "-1" }, { indent: "+1" }],
-    ["link", "image", "video"]
+    ["link", "image", "video"],
   ];
 
   const formats = [
@@ -39,18 +40,17 @@ const FreeBoardWrite = () => {
     "color",
     "link",
     "image",
-    "video"
+    "video",
   ];
 
-  Quill.register("modules/imageResize", ImageResize);
   const modules = {
     toolbar: {
-      container: toolbarOptions
+      container: toolbarOptions,
     },
     imageResize: {
       parchment: Quill.import("parchment"),
-      modules: ["Resize", "DisplaySize", "Toolbar"]
-    }
+      modules: ["Resize", "DisplaySize", "Toolbar"],
+    },
   };
 
   const [board, setBoard] = useState({ title: "", content: "" });
@@ -65,20 +65,18 @@ const FreeBoardWrite = () => {
     const { name, value } = e.target;
     setBoard((prevBoard) => ({
       ...prevBoard,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleContentChange = (content) => {
-    console.log(content)
     setBoard((prevBoard) => ({
       ...prevBoard,
-      content: content
+      content: content,
     }));
   };
 
   const handleCreateBoardClick = async () => {
-
     if (board.title.trim() === "") {
       setTitleError(true);
       return;
@@ -98,7 +96,7 @@ const FreeBoardWrite = () => {
         "http://localhost:5056/post/v1",
         {
           title: board.title,
-          content: board.content
+          content: board.content,
         },
         {
           headers: {
@@ -106,7 +104,8 @@ const FreeBoardWrite = () => {
             refreshtoken: refreshToken,
             "Content-Type": "application/json",
           },
-        });
+        }
+      );
 
       if (response.status === 200) {
         alert("게시글이 성공적으로 등록되었습니다.");
@@ -116,7 +115,6 @@ const FreeBoardWrite = () => {
       alert("게시글 등록에 실패 하였습니다. 다시 시도해주세요.");
     }
   };
-  
 
   const handleIntakeFoodClick = async () => {
     try {
@@ -141,61 +139,65 @@ const FreeBoardWrite = () => {
       let totalKcal = 0;
 
       serverData.sort((a, b) => {
-        const order = ['BREAKFAST', 'LUNCH', 'DINNER', 'SNACKS'];
+        const order = ["BREAKFAST", "LUNCH", "DINNER", "SNACKS"];
         return order.indexOf(a.category) - order.indexOf(b.category);
       });
 
       if (Array.isArray(serverData)) {
         const tableRows = serverData.map((item, index) => {
-          let categoryTag = '';
+          let categoryTag = "";
 
           switch (item.category) {
-            case 'BREAKFAST':
+            case "BREAKFAST":
               if (!isMorningRendered) {
                 isMorningRendered = true;
-                categoryTag = '<br/><div><strong ><아침></strong></div>';
+                categoryTag = "<br/><div><strong ><아침></strong></div>";
               }
               break;
-            case 'LUNCH':
+            case "LUNCH":
               if (!isLunchRendered) {
                 isLunchRendered = true;
-                categoryTag = '<br/><div><strong><점심></strong></div>';
+                categoryTag = "<br/><div><strong><점심></strong></div>";
               }
               break;
-            case 'DINNER':
+            case "DINNER":
               if (!isDinnerRendered) {
                 isDinnerRendered = true;
-                categoryTag = '<br/><div><strong><저녁></strong></div>';
+                categoryTag = "<br/><div><strong><저녁></strong></div>";
               }
               break;
-            case 'SNACKS':
+            case "SNACKS":
               if (!isSnacksRendered) {
                 isSnacksRendered = true;
-                categoryTag = '<br/><div><strong><간식></strong></div>';
+                categoryTag = "<br/><div><strong><간식></strong></div>";
               }
               break;
             default:
               return null;
           }
           totalKcal += item.calculationKcal;
-          const last = index !== serverData.length - 1 ? '' : `<br/><div style="text-align: left;"><h2>[총 칼로리] ${totalKcal}Kcal</h></div>`;
+          const last =
+            index !== serverData.length - 1
+              ? ""
+              : `<br/><div style="text-align: left;"><h2>[총 칼로리] ${Math.round(
+                  totalKcal
+                )}Kcal</h></div>`;
 
-          return (
-            `
+          return `
             ${categoryTag}
             <li key=${item.id}>
               <strong>${item.name}</strong> -
               <span>${item.foodAmount}g(ml)</span> /
               <span>${item.calculationKcal}Kcal</span>
-            </li>${last}`
-          );
+            </li>${last}`;
         });
 
-        const todayMenu = '<div style="text-align: left;"><h2>[오늘의 식단]</h2></div>';
+        const todayMenu =
+          '<div style="text-align: left;"><h2>[오늘의 식단]</h2></div>';
 
         setBoard((prevBoard) => ({
           ...prevBoard,
-          content: todayMenu + tableRows.join('') + prevBoard.content
+          content: todayMenu + tableRows.join("") + prevBoard.content,
         }));
         console.log(board.content);
       }
@@ -213,13 +215,9 @@ const FreeBoardWrite = () => {
   };
 
   const IntakeBtnBoxView = (
-    <div className='intake-btn-box' onClick={handleIntakeFoodClick}>
-      <div className='intake-btn'>
-        섭취음식
-      </div>
-      <div className='intake-btn'>
-        불러오기
-      </div>
+    <div className="intake-btn-box" onClick={handleIntakeFoodClick}>
+      <div className="intake-btn">섭취음식</div>
+      <div className="intake-btn">불러오기</div>
     </div>
   );
 
