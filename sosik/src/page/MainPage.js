@@ -3,13 +3,25 @@ import { Link } from "react-router-dom";
 import './mainpage.css'
 import foodsearch from "../images/foodsearch.png";
 import community from "../images/community.png";
-// <a href="https://kr.freepik.com/free-vector/group-of-young-people-posing-for-a-photo_5230711.htm#&position=35&from_view=author&uuid=bab30dab-0dcf-472e-9298-b734980f2c32">작가 pikisuperstar</a> 출처 Freepik
 
 function Mainpage() {
-    const member = JSON.parse(window.sessionStorage.getItem("member"));
-    return (
-        <>
-            <div data-v-4b6b04e7="" className="cont_main area_responsible">
+  const member = JSON.parse(window.sessionStorage.getItem("member"));
+  return (
+    <>
+      <div data-v-4b6b04e7="" className="cont_main area_responsible">
+        <div data-v-4b6b04e7="" className="inner_main inner_responsible">
+          <Link to={!member || !member.result ? "/login" : "/recdkcal"}>
+            <div data-v-4b6b04e7="" className="box_responsible type_esg">
+              <span data-v-4b6b04e7="" className="title_responsible" />
+              <img
+                data-v-a968263a=""
+                data-v-4b6b04e7=""
+                src="https://t1.kakaocdn.net/kakaocorp/kakaocorp/service/main/esg.gif"
+                className="img_responsible type_esg"
+              />
+              <p data-v-4b6b04e7="" className="text_responsible">
+                {!member || !member.result ? "식단관리" : "식단관리"}
+              </p>
 
                 <div data-v-4b6b04e7="" className="inner_main inner_responsible">
                     <Link to={!member || !member.result ? "/login" : "/recdkcal"}>
