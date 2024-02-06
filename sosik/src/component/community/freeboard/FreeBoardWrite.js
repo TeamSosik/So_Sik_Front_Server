@@ -7,6 +7,8 @@ import axios from "axios";
 import "react-quill/dist/quill.snow.css";
 import "./freeBoardwrite.css";
 
+Quill.register("modules/imageResize", ImageResize);
+
 const FreeBoardWrite = () => {
 
   const toolbarOptions = [
@@ -19,7 +21,7 @@ const FreeBoardWrite = () => {
     [{ list: "ordered" }, { list: "bullet" }],
     [{ color: [] }, { background: [] }],
     [{ align: [] }, { indent: "-1" }, { indent: "+1" }],
-    ["link", "image", "video"]
+    ["link", "image", "video"],
   ];
 
   const formats = [
@@ -42,7 +44,6 @@ const FreeBoardWrite = () => {
     "video"
   ];
 
-  Quill.register("modules/imageResize", ImageResize);
   const modules = {
     toolbar: {
       container: toolbarOptions
@@ -70,7 +71,6 @@ const FreeBoardWrite = () => {
   };
 
   const handleContentChange = (content) => {
-    console.log(content)
     setBoard((prevBoard) => ({
       ...prevBoard,
       content: content
@@ -116,7 +116,7 @@ const FreeBoardWrite = () => {
       alert("게시글 등록에 실패 하였습니다. 다시 시도해주세요.");
     }
   };
-  
+
 
   const handleIntakeFoodClick = async () => {
     try {
