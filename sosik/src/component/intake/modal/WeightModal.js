@@ -2,6 +2,10 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import React, { useState } from "react";
+import RenderTooltip from "./RenderTooltip";
+import { OverlayTrigger } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 
 function WeightModal({ handleCloseModal, accessToken }) {
   const [currentWeight, setCurrentWeight] = useState("");
@@ -52,7 +56,16 @@ function WeightModal({ handleCloseModal, accessToken }) {
         centered // 중앙 정렬
       >
         <Modal.Header closeButton>
-          <Modal.Title>나의 체중 기록</Modal.Title>
+          <Modal.Title>
+            나의 체중 기록{" "}
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 100, hide: 300 }}
+              overlay={RenderTooltip}
+            >
+              <FontAwesomeIcon icon={faCircleQuestion} />
+            </OverlayTrigger>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
