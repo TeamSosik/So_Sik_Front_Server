@@ -120,16 +120,7 @@
   animation: moveAnimation 2s;
 }
 
-.kcalContexListBox>.kcalContex>.kcalContexTitle {
-  width: 80%;
-  height: 20%;
-  font-size: 25px;
-  padding-top: 15px;
-  font-weight: bolder;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .kcalContexListBox>.kcalContex>.kcalContextContentBox {
   width: 60%;
@@ -187,4 +178,25 @@
   margin: auto;
   margin-top: 200px;
   margin-bottom: 130px;
+}
+
+.kcalContexListBox>.kcalContex>.kcalContexTitle {
+  width: 80%;
+  height: 20%;
+  font-size: 23px;
+  padding-top: 15px;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+}
+
+.kcalContexTitle {
+  display: block;
+  width: 281px;
+  text-align: center; 
+  font-weight: bolder !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0 auto; 
 }
