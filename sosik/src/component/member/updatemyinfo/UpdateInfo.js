@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -19,6 +19,12 @@ import TdeeCalFunction from "./TdeeCalFunction";
 import ValidationForm from "./ValidationForm";
 
 function UpdateInfo() {
+
+  const fileRef = useRef();
+  const formFileImageBoxRef = useRef();
+  const fileLabel = useRef();
+  const formFileBoxRef = useRef();
+
   const [users, setUsers] = useState({
     memberId: "",
     email: "",
@@ -33,6 +39,7 @@ function UpdateInfo() {
     tdeeCalculation: "",
     weightList: [""],
   });
+
   const getMemberDetail = async () => {
     const authorization = JSON.parse(sessionStorage.getItem("accesstoken"));
     const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
@@ -73,6 +80,7 @@ function UpdateInfo() {
   };
   useEffect(() => {
     getMemberDetail();
+    formFileImageBoxRef.current.classList.toggle('view-show');
   }, []);
   const navigate = useNavigate();
   const member = JSON.parse(window.sessionStorage.getItem("member")).result;
@@ -90,12 +98,47 @@ function UpdateInfo() {
     profileImage: "", // 사용자가 프로필 이미지를 선택하지 않았을 때를 나타내기 위해서 null로 설정
   });
 
+  const allowedFileTypes = ["image/jpg","image/jpeg", "image/png", "image/gif"];
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setMemberInfo((prevInfo) => ({
-      ...prevInfo,
-      profileImage: file,
-    }));
+
+    if (file && allowedFileTypes.includes(file.type)) {
+
+      // 이미지 확인
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        fileRef.current.src = e.target.result;
+      }
+      fileReader.readAsDataURL(file);
+      
+      setMemberInfo((prevInfo) => ({
+        ...prevInfo,
+        profileImage: file,
+      }));
+      formFileImageBoxRef.current.classList.remove("view-show");
+      fileLabel.current.classList.add("view-show");
+      formFileBoxRef.current.classList.add("form-file-box");
+
+    } else {
+
+      const fileTypes = allowedFileTypes.map((fileType) => {
+        const a = fileType.split("/")[1];
+        return a;
+      });
+      const textFileTypes = fileTypes.join(", ");
+
+      alert(`${textFileTypes} 파일만 사용 가능합니다.`);
+      e.target.value = null;
+      setMemberInfo((prevInfo) => ({
+        ...prevInfo,
+        profileImage: "",
+      }));
+
+      formFileImageBoxRef.current.classList.toggle("view-show");
+      fileLabel.current.classList.toggle("view-show");
+      formFileBoxRef.current.classList.toggle("form-file-box");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -161,6 +204,13 @@ function UpdateInfo() {
 
               <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
             </InputGroup>
+            <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>       
+              <div
+                style={{ color: "red", paddingTop: "5px"}}
+              >
+                {isNaN(memberInfo.currentWeight) ? "숫자를 입력해주세요" : ""}
+              </div>
+            </InputGroup>
 
             <InputGroup className="mb-3">
               <Form.Label column sm="3">
@@ -174,6 +224,13 @@ function UpdateInfo() {
               />
               <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
             </InputGroup>
+            <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>       
+              <div
+                style={{ color: "red", paddingTop: "5px"}}
+              >
+                {isNaN(memberInfo.targetWeight) ? "숫자를 입력해주세요" : ""}
+              </div>
+            </InputGroup>
 
             <InputGroup className="mb-3">
               <Form.Label column sm="3">
@@ -186,6 +243,13 @@ function UpdateInfo() {
                 onChange={handleInputChange}
               />
               <InputGroup.Text id="basic-addon2">cm</InputGroup.Text>
+            </InputGroup>
+            <InputGroup className="mb-3" style={{ marginLeft: "185px" }}>       
+              <div
+                style={{ color: "red", paddingTop: "5px"}}
+              >
+                {isNaN(memberInfo.height) ? "숫자를 입력해주세요" : ""}
+              </div>
             </InputGroup>
 
             <div key={`inline-${"radio"}`} className="mb-3">
@@ -246,15 +310,28 @@ function UpdateInfo() {
                 onChange={handleInputChange}
               />
             </div>
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>프로필 이미지</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} />
+
+            <Form.Group controlId="formFile" className="mb-3 file-box">
+
+              <div ref={formFileImageBoxRef} className="form-file-image-box">
+                <img ref={fileRef} />
+              </div>
+
+              <div ref={formFileBoxRef}>
+                <Form.Label ref={fileLabel}>프로필 이미지</Form.Label>
+                <Form.Control type="file" accept="image/jpg, image/png, image/jpeg, image/gif" onChange={handleImageChange} />
+              </div>
+
             </Form.Group>
-            <div className="text-center">
-              <Button variant="success" type="submit">
-                수정하기
-              </Button>
-            </div>
+
+            <Form.Group >
+              <div className="text-center submit-box">
+                <Button variant="success" type="submit">
+                  수정하기
+                </Button>
+              </div>
+            </Form.Group>
+
           </Form>
         </Col>
         <Col> </Col>

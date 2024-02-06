@@ -7,6 +7,7 @@ import axios from "axios";
 import Tbody from "./Tbody";
 import PageButton from "./PageButton";
 import Loading from "../../common/spinners/Loading";
+import FoodNoSearch from "../../../images/foodNoSearch.png";
 
 const FoodModal = ({ modalBtn }) => {
   // 필드
@@ -54,6 +55,11 @@ const FoodModal = ({ modalBtn }) => {
 
     // 음식 서비스에 요청하기
     const data = await getDataList();
+
+    if(!data) {
+      
+      return;
+    }
 
     // 데이터 뿌려주기
     setDataList(() => {
@@ -133,9 +139,13 @@ const FoodModal = ({ modalBtn }) => {
       });
 
       setLoading(false);
-
       return response;
-    } catch (e) { }
+
+    } catch (e) {
+
+      alert("서버 점검 중으로 나중에 다시 사용 바랍니다.");
+      setLoading(false);
+    }
   };
 
   const headerCellStyle = {
@@ -290,7 +300,9 @@ const FoodModal = ({ modalBtn }) => {
                 {/* 페이지 번호 끝 */}
               </>
             ) : (
-              <div>데이터가 없습니다.</div>
+              <div>
+                <img src={FoodNoSearch} alt="데이터_없음.png" />
+              </div>
             )}
           </div>
         </div>
