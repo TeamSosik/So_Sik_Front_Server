@@ -46,7 +46,7 @@ const Aside = ({ props }) => {
             src={`http://localhost:5056/members/v1/images/${props.memberId}`}
             alt=""
           />
-          <h2>{props.nickname} 님</h2>
+          <h2 className="nickname">{props.nickname} 님</h2>
         </div>
         <div className="update-btn">
           <button
