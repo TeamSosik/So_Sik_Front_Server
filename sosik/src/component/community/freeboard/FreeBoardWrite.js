@@ -7,6 +7,8 @@ import axios from "axios";
 import "react-quill/dist/quill.snow.css";
 import "./freeBoardwrite.css";
 
+Quill.register("modules/imageResize", ImageResize);
+
 const FreeBoardWrite = () => {
   const toolbarOptions = [
     [
@@ -41,7 +43,6 @@ const FreeBoardWrite = () => {
     "video",
   ];
 
-  Quill.register("modules/imageResize", ImageResize);
   const modules = {
     toolbar: {
       container: toolbarOptions,
@@ -69,7 +70,6 @@ const FreeBoardWrite = () => {
   };
 
   const handleContentChange = (content) => {
-    console.log(content);
     setBoard((prevBoard) => ({
       ...prevBoard,
       content: content,
