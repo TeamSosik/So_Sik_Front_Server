@@ -94,8 +94,8 @@ const RecdAnly_section2 = () => {
         label: data,
         value:
           index === 2
-            ? (Math.round(totalIntakeValues[index] * 100) / 100) * 9
-            : (Math.round(totalIntakeValues[index] * 100) / 100) * 4,
+            ? Math.round((totalIntakeValues[index] * 100) / 100) * 9
+            : Math.round((totalIntakeValues[index] * 100) / 100) * 4,
         color: colors[index],
       };
     });
