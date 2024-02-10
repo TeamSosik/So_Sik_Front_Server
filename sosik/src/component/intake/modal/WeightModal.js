@@ -24,7 +24,7 @@ function WeightModal({ handleCloseModal, accessToken }) {
 
       await axios
         .post(
-          "http://localhost:5056/members/v1/weight",
+          "http://43.200.224.252:5056/members/v1/weight",
           {
             currentWeight: currentWeight,
             targetWeight: targetWeight,

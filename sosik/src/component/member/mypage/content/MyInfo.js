@@ -23,7 +23,7 @@ const MyInfo = ({ props }) => {
     try {
       await axios({
         method: "get",
-        url: "http://localhost:5056/target-calorie/v1/" + today,
+        url: "http://43.200.224.252:5056/target-calorie/v1/" + today,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,

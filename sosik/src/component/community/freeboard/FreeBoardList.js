@@ -21,7 +21,7 @@ const FreeBoardList = ({ searchKeyword }) => {
   const handleScroll = () => {
     const scrollTop = document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight;
-    const clientHeight = document.documentElement.clientHeight;
+    const clientHeight = document.documentEledment.clientHeight;
 
     if (scrollTop + clientHeight >= scrollHeight - 20 && !loading && hasMore) {
       // 스크롤이 하단에 도달하면 새로운 데이터 로드
@@ -50,7 +50,7 @@ const FreeBoardList = ({ searchKeyword }) => {
     try {
       const response = await axios({
         method: "get",
-        url: 'http://localhost:5056/post/v1',
+        url: 'http://43.200.224.252:5056/post/v1',
         params: params
       }).then((response) => {
         const resultData = response.data.result.content;

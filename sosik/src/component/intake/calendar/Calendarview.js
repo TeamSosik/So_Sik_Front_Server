@@ -25,7 +25,7 @@ function Calendarview(props) {
     try {
       const response = await axios({
         method: "get",
-        url: 'http://localhost:5056/intake/v1/check',
+        url: 'http://43.200.224.252:5056/intake/v1/check',
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,

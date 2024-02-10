@@ -14,7 +14,7 @@ const RedirectionKakao = (props) => {
     const kakaoLogin = async () => {
       await axios({
         method: "GET",
-        url: `http://localhost:5056/oauth/kakao/token?code=${code}`,
+        url: `http://43.200.224.252:5056/oauth/kakao/token?code=${code}`,
         headers: {
           "Content-Type": "application/json;charset=utf-8", //json형태로 데이터를 보내겠다는뜻
           "Access-Control-Allow-Origin": "*", //이건 cors 에러때문에 넣어둔것. 당신의 프로젝트에 맞게 지워도됨
@@ -46,7 +46,7 @@ const RedirectionKakao = (props) => {
             memberId: memberId
           };
 
-          axios.get("http://localhost:5056/members/v1/detail", {
+          axios.get("http://43.200.224.252:5056/members/v1/detail", {
             headers: customHeader,
           })
 

@@ -17,7 +17,7 @@ const Aside = ({ props }) => {
     const refreshToken = JSON.parse(sessionStorage.getItem("refreshtoken"));
     try {
       const response = await axios.get(
-        "http://localhost:5056/members/v1/weight-record-check",
+        "http://43.200.224.252:5056/members/v1/weight-record-check",
         {
           headers: {
             authorization: authorization,
@@ -47,12 +47,7 @@ const Aside = ({ props }) => {
       <div className="left-section">
         <div className="profile-info">
           <img
-            src={
-              props.profileImage && props.profileImage.indexOf("cat.jpg") !== -1 ? 
-              DefaultImage
-              :
-              `http://localhost:5056/members/v1/images/${props.memberId}`
-            }
+            src={`http://43.200.224.252:5056/members/v1/images/${props.memberId}`}
             alt=""
           />
           <h2 className="nickname">{props.nickname} 님</h2>

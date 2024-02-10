@@ -13,7 +13,7 @@ import { HeaderContext } from "../../common/header/Header";
 function Login() {
 
   const REST_API_KEY_FOR_KAKAO = "83838cea18a7862894ce003e923d2fd7";
-  const REDIRECT_URI_FOR_KAKAO = "http://localhost:3000/redirection";
+  const REDIRECT_URI_FOR_KAKAO = "http://43.200.224.252:3000/redirection";
   const linkForKakao = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY_FOR_KAKAO}&redirect_uri=${REDIRECT_URI_FOR_KAKAO}&response_type=code`;
 
   const [credentials, setCredentials] = useState({
@@ -42,7 +42,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios
-        .post("http://localhost:5056/members/v1/sign-in", credentials)
+        .post("http://43.200.224.252:5056/members/v1/sign-in", credentials)
         .then((result) => {
           const accesstoken = result.data.result.accessToken;
           const refreshtoken = result.data.result.refreshToken;
@@ -63,7 +63,7 @@ function Login() {
           };
 
           axios
-            .get("http://localhost:5056/members/v1/detail", {
+            .get("http://43.200.224.252:5056/members/v1/detail", {
               headers: customHeader,
             })
             .then(function (res) {

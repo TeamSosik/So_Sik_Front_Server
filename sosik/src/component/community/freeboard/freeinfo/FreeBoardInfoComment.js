@@ -57,7 +57,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
     if (newComment.trim() !== "") {
       axios
         .post(
-          "http://localhost:5056/comment/v1",
+          "http://43.200.224.252:5056/comment/v1",
           {
             communityId: postId,
             content: newComment,
@@ -97,7 +97,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
   const handleUpdateComment = async (commentId) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5056/comment/v1/${commentId}`,
+        `http://43.200.224.252:5056/comment/v1/${commentId}`,
         {
           content: editedComment,
         },
@@ -130,7 +130,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
     const confirmDelete = window.confirm("댓글을 삭제하시겠습니까?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:5056/comment/v1/${commentId}`, {
+        await axios.delete(`http://43.200.224.252:5056/comment/v1/${commentId}`, {
           headers: {
             Authorization: authorization,
             RefreshToken: refreshToken,
@@ -166,7 +166,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
                     />
                   ) : (
                     <Image
-                      src={`http://localhost:5056/members/v1/images/${member.result.memberId}`}
+                      src={`http://43.200.224.252:5056/members/v1/images/${member.result.memberId}`}
                       alt="프로필 이미지"
                       roundedCircle
                       style={{ margin: "10px" }}
@@ -216,7 +216,7 @@ const FreeBoardInfoComment = ({ commentlist, postId }) => {
               <ListGroup.Item key={index} className="commentlist">
                 <div>
                   <Image
-                    src={`http://localhost:5056/members/v1/images/${comment.memberId}`}
+                    src={`http://43.200.224.252:5056/members/v1/images/${comment.memberId}`}
                     alt="프로필 이미지"
                     roundedCircle
                     style={{ marginRight: "10px" }}

@@ -48,7 +48,7 @@ const SearchBox = () => {
 
     try {
       axios({
-        url: 'http://localhost:5056/food/v1/search', 
+        url: 'http://43.200.224.252:5056/food/v1/search', 
         params: params
       })
       .then(function (res) {

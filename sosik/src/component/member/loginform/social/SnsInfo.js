@@ -97,7 +97,7 @@ function SnsInfo() {
     
 
     try {
-      axios.patch('http://localhost:5056/oauth/v1', formData, { headers })
+      axios.patch('http://43.200.224.252:5056/oauth/v1', formData, { headers })
       .then(function (res) {
         window.sessionStorage.setItem("member",JSON.stringify(res.data));
         alert("정상 등록되었습니다.")
@@ -113,7 +113,7 @@ function SnsInfo() {
       memberId: member.memberId
     };
 
-    axios.get("http://localhost:5056/members/v1/detail", {
+    axios.get("http://43.200.224.252:5056/members/v1/detail", {
       headers: customHeader,
     })
     .then(function (res) {

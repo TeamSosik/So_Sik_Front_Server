@@ -33,7 +33,7 @@ const FreeBoardCard = (props) => {
             </div>
             <span>
               <Image
-                src={`http://localhost:5056/members/v1/images/${props.content.memberId}`}
+                src={`http://43.200.224.252:5056/members/v1/images/${props.content.memberId}`}
                 alt="프로필 이미지"
                 roundedCircle
                 width="35"
