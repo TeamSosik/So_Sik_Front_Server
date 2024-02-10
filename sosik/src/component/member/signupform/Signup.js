@@ -199,7 +199,7 @@ function Signup() {
     try {
       
       const response = await axios.get(
-        "http://localhost:5056/members/v1/validation/" + memberInfo.email
+        "http://43.200.224.252:5056/members/v1/validation/" + memberInfo.email
       );
       if (response.data) {
         setIsDuplicate(true);
@@ -234,7 +234,7 @@ function Signup() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        url: "http://localhost:5056/members/v1/sign-up", // 서버
+        url: "http://43.200.224.252:5056/members/v1/sign-up", // 서버
         data: formData,
       }).then(function (response) {
         alert("가입을 환영합니다!");

@@ -93,7 +93,7 @@ const FreeBoardWrite = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5056/post/v1",
+        "http://43.200.224.252:5056/post/v1",
         {
           title: board.title,
           content: board.content,
@@ -120,7 +120,7 @@ const FreeBoardWrite = () => {
     try {
       const today = getFormattedDate();
       const response = await axios.get(
-        "http://localhost:5056/intake/v1/" + today,
+        "http://43.200.224.252:5056/intake/v1/" + today,
         {
           headers: {
             authorization: authorization,

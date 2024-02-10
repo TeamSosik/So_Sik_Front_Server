@@ -22,7 +22,7 @@ function FreeBoardInfo() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:5056/post/v1/${id}`,
+        url: `http://43.200.224.252:5056/post/v1/${id}`,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
@@ -56,7 +56,7 @@ function FreeBoardInfo() {
       try {
         const response = await axios({
           method: "delete",
-          url: `http://127.0.0.1:5056/post/v1/${id}`,
+          url: `http://43.200.224.252:5056/post/v1/${id}`,
           headers: {
             Authorization: authorization,
             RefreshToken: refreshToken,

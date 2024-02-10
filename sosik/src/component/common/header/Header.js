@@ -54,7 +54,7 @@ const Header = () => {
       await axios({
         method: "post",
         url: "/members/v1/sign-out",
-        baseURL: "http://localhost:5056",
+        baseURL: "http://43.200.224.252:5056",
         headers: {
           authorization: accesstoken,
           refreshToken: refreshtoken,

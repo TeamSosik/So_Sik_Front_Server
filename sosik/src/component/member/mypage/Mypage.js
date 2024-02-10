@@ -31,7 +31,7 @@ const MyPage = () => {
     try {
       await axios({
         method: "get",
-        url: "http://localhost:5056/members/v1/detail",
+        url: "http://43.200.224.252:5056/members/v1/detail",
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,

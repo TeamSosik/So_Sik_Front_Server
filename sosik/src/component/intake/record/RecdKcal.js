@@ -36,7 +36,7 @@ const RecdKcal = () => {
       const response = await axios({
         method: "get",
         url: url,
-        baseURL: "http://localhost:5056",
+        baseURL: "http://43.200.224.252:5056",
         headers: {
           Authorization: accesstoken,
           refreshtoken: refreshtoken,
@@ -85,7 +85,7 @@ const RecdKcal = () => {
       const response = await axios({
         method: "get",
         url: url,
-        baseURL: "http://localhost:5056",
+        baseURL: "http://43.200.224.252:5056",
         headers: {
           Authorization: accesstoken,
           refreshtoken: refreshtoken,

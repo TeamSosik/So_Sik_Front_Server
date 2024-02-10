@@ -34,7 +34,7 @@ const RecdAnly_section1 = () => {
 
         method: "get",
         url: "/intake/v1/rank",
-        baseURL: "http://localhost:5056/",
+        baseURL: "http://43.200.224.252:5056/",
         headers: {
           authorization: accesstoken,
           refreshtoken: refreshtoken,

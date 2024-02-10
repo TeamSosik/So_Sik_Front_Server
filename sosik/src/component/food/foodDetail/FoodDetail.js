@@ -88,7 +88,7 @@ const FoodDetail = () => {
       const response = await axios({
         method: "get",
         url: `/food/v1/${foodId}`,
-        baseURL: "http://localhost:5056/",
+        baseURL: "http://43.200.224.252:5056/",
         headers: {
           "Content-Type": "application/json",
         },

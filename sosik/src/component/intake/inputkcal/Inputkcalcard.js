@@ -43,7 +43,7 @@ function Inputkcalcard({ props }) {
     try {
       await axios({
         method: "get",
-        url: "http://localhost:5056/target-calorie/v1/" + loadDate,
+        url: "http://43.200.224.252:5056/target-calorie/v1/" + loadDate,
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
@@ -64,7 +64,7 @@ function Inputkcalcard({ props }) {
     try {
       await axios({
         method: "get",
-        url: "http://localhost:5056/members/v1/target-weight-data",
+        url: "http://43.200.224.252:5056/members/v1/target-weight-data",
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
@@ -96,7 +96,7 @@ function Inputkcalcard({ props }) {
       const requestUpdateTargetCalorie = updateTodayTargetKcal;
       await axios
         .patch(
-          "http://localhost:5056/target-calorie/v1/",
+          "http://43.200.224.252:5056/target-calorie/v1/",
           requestUpdateTargetCalorie,
           {
             headers: {
@@ -120,7 +120,7 @@ function Inputkcalcard({ props }) {
         const requestTargetCalorie = createTodayTargetKcal;
         await axios
           .post(
-            "http://localhost:5056/target-calorie/v1/",
+            "http://43.200.224.252:5056/target-calorie/v1/",
             requestTargetCalorie,
             {
               headers: {

@@ -66,7 +66,7 @@ const RecdKcalSection2 = ({ mealList: mealDataList, addMealList, props }) => {
     const accesstoken = JSON.parse(sessionStorage.getItem("accesstoken"));
     const refreshtoken = JSON.parse(sessionStorage.getItem("refreshtoken"));
 
-    const url = `http://localhost:5056/intake/v1/${id}`;
+    const url = `http://43.200.224.252:5056/intake/v1/${id}`;
 
     try {
       const response = await axios.delete(url, {

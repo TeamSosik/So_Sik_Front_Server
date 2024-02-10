@@ -40,7 +40,7 @@ function UpdateInfo() {
     try {
       await axios({
         method: "get",
-        url: "http://localhost:5056/members/v1/detail",
+        url: "http://43.200.224.252:5056/members/v1/detail",
         headers: {
           authorization: authorization,
           refreshToken: refreshToken,
@@ -134,7 +134,7 @@ function UpdateInfo() {
           "Content-Type": "multipart/form-data",
         },
         url: "/members/v1",
-        baseURL: "http://localhost:5056", // 서버
+        baseURL: "http://43.200.224.252:5056", // 서버
         data: formData,
       }).then(function (response) {
         navigate("/mypage"); //리다이렉트

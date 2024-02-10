@@ -84,7 +84,7 @@ const Tbody = ({ data, handleModalTogle, handleDataListChange }) => {
       const response = await axios({
         method: "post",
         url: "/intake/v1/food",
-        baseURL: "",
+        baseURL: "http://43.200.224.252:5056",
         headers: {
           "Content-Type": "application/json",
           Authorization: accesstoken,

@@ -45,7 +45,7 @@ const FoodSearch = () => {
       const response = await axios({
         method: "get",
         url: "/food/v1",
-        baseURL: "http://localhost:5056/",
+        baseURL: "http://43.200.224.252:5056/",
         params: params,
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ const FoodSearch = () => {
       const response = await axios({
         method: "get",
         url: "/food/v1",
-        baseURL: "http://localhost:5056/",
+        baseURL: "http://43.200.224.252:5056/",
         params: params,
         headers: {
           "Content-Type": "application/json",

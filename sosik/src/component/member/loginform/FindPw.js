@@ -28,7 +28,7 @@ function FindPw() {
     try {
       const jsonData = JSON.stringify(formData);
       const response = await axios
-        .post("http://localhost:5056/members/v1/passwd", jsonData, {
+        .post("http://43.200.224.252:5056/members/v1/passwd", jsonData, {
           headers: {
             "Content-Type": `application/json`,
           },

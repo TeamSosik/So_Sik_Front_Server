@@ -31,7 +31,7 @@ function FreeBoardInfoHeader({ title, props, nickname, date, hits }) {
           <div className="freeinfonamedate">
             <span>
               <Image
-                src={`http://localhost:5056/members/v1/images/${props}`}
+                src={`http://43.200.224.252:5056/members/v1/images/${props}`}
                 alt="프로필 이미지"
                 roundedCircle
                 style={{ width: "30px", height: "30px", marginRight: "5px" }}
